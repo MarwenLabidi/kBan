@@ -1,0 +1,11 @@
+:root{
+	--clr_white:hsl(76, 100%, 100%);
+	--clr_Dark:hsla(0, 0%, 0%);
+	--clr_gray:rgb(105, 105, 105, 0.3);
+	--clr_red:hsl(0, 100%, 50%);
+	--clr_green:hsl(129, 73%, 31%);
+}
+@custom-media --small (width <= 400px);
+@custom-media --tablets (width >= 450px);
+@custom-media --desktop (width >= 900px);
+@custom-media --desktop-large (width >= 1300px);
