@@ -2,11 +2,13 @@
 #### Next Generation  kanban board 
 
 # [APP link]()
-# [VSCODE extension]()
-# [CHROME extension]()
 
 ## Tech Stack:
 - Html , Css , javaScript
 - Git , GitHub
-- Vite,esbuild, PostCss,webworker
+- Vite,esbuild, PostCss,workBox
+
+## API :
+- Drag and Drop API
+-indexDB
 
