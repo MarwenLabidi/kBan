@@ -1,0 +1,1 @@
+const sun=`<div class="sun">🌤️</div>`

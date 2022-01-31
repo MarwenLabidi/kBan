@@ -1,0 +1,13 @@
+body>main{
+	background-color: var(--clr_black2);
+	width: 100%;
+}
+.darkMode{
+	text-align: right;
+	padding: 10px;
+	font-size: 40px;
+	& span{
+		margin-right: 25px;
+		border-radius:50%;
+	}
+}

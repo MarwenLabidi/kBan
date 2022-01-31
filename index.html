@@ -1,13 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/main.js"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vite App</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:ital,wght@1,300&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+  <aside>
+    <main>
+      <section class="leftbar">
+        <img class="logo" alt="logo" src="/favicon.svg">
+        <img src="/project.png" alt="project.png">
+        <img src="/repport.png" alt="report.png">
+        <img src="/install.png" alt="install.png">
+      </section>
+      <section class="rightbar">
+        <div class="projectnames">
+          <h2>PROJECT NAME</h2>
+          <hr>
+        </div>
+        <div class="workspace">
+          <section class="Roadmap">
+            <img src="/road-map-.png" alt="">
+            <h3>Roadmap</h3>
+          </section>
+          <section class="KanbanBoard">
+            <img src="/kanban-board.png" alt="">
+            <h3>K-Board</h3>
+          </section>
+          <section class="Bugs">
+            <img src="/bugs.png" alt="">
+            <h3>Bugs</h3>
+          </section>
+        </div>
+      </section>
+    </main>
+  </aside>
+  <main>
+    <div class="darkMode">
+      <span class='night'>🌙</span>
+    </div>
+
+  </main>
+  <script type="module" src="/main.js"></script>
+</body>
+
 </html>

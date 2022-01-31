@@ -1,0 +1,44 @@
+aside {
+	background-color: var(--clr_black);
+	color: var(--clr_white);
+	width:23%;
+	height:100vh;
+}
+.logo{
+	background-color: var(--clr_white);
+	position:relative;
+	width:80px;
+	margin-bottom:-55px;
+}
+
+aside main{
+	display: flex;
+}
+
+.leftbar {
+	display: grid;
+	justify-items: center;
+	background-color: var(--clr_dark);
+	width: 30%;
+	height: 100vh;
+	& img:not(.logo){
+		width: 40%;
+	}
+}
+.rightbar{
+	fonts-family: var(--ff_Anton);
+	padding: 5px;
+	& img{
+		width: 20%;
+		height: 20%;
+	}
+}
+
+.Roadmap,.KanbanBoard,.Bugs{
+	display: flex;
+	gap: 20px;
+	align-items: center;
+	margin-top: 40px;
+	padding-left: 20px;
+}
+

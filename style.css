@@ -1,3 +1,4 @@
 @import"./src/css/variables.css";
 @import"./src/css/base.css";
-/* @import"./src/css/components.css"; */
+@import"./src/css/sideBar.css";
+@import"./src/css/main.css";

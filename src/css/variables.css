@@ -1,9 +1,19 @@
-:root{
+:root{  
+	/* fonts varriables */
+	--ff_Anton: 'Anton', sans-serif;
+        --ff_Poppins: 'Poppins', sans-serif;
+	/* colors variables */
 	--clr_white:hsl(76, 100%, 100%);
-	--clr_Dark:hsla(0, 0%, 0%);
-	--clr_gray:rgb(105, 105, 105, 0.3);
+	--clr_dark:hsla(0, 0%, 0%);
+	--clr_black:hsl(215, 0%, 13%);
+	--clr_black2:hsl(215, 0%, 25%);
+	--clr_gray:hsl(0, 0%, 41%);
+	--clr_gray_white:hsl(169, 14%, 85%);
 	--clr_red:hsl(0, 100%, 50%);
-	--clr_green:hsl(129, 73%, 31%);
+	--clr_green:hsl(150, 52%, 51%);
+	--clr_orange:hsl(40, 94%, 58%);
+	--clr_purple:hsl(265, 98%, 67%);
+	--clr_blue:hsl(210, 100%, 50%);
 }
 @custom-media --small (width <= 400px);
 @custom-media --tablets (width >= 450px);
