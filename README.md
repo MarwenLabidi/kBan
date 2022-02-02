@@ -7,6 +7,7 @@
 - Html , Css , javaScript
 - Git , GitHub
 - Vite,esbuild, PostCss,workBox
+-canvas js
 
 ## API :
 - Drag and Drop API
