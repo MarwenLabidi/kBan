@@ -1,7 +1,7 @@
 :root{  
 	/* fonts varriables */
-	--ff_Anton: 'Anton', sans-serif;
         --ff_Poppins: 'Poppins', sans-serif;
+	--ff_Anton: 'Anton', sans-serif;
 	/* colors variables */
 	--clr_white:hsl(76, 100%, 100%);
 	--clr_dark:hsla(0, 0%, 0%);

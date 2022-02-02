@@ -1,13 +1,17 @@
+@import"./components/darkModeButton.css";
+@import"./components/card.css";
+@import"./components/roadmap.css";
+@import"./components/kanbanBoard.css";
+
+
 body>main{
 	background-color: var(--clr_black2);
-	width: 100%;
+	width: 90%;
+
 }
-.darkMode{
-	text-align: right;
-	padding: 10px;
-	font-size: 40px;
-	& span{
-		margin-right: 25px;
-		border-radius:50%;
-	}
+
+.workspace{
+	height: 90.5%;
+	display: grid;
+	/* grid-template-columns:repeat(3,1fr); */
 }

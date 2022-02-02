@@ -1,0 +1,78 @@
+/* add pop op names for icons in the left bar */
+.leftbar>span:hover::after {
+	background-color: var(--clr_orange);
+	content: attr(data-content);
+	color: black;
+	position: absolute;
+	padding: 10px;
+	border-radius: 30px;
+	transform: translate(-70%, -140%);
+	font-size: 18px;
+}
+
+.leftbar>span:hover::before {
+	content: "";
+	position: absolute;
+	border-radius: 30px;
+	transform: translate(-5%, -140%);
+	border-top: solid 20px var(--clr_orange);
+	border-left: solid 20px transparent;
+	border-right: solid 20px transparent;
+	opacity: 0, 2;
+}
+
+/* animation */
+
+
+/* roadmap */
+.Roadmap:hover,
+.KanbanBoard:hover,
+.Bugs:hover {
+	background-color: var(--clr_dark);
+	cursor: pointer;
+	transform: scale(1.1);
+}
+
+.Roadmap:active,
+.KanbanBoard:active,
+.Bugs:active {
+	transform: scale(1);
+}
+
+/* leffbar */
+.leftbar img:not(.logo):hover {
+	cursor: pointer;
+	transform: scale(1.1);
+}
+
+/* dark button */
+.darkMode span:hover {
+	cursor: pointer;
+}
+
+/* add card */
+.card:hover {
+	box-shadow: 0px 0px 1px 1px var(--clr_white);
+	cursor: pointer;
+	transform: scale(1.1);
+}
+
+.card:active {
+	box-shadow: 0px 0px 20px 1px var(--clr_dark);
+	transform: scale(1);
+
+}
+
+/* kaban board */
+.board div span {
+	cursor: pointer;
+}
+.cardBoard:hover {	cursor: pointer;
+}
+
+.cardBoard img:hover {
+	cursor: pointer;
+	transform: scale(1.1);
+}
+
+
