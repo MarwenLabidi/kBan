@@ -1,0 +1,32 @@
+.bugs{
+	& table{
+		height:91vh;
+		width:100%;
+		& thead{
+			background-color:var(--clr_orange);
+			& tr{
+				& th{
+					font-size:1.5em;
+					padding:1em;
+					& span{
+						position:relative;
+						left:20%;
+						background-color:var(--clr_green);
+						border-radius: 20px;
+					}
+				}
+			}
+		}
+		& tbody{
+			background-color:var(--clr_green);
+			/* color:var(--clr_white); */
+			& tr{
+				& td{
+					padding:1em;
+					font-size:1.5em;
+					font-family:'Poppins', sans-serif;
+				}
+			}
+		}
+	}
+}

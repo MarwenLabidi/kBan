@@ -2,11 +2,16 @@
 @import"./components/card.css";
 @import"./components/roadmap.css";
 @import"./components/kanbanBoard.css";
+@import"./components/bugs.css";
+@import"./components/chart.css";
 
 
 body>main{
 	background-color: var(--clr_black2);
-	width: 90%;
+	/* NOTE if there is a seconde side bar */
+	/* width: 90%; */
+	/* NOTE if there is not a seconde side bar */
+	width: 100%;
 
 }
 

@@ -1,7 +1,10 @@
 aside {
 	background-color: var(--clr_black);
 	color: var(--clr_white);
-	width: 28%;
+	/*NOTE if there is a side bar */
+	/* width: 28%; */
+	/*NOTE if there is note a side bar */
+	width: 7%;
 	height: 100vh;
 }
 
@@ -20,7 +23,8 @@ aside main {
 	display: grid;
 	justify-items: center;
 	background-color: var(--clr_dark);
-	width: 30%;
+	/* NOTE if there is a side bar  */
+	/* width: 30%; */
 	height: 100vh;
 
 	& img:not(.logo) {
