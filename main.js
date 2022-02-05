@@ -1,3 +1,3 @@
 import './style.css' 
-import './src/js/chart.js'
-import './src/js/dom.js'
+import './src/js/script.js'
+// import './src/js/chart.js'

@@ -1,10 +1,10 @@
 aside {
 	background-color: var(--clr_black);
 	color: var(--clr_white);
-	/*NOTE if there is a side bar */
-	/* width: 28%; */
+	/* NOTE if there is a side bar */
+	width: 28%;
 	/*NOTE if there is note a side bar */
-	width: 7%;
+	/* width: 7%; */
 	height: 100vh;
 }
 

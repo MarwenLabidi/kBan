@@ -9,7 +9,9 @@
 - Vite,esbuild, PostCss,workBox
 -canvas js
 
-## API :
+## API and library :
 - Drag and Drop API
--indexDB
+-dexie.js(indexdDB library)
+-QuantumAlert
+
 
