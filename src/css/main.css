@@ -9,14 +9,13 @@
 body>main{
 	background-color: var(--clr_black2);
 	/* NOTE if there is a seconde side bar */
-	/* width: 90%; */
+	width: 90%;
 	/* NOTE if there is not a seconde side bar */
-	width: 100%;
+	/* width: 100%; */
 
 }
 
 .workspace{
 	height: 90.5%;
 	display: grid;
-	grid-template-columns:repeat(3,1fr);
 }

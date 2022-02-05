@@ -1,22 +1,32 @@
-const black ="hsl(215, 0%, 25%)"
-const white ="hsl(76, 100%, 100%)"
-const red ="#FF0000"
-const green ="#3CB371"
-const orange ="#FFC000"
-const blue ="#008080"
+const black = "hsl(215, 0%, 25%)"
+const white = "hsl(76, 100%, 100%)"
+const red = "#FF0000"
+const green = "#3CB371"
+const orange = "#FFC000"
+const blue = "#008080"
 
-let fontColor="white"
-let backgroundColor=black
+let fontColor = "white"
+let backgroundColor = black
 
-let openBugs=50
-let doneBugs=50
+let openBugs = 50
+let doneBugs = 50
 
-let backLog=40
-let inProgress=40
-let done=20
+let backLog = 40
+let inProgress = 40
+let done = 20
+const report = document.querySelector('#report')
+const reports = document.querySelector('.reports')
+const workspace = document.querySelector('.workspace')
 
+const {
+	reportHtml
+} = await import('./ajaj.js')
 
-window.onload = function () {
+report.addEventListener('click', function () {
+
+	workspace.innerHTML = ''
+	workspace.append(reportHtml)
+
 	CanvasJS.addColorSet("progress",
 		[ //colorSet Array
 
@@ -102,4 +112,4 @@ window.onload = function () {
 		}]
 	});
 	chartBugs.render();
-}
+})

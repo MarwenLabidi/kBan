@@ -1,13 +1,8 @@
+	var projectName = null;
+	const SubmitFun = () => {
+		projectName = inx;
+		// localStorage.setItem('projectName', projectName);
 
-
-
-const SubmitFun=()=> {
-	let projectName = inx;
-	localStorage.setItem('projectName', projectName);
-
-	setTimeout(() => {
-		
-		window.location.reload();
-	}, 1000);
-
-}
+		// window.location.reload();
+		// console.log( projectName)
+	}

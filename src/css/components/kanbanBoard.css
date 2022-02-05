@@ -3,12 +3,17 @@
 
 	& h1:first-child {
 		padding: 10px;
-		margin: -15px 0;
+		margin: -21px 0;
 		font-size: 35px;
 		font-weight: bold;
 		font-family: 'Poppins', sans-serif;
+		position: absolute;
+		top: 5%;
 	}
-
+	& hr{
+		padding: 10;
+		margin:10px 0; 
+	}
 	& .board {
 		display: flex;
 		justify-content: space-between;
@@ -16,13 +21,13 @@
 
 		& div {
 			width: 30%;
-			height: 80vh;
+			height: 85vh;
 			border-radius: 20px;
 			overflow: scroll;
 			& h2:first-child {
 				position: fixed;
 				padding: 10px;
-				top: 89px;
+				top: 85px;
 				font-family: 'Anton', sans-serif;
 				letter-spacing: 3px;
 				font-size: 30px;
