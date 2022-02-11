@@ -1,5 +1,5 @@
 .reports_card {
-	color: var(--clr_white);
+	color: var(--clr_dark);
 	font-size: 25px;
 	font-weight: bold;
 	font-family: 'Poppins', sans-serif;
@@ -13,7 +13,6 @@
 	& h2 {
 		background-color: var(--clr_gray);
 		padding: 10px;
-		margin-bottom: -10px;
 		font-family: 'Anton', sans-serif;
 		letter-spacing: 5px;
 	}

@@ -1,6 +1,8 @@
 .bugs{
+	height: 100%;
+	overflow-Y: scroll;
 	& table{
-		height:91vh;
+		height:10px;
 		width:100%;
 		& thead{
 			background-color:var(--clr_orange);
@@ -25,6 +27,13 @@
 					padding:1em;
 					font-size:1.5em;
 					font-family:'Poppins', sans-serif;
+				}
+				& td:first-child img{
+					transform:rotate(90deg) translate(-10px,-800%);	
+					width:10%;
+				}
+					& td:first-child img:hover{
+						cursor:pointer;
 				}
 			}
 		}

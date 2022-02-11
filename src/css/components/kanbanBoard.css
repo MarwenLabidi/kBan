@@ -2,40 +2,50 @@
 	color: var(--clr_white);
 
 	& h1:first-child {
+		letter-spacing: 5px;
+
 		padding: 10px;
 		margin: -21px 0;
 		font-size: 35px;
 		font-weight: bold;
-		font-family: 'Poppins', sans-serif;
+		font-family: 'Anton', sans-serif;
 		position: absolute;
 		top: 5%;
 	}
-	& hr{
+
+	& hr {
 		padding: 10;
-		margin:10px 0; 
+		margin: 16px 0;
 	}
+
 	& .board {
 		display: flex;
 		justify-content: space-between;
+		margin-left: 19px;
 		height: 91%;
 
 		& div {
-			width: 30%;
+			width: 31.2%;
 			height: 85vh;
 			border-radius: 20px;
-			overflow: scroll;
+			overflow-Y: scroll;
+
+			/* margin-top: 50px; */
 			& h2:first-child {
 				position: fixed;
 				padding: 10px;
 				top: 85px;
-				font-family: 'Anton', sans-serif;
+				transform: translateX(-1.2%);
+				font-family: 'Poppins', sans-serif;
 				letter-spacing: 3px;
 				font-size: 30px;
 				background: var(--clr_gray);
 				width: 100%;
+				z-index: 1;
 
 				& span {
 					background-color: var(--clr_white);
+					padding: 6px;
 					border-radius: 10%;
 					position: relative;
 					left: 30px;
@@ -48,55 +58,64 @@
 				/* background-color: var(--clr_orange); */
 				color: var(--clr_dark);
 				box-shadow: 0px 0px 10px var(--clr_dark);
-				margin-top: 60px;
-				margin:60px 10px;
-				width:320px;
+				margin-top: 20px;
+				width: 320px;
 				border-radius: 20px;
-				& h3{
+
+				& h3 {
 					border-radius: 20px;
-					margin: 10px ;
+					margin: 10px;
 					padding: 20px;
-		
-					
+
+
 				}
 
 				& .comments {
 					overflow: hidden;
-					margin-left:50%;
-					height:30px;
-					width:150px;
-					& p{
+					margin-left: 50%;
+					height: 30px;
+					width: 150px;
+
+					& p {
 						display: inline-block;
 						position: relative;
 						top: -10px;
 						left: 25px;
 						color: var(--clr_dark);
 					}
+
 					& img:last-child {
 						width: 22px;
-						transform:rotate(90deg);
+						transform: rotate(90deg);
 						position: relative;
-						top:-4px;
+						top: -4px;
 						/* left: 20px; */
 					}
+
 					& img {
 						width: 20%;
 						margin-right: 10px;
 					}
 				}
 			}
+
+
 		}
 	}
 }
 
-.board div:first-child .cardBoard{
+.board div:first-child .cardBoard {
 	background-color: var(--clr_orange);
 }
 
-.board div:last-child .cardBoard{
+.board div:last-child .cardBoard {
 	background-color: var(--clr_green);
 }
 
-.board div:nth-child(2) .cardBoard{
+.board div:nth-child(2) .cardBoard {
 	background-color: var(--clr_blue);
+}
+
+section.workspace div.kBord section.board:nth-child(3) div>section.cardBoard:nth-child(2) {
+	margin-top: 70px;
 }

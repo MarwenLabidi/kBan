@@ -2,6 +2,7 @@
 	color: var(--clr_white);
 	display: flex;
 	fonts-family: var(--ff_Poppins);
+	margin-top: 10px;
 }
 
 .epic {
@@ -9,9 +10,9 @@
 
 	& h2 {
 		background-color: var(--clr_blue);
-		padding: 10px;
+		padding: 27px;
 		font-size: 30px;
-		margin-bottom: 70px;
+		margin-bottom: 50px;
 	}
 
 	& h3 {
@@ -21,21 +22,40 @@
 		font-size: 20px;
 		font-weight: bold;
 		font-family: var(--ff_Poppins);
-	}
-	& .epic_task {
-	height: 65vh;
-	overflow-y: scroll;
-	& button{
-		background-color: var(--clr_green);
-		width: 12.3%;
-		position: absolute;
-		top:145px;
-		& img{
-			width: 20%;
+		margin-bottom: 6px;
+		position: relative;
+
+		& img {
+			transform: rotate(90deg) translate(-18px, 22px);
+			width: 11%;
+			position: absolute;
+		}
+
+		& img:hover {
+			cursor: pointer;
 		}
 	}
 
-}
+	& .epic_task {
+		height: 65vh;
+		overflow-y: scroll;
+
+		& button {
+			background-color: var(--clr_green);
+			width: 12.5%;
+			position: absolute;
+			top: 154px;
+
+			& img {
+				width: 20%;
+			}
+		}
+
+		& button:hover {
+			cursor: pointer;
+		}
+
+	}
 }
 
 
@@ -45,22 +65,32 @@
 
 	& h2 {
 		background-color: var(--clr_purple);
-		padding: 10px;
+		padding: 25px;
 		font-size: 30px;
-		& .previousnext{
+
+		& .previousnext {
 			position: relative;
-			left: 45%;
-			& button{
-			border-radius: 50%;
-			font-size: 20px;
-			font-weight: bold;}
+			left: 55%;
+			top: -37px;
+
+			& button {
+				border-radius: 50%;
+				font-size: 20px;
+				font-weight: bold;
+				width: 28px;
+			}
+
+			& button:hover {
+				cursor: pointer;
+			}
 		}
+
 	}
-	
+
 	& h3 {
 		background-color: var(--clr_black);
 		padding: 10px;
-		
+
 
 	}
 
@@ -79,10 +109,9 @@
 
 	& .daysNames {
 		display: flex;
-		gap: 42px;
+		gap: 46px;
 		margin-top: -20px;
 		margin-left: 20px
-
 	}
 
 	& .days {

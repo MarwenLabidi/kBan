@@ -1,50 +1,50 @@
 let dataBases = await indexedDB.databases()
 const workspace = document.querySelector('.workspace')
-// let projectName = null
 const rightbar = document.querySelector('.rightbar')
 const project = document.querySelector('#project')
 let prevSibling = null
+const components = await import('./ajaj.js')
+const aside = document.querySelector('aside')
+const main = document.querySelector('main')
 
-const {
-	cardAddHtml
-} = await import('./ajaj.js')
 
 project.addEventListener('click', () => {
 	workspace.innerHTML = ''
-	workspace.append(cardAddHtml)
+	workspace.append(components.cardAddHtml)
+	if (dataBases.length > 0) {
+		//TODO  if the data base not empty add project cards
+		workspace.style.gridTemplateColumns = '1fr 1fr 1fr'
+		const Names = []
+		dataBases.forEach(db => {
+			Names.push(db.name)
+			workspace.append(components.card_projectNamesHtml.cloneNode(true))
+		})
+		const cardNames = [...document.querySelectorAll('.cardName')]
+		for (let index = 0; index < Names.length; index++) {
+			cardNames[index].innerText = Names[index]
+		}
+		//TODO when you click to any project card it will show you seconde side bar and show you the data
+		//TODO  if you click oneof them
+	}
 
 })
 project.click()
 
-// if (dataBases.length > 0) {
-// 	//TODO  if the data base not empty add project cards
-// 	const Names = []
-// 	const {
-// 		card_projectNamesHtml
-// 	} = await import('./ajaj.js')
-// 	dataBases.forEach(db => {
-// 		Names.push(db.name)
-// 		workspace.append(card_projectNamesHtml.cloneNode(true))
-// 	})
-// 	const cardNames = [...document.querySelectorAll('.cardName')]
-// 	for (let index = 0; index < Names.length; index++) {
-// 		cardNames[index].innerText = Names[index]
-// 	}
-// 	//TODO when you click to any project card it will show you seconde side bar and show you the data
-// 	//TODO  if you click oneof them
-// }
 
-//style card-Add
 const cardAdd = document.querySelector('.cardAdd')
 if (cardAdd) {
-	prevSibling = cardAdd.previousElementSibling;
-}
-if (!prevSibling) {
-	workspace.style.gridTemplateColumns = '1fr 1fr 1fr'
+	prevSibling = cardAdd.nextElementSibling;
+	if (!prevSibling) {
+		workspace.style.gridTemplateColumns = '1fr'
+		cardAdd.style.placeItems = 'center'
+	} else {
+		workspace.style.gridTemplateColumns = '1fr 1fr 1fr'
+	}
 }
 
+
 //TODO when you click the add card card show prompt asking the name of the project
-cardAdd.addEventListener('click',  () => {
+cardAdd.addEventListener('click', () => {
 
 	Qual.confirmd("What is the Name of your Project ?", //For heading
 		"", //For sub heading
@@ -56,78 +56,85 @@ cardAdd.addEventListener('click',  () => {
 		"string", //type of input you want whether a text ,password or number
 		"Enter Project Name" //Placeholder text of input field
 	)
-})
-// FIXME FIGURE OUT A SOLUTION FOR THIS
-setTimeout(() => {
-	console.log(projectName)
-}, 5000);
-//TODO when you submit the name it will show you the seconde side barr(roadmap kanban board and bugs)for the project
-//TODO create a data base
-// let projectName = localStorage.getItem('projectName');
-// localStorage.clear();
-// if (projectName) {
-// 	const {
-// 		sideBarRightHtml
-// 	} = await import('./ajaj.js')
-// 	rightbar.append(sideBarRightHtml)
-// }
 
-//create data base
-// var db = new Dexie(projectName);
+	const waitUntilReturnName = (value) => {
+		return new Promise((resolve, reject) => {
+			const waitUntilReturn = setInterval(() => {
+				let value = projectName
+				if (value) {
+					clearInterval(waitUntilReturn)
+					resolve(value)
+				}
+			}, 4000)
+		})
+	}
+	waitUntilReturnName(projectName).then((Name) => {
+		aside.style.width = '28%'
+		rightbar.append(components.sideBarRightHtml)
+	})
+})
+
+
+
+// create data base
+// var db = new Dexie('aaaaaa');
 // db.version(1).stores({
 // 	Roadmap: `epics,color,startDay,finishDay,startMonth,finshMonth,year`,
 // 	kanban: `backlog,inProgress,done`,
 // 	bugs: `opened,closed`,
 // });
 // await db.Roadmap.bulkPut([{
-// 	// epics: "UX design",
-// 	// color: "red",
-// 	// startDay: "10 ",
-// 	// finishDay: "15 ",
-// 	// startMounth: "February",
-// 	// finshMonth: "March",
-// 	// year: "2022",
+// 	epics: "UX design",
+// 	color: "red",
+// 	startDay: "10 ",
+// 	finishDay: "15 ",
+// 	startMounth: "February",
+// 	finshMonth: "March",
+// 	year: "2022",
 // }])
 
 
-// }
-//TODO if you click roadmap show roadmap component
-const Roadmap = document.querySelector('.Roadmap')
-if (Roadmap !== null) {
-	const {
-		roadmapHtml
-	} = await import('./ajaj.js')
+const observer = new MutationObserver((mutations) => {
+	mutations.forEach((mutation) => {
+		const Roadmap = document.querySelector('.Roadmap')
+		const KanbanBoard = document.querySelector('.KanbanBoard')
+		const Bugs = document.querySelector('.Bugs')
 
-	Roadmap.addEventListener('click', () => {
-		workspace.innerHTML = ''
-		workspace.append(roadmapHtml)
-	})
-}
-//TODO  else if you click the kanban it will show ou kanban
-const KanbanBoard = document.querySelector('.KanbanBoard')
-if (KanbanBoard !== null) {
-	const {
-		kanbanboardHtml
-	} = await import('./ajaj.js')
-	KanbanBoard.addEventListener('click', () => {
-		workspace.innerHTML = ''
-		workspace.append(kanbanboardHtml)
+		Roadmap.addEventListener('click', () => {
+			workspace.style.gridTemplateColumns = '1fr'
+			workspace.innerHTML = ''
+			workspace.append(components.roadmapHtml)
+		})
+		KanbanBoard.addEventListener('click', () => {
+			workspace.style.gridTemplateColumns = '1fr'
+			workspace.innerHTML = ''
+			workspace.append(components.kanbanboardHtml)
 
 
-	})
-}
-//TODO  else it will show you bugs component
-const Bugs = document.querySelector('.Bugs')
-if (Bugs !== null) {
-	const {
-		bugsTemplateHtml
-	} = await import('./ajaj.js')
-	Bugs.addEventListener('click', () => {
-		workspace.innerHTML = ''
-		workspace.append(bugsTemplateHtml)
+		})
+		Bugs.addEventListener('click', () => {
+			workspace.style.gridTemplateColumns = '1fr'
+			workspace.innerHTML = ''
+			workspace.append(components.bugsTemplateHtml)
+
+		})
 
 	})
-}
+})
+// the elelemtn you wanna to observe
+observer.observe(rightbar, {
+	childList: true
+})
+
+report.addEventListener('click', () => {
+	workspace.style.gridTemplateColumns = '1fr'
+	aside.style.width = '5.5%'
+
+
+	workspace.innerHTML = ''
+	workspace.append(components.reportHtml)
+
+})
 //TODO create functionality of roadmap
 //TODO create a calendar 
 //TODO create a add epic functionality
@@ -142,20 +149,6 @@ if (Bugs !== null) {
 
 //TODO create functionality of bugs: it will show you a promp and when the bug is open the color is red and when you close it the color become green
 //TODO CReate delete functionality
-
-
-
-// TODO create the report functionality
-// const reports = document.querySelector('.reports')
-// const report=document.querySelector('#report')
-// 	const {
-// 		reportHtml
-// 	} = await import('./ajaj.js')
-// 	report.addEventListener('click', () => {
-// 		workspace.innerHTML = ''
-// 		workspace.append(reportHtml)
-
-// 	})
 
 // TODO count the task open and in progress done and bugs and calcule the percent of each tasks
 

@@ -7,11 +7,13 @@
 - Html , Css , javaScript
 - Git , GitHub
 - Vite,esbuild, PostCss,workBox
--canvas js
+
 
 ## API and library :
 - Drag and Drop API
--dexie.js(indexdDB library)
--QuantumAlert
+- MutationObservers API
+- canvasJs libarary
+- dexie.js(indexdDB library)
+- QuantumAlert libraty
 
 
