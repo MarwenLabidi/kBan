@@ -6,13 +6,15 @@ let prevSibling = null
 const components = await import('./ajaj.js')
 const aside = document.querySelector('aside')
 const main = document.querySelector('main')
+const calendar = await import('./calendar.js')
 
 
 project.addEventListener('click', () => {
 	workspace.innerHTML = ''
 	workspace.append(components.cardAddHtml)
+	rightbar.style.display = 'block'
 	if (dataBases.length > 0) {
-		//TODO  if the data base not empty add project cards
+		//  if the data base not empty add project cards
 		workspace.style.gridTemplateColumns = '1fr 1fr 1fr'
 		const Names = []
 		dataBases.forEach(db => {
@@ -43,7 +45,7 @@ if (cardAdd) {
 }
 
 
-//TODO when you click the add card card show prompt asking the name of the project
+// when you click the add card card show prompt asking the name of the project
 cardAdd.addEventListener('click', () => {
 
 	Qual.confirmd("What is the Name of your Project ?", //For heading
@@ -69,8 +71,11 @@ cardAdd.addEventListener('click', () => {
 		})
 	}
 	waitUntilReturnName(projectName).then((Name) => {
+		// console.log(Name) NOTE send the name to the service worker
 		aside.style.width = '28%'
 		rightbar.append(components.sideBarRightHtml)
+		const projectnamesHtml = document.querySelector('.projectnames')
+		projectnamesHtml.innerText = Name
 	})
 })
 
@@ -94,7 +99,7 @@ cardAdd.addEventListener('click', () => {
 // }])
 
 
-const observer = new MutationObserver((mutations) => {
+const observerSideBar = new MutationObserver((mutations) => {
 	mutations.forEach((mutation) => {
 		const Roadmap = document.querySelector('.Roadmap')
 		const KanbanBoard = document.querySelector('.KanbanBoard')
@@ -122,20 +127,20 @@ const observer = new MutationObserver((mutations) => {
 	})
 })
 // the elelemtn you wanna to observe
-observer.observe(rightbar, {
+observerSideBar.observe(rightbar, {
 	childList: true
 })
 
 report.addEventListener('click', () => {
 	workspace.style.gridTemplateColumns = '1fr'
-	aside.style.width = '5.5%'
-
-
+	aside.style.width = '5.2%'
+	rightbar.style.display = 'none'
 	workspace.innerHTML = ''
 	workspace.append(components.reportHtml)
 
 })
-//TODO create functionality of roadmap
+//TODO create functionality of roadmap use mutation observer
+
 //TODO create a calendar 
 //TODO create a add epic functionality
 //TODO when you click it itwill show you prompt ask you

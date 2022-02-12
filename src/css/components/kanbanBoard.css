@@ -13,6 +13,29 @@
 		top: 5%;
 	}
 
+	& #newKboard {
+		margin-left: 40%;
+		margin-right: 5%;
+		transform: translateY(-80%);
+		padding: 10px;
+		border-radius: 10px;
+		font-size: 20px;
+		font-weight: bold;
+	}
+	& #newKboard:hover {
+		background-color: var(--clr_white);
+		cursor: pointer;
+	}
+
+	& form {
+
+		display: inline-block;
+		transform: translateY(-80%);
+		padding: 10px;
+				font-size: 20px;
+		font-weight: bold;
+	}
+
 	& hr {
 		padding: 10;
 		margin: 16px 0;
