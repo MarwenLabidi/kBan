@@ -17,11 +17,8 @@
 		font-family: 'Anton', sans-serif;
 		letter-spacing: 5px;
 		margin-left: -30px;
+		margin-bottom: 70px;
 	}
-	& hr {
-		transform: translateX(-1%);
-		/* margin-top: 10px; */
-		margin-bottom: 50px;
-		opacity: 0.6;
-	}
+
+	
 }
