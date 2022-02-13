@@ -20,6 +20,6 @@ let febraryDaysNumber = leapYear(currentyear) ? 29 : 28
 export const monthDaysNumber = [31, febraryDaysNumber, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
 export const getFirstDaysOfSpesificMonth = (month, year) => {
-	return date= new Date(year, month,1).getDay();a
+	return  new Date(year, month,1).getDay();
 }
 

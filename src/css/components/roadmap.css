@@ -45,6 +45,7 @@
 			width: 12.5%;
 			position: absolute;
 			top: 154px;
+			min-width: 168px;
 
 			& img {
 				width: 20%;
