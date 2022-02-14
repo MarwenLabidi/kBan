@@ -1,6 +1,7 @@
 ## Welcome to  kBan
 #### Next Generation  kanban board 
 ## very fast ⚡ ⚡ ⚡ 
+## you can install it or use it directly the link bellow
 
 # [APP link]()
 

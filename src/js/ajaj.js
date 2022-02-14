@@ -37,3 +37,9 @@ export const bugbarHtml=stringToHTML(bugbarString)
 const report = await fetch('./src/html/report.html')
 const reportString=await report.text()
 export const reportHtml=stringToHTML(reportString)
+
+const epic= await fetch('./src/html/epicRoadmap.html')
+const epicString=await epic.text()
+export const epicHtml=stringToHTML(epicString)
+// export const epicHtmlSecondChild=epicHtml.childNodes[1]
+

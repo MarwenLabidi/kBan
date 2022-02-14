@@ -7,7 +7,17 @@ const components = await import('./ajaj.js')
 const aside = document.querySelector('aside')
 const main = document.querySelector('main')
 const calendar = await import('./calendar.js')
-
+const waitUntilReturnName = (value, vl) => {
+	return new Promise((resolve, reject) => {
+		const waitUntilReturn = setInterval(() => {
+			let value = eval(vl)
+			if (value) {
+				clearInterval(waitUntilReturn)
+				resolve(value)
+			}
+		}, 4000)
+	})
+}
 
 project.addEventListener('click', () => {
 	workspace.innerHTML = ''
@@ -59,26 +69,213 @@ cardAdd.addEventListener('click', () => {
 		"Enter Project Name" //Placeholder text of input field
 	)
 
-	const waitUntilReturnName = (value) => {
-		return new Promise((resolve, reject) => {
-			const waitUntilReturn = setInterval(() => {
-				let value = projectName
-				if (value) {
-					clearInterval(waitUntilReturn)
-					resolve(value)
-				}
-			}, 4000)
-		})
-	}
-	waitUntilReturnName(projectName).then((Name) => {
-		// console.log(Name) FIXME send the name to the service worker
+
+	waitUntilReturnName(projectName, 'projectName').then((Name) => {
+		//! console.log(Name) NOTE : send the name to the service worker
 		aside.style.width = '28%'
 		rightbar.append(components.sideBarRightHtml)
 		const projectnamesHtml = document.querySelector('.projectnames')
 		projectnamesHtml.innerText = Name
+		projectName = null
 	})
 })
 
+
+
+const observerSideBar = new MutationObserver((mutations) => {
+	const Roadmap = document.querySelector('.Roadmap')
+	const KanbanBoard = document.querySelector('.KanbanBoard')
+	const Bugs = document.querySelector('.Bugs')
+
+	Roadmap.addEventListener('click', () => {
+		workspace.style.gridTemplateColumns = '1fr'
+		workspace.innerHTML = ''
+		workspace.append(components.roadmapHtml)
+		//!calendar
+		const monthDom = document.querySelector('.mounth')
+		monthDom.innerText = calendar.currentMounth
+		const yearDom = document.querySelector('.year')
+		yearDom.innerText = calendar.currentyear
+		const daysDom = document.querySelector('.days')
+		daysDom.innerText = ''
+
+		const firstDayMth = calendar.getFirstDaysOfSpesificMonth(calendar.currentMounthNumber, calendar.currentyear)
+		for (let index = 1; index < firstDayMth; index++) {
+			let div = document.createElement('div')
+			daysDom.append(div)
+		}
+		for (let index = 1; index <= calendar.monthDaysNumber[calendar.currentMounthNumber]; index++) {
+			let div = document.createElement('div')
+			div.innerText = index
+			daysDom.append(div)
+		}
+
+
+	})
+	Roadmap.click()
+
+	KanbanBoard.addEventListener('click', () => {
+		workspace.style.gridTemplateColumns = '1fr'
+		workspace.innerHTML = ''
+		workspace.append(components.kanbanboardHtml)
+	})
+	Bugs.addEventListener('click', () => {
+		workspace.style.gridTemplateColumns = '1fr'
+		workspace.innerHTML = ''
+		workspace.append(components.bugsTemplateHtml)
+
+	})
+
+})
+observerSideBar.observe(rightbar, {
+	childList: true
+})
+
+report.addEventListener('click', () => {
+	workspace.style.gridTemplateColumns = '1fr'
+	aside.style.width = '5.2%'
+	rightbar.style.display = 'none'
+	workspace.innerHTML = ''
+	workspace.append(components.reportHtml)
+
+})
+const observerWorkspace = new MutationObserver((mutations) => {
+	const daysDom = document.querySelector('.days')
+	const monthDom = document.querySelector('.mounth')
+	const yearDom = document.querySelector('.year')
+	const epicButton = document.querySelector('#epicButton')
+	const btnPrevious = document.querySelector('.btn_previous')
+	const btnNext = document.querySelector('.btn_next')
+
+	let thisYear = calendar.currentyear
+	let thisMonth = calendar.currentMounthNumber
+	const createCalender = () => {
+		daysDom.innerHTML = ''
+		yearDom.innerText = thisYear
+		monthDom.innerText = calendar.MONTHS[thisMonth]
+		const PfirstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
+		for (let index = 1; index < PfirstDayMth; index++) {
+			let div = document.createElement('div')
+			daysDom.append(div)
+		}
+		for (let index = 1; index <= calendar.monthDaysNumber[thisMonth]; index++) {
+			let div = document.createElement('div')
+			div.innerText = index
+			daysDom.append(div)
+		}
+	}
+	//!NOTE
+	const evrySingleDays = [...document.querySelectorAll('.days div')]
+        
+	if (!btnPrevious || !btnNext) {
+		return
+	}
+	btnPrevious.addEventListener('click', () => {
+		evrySingleDays = [...document.querySelectorAll('.days div')]
+
+		if (thisMonth === 0) {
+			thisYear--
+			thisMonth = 11
+		} else {
+			thisMonth--
+		}
+		createCalender()
+	})
+	btnNext.addEventListener('click', () => {
+		evrySingleDays = [...document.querySelectorAll('.days div')]
+
+		if (thisMonth === 11) {
+			thisYear++
+			thisMonth = 0
+		} else {
+			thisMonth++
+		}
+		createCalender()
+	})
+	if (!epicButton) {
+		return
+	}
+	epicButton.addEventListener('click', () => {
+		Qual.confirmd("ADD EPIC ", //For heading
+			"", //For sub heading
+			inf, //icon variable we can define our own also by giving th link in double quotes
+			"ADD", //blue button string
+			"", // cancel button string
+			"addEpic", //function name that is to be called on click on blue button
+			"", //function name that is to be called on click on cancel button
+			"string", //type of input you want whether a text ,password or number
+			"Enter EPIC" //Placeholder text of input field
+		)
+		waitUntilReturnName(epicName, 'epicName').then((epic) => {
+			waitUntilReturnName(startDate, 'startDate').then((sDate) => {
+				waitUntilReturnName(endDate, 'endDate').then((eDate) => {
+					// thisMonth  thisYear
+					const getDayMonthYear = (date) => {
+						const dateArr = date.split('-')
+						return {
+							day: dateArr[2],
+							month: dateArr[1],
+							year: dateArr[0]
+						}
+					}
+					const startDayMonthYear = getDayMonthYear(sDate)
+					const endDayMonthYear = getDayMonthYear(eDate)
+					const firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
+
+
+					//! NOTE send epic sDate  and eDate to the servece worker
+					const epicTask = document.querySelector('.epic_task')
+					let epicTaskHtml = components.epicHtml
+					epicTaskHtml.childNodes[1].innerHTML = epic
+					// TODO create multiple color function random color
+					epicTask.append(epicTaskHtml.cloneNode(true))
+					//NOTE UPDATE EVERY SINGLE DAY WHEN UOU CALL COLOR FUNCTION
+					// const evrySingleDays = [...document.querySelectorAll('.days div')]
+					const runOneTime = (firstDay,arrDays) => {
+						let run = true
+						return () => {
+							if (run === true) {
+								for (let index = 1; index < firstDay; index++) {
+									arrDays.shift()
+								}
+								run = false
+							}
+						}
+					}
+					runOneTime(firstDayMth,evrySingleDays)()
+					//! NOTE this is function 
+					let s = null
+					let e = null
+					if ((thisYear + '') === startDayMonthYear.year) {
+						if (('0' + (thisMonth + 1)) === startDayMonthYear.month) {
+							s = +startDayMonthYear.day - 1
+							e = +endDayMonthYear.day
+							console.log(s)
+							console.log(e)
+							for (let index = s; index < e; index++) {
+								if (!evrySingleDays[index]) {
+									break
+								}
+								evrySingleDays[index].style.backgroundColor = '#f5f5f5'
+							}
+
+						}
+					}
+					startDate = null
+					epicName = null
+					endDate = null
+				})
+			})
+		})
+	})
+
+
+})
+
+observerWorkspace.observe(workspace, {
+	childList: true,
+	// subtree: true
+})
 
 
 // create data base
@@ -98,125 +295,6 @@ cardAdd.addEventListener('click', () => {
 // 	year: "2022",
 // }])
 
-
-const observerSideBar = new MutationObserver((mutations) => {
-	mutations.forEach((mutation) => {
-		const Roadmap = document.querySelector('.Roadmap')
-		const KanbanBoard = document.querySelector('.KanbanBoard')
-		const Bugs = document.querySelector('.Bugs')
-
-		Roadmap.addEventListener('click', () => {
-			workspace.style.gridTemplateColumns = '1fr'
-			workspace.innerHTML = ''
-			workspace.append(components.roadmapHtml)
-			//! calendar
-			const monthDom = document.querySelector('.mounth')
-			monthDom.innerText = calendar.currentMounth
-			const yearDom = document.querySelector('.year')
-			yearDom.innerText = calendar.currentyear
-			const daysDom = document.querySelector('.days')
-			daysDom.innerText = ''
-
-			const firstDayMth = calendar.getFirstDaysOfSpesificMonth(calendar.currentMounthNumber, calendar.currentyear)
-			for (let index = 1; index < firstDayMth; index++) {
-				let div = document.createElement('div')
-				daysDom.append(div)
-			}
-			for (let index = 1; index <= calendar.monthDaysNumber[calendar.currentMounthNumber]; index++) {
-				let div = document.createElement('div')
-				div.innerText = index
-				daysDom.append(div)
-			}
-
-
-		})
-		Roadmap.click()
-		KanbanBoard.addEventListener('click', () => {
-			workspace.style.gridTemplateColumns = '1fr'
-			workspace.innerHTML = ''
-			workspace.append(components.kanbanboardHtml)
-		})
-		Bugs.addEventListener('click', () => {
-			workspace.style.gridTemplateColumns = '1fr'
-			workspace.innerHTML = ''
-			workspace.append(components.bugsTemplateHtml)
-
-		})
-
-	})
-})
-// the elelemtn you wanna to observe
-observerSideBar.observe(rightbar, {
-	childList: true
-})
-
-report.addEventListener('click', () => {
-	workspace.style.gridTemplateColumns = '1fr'
-	aside.style.width = '5.2%'
-	rightbar.style.display = 'none'
-	workspace.innerHTML = ''
-	workspace.append(components.reportHtml)
-
-})
-//TODO create functionality of roadmap use mutation observer
-const observerWorkspace = new MutationObserver((mutations) => {
-	const daysDom = document.querySelector('.days')
-	const monthDom = document.querySelector('.mounth')
-	const yearDom = document.querySelector('.year')
-
-	mutations.forEach((mutation) => {
-		const btnPrevious = document.querySelector('.btn_previous')
-		const btnNext = document.querySelector('.btn_next')
-		//FIXME
-		let thisYear = calendar.currentyear
-		let thisMonth = calendar.currentMounthNumber
-		const createCalender = () => {
-			daysDom.innerHTML = ''
-			yearDom.innerText = thisYear
-			monthDom.innerText = calendar.MONTHS[thisMonth]
-			const PfirstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
-			for (let index = 1; index < PfirstDayMth; index++) {
-				let div = document.createElement('div')
-				daysDom.append(div)
-			}
-			for (let index = 1; index <= calendar.monthDaysNumber[thisMonth]; index++) {
-				let div = document.createElement('div')
-				div.innerText = index
-				daysDom.append(div)
-			}
-		}
-		btnPrevious.addEventListener('click', () => {
-			if (thisMonth === 0) {
-				thisYear--
-				thisMonth = 11
-			} else {
-				thisMonth--
-			}
-			createCalender()
-		})
-
-		btnNext.addEventListener('click', () => {
-			if (thisMonth === 11) {
-				thisYear++
-				thisMonth = 0
-			} else {
-				thisMonth++
-			}
-			createCalender()
-		})
-
-
-	})
-})
-
-observerWorkspace.observe(workspace, {
-	childList: true,
-	// subtree: true
-})
-
-//TODO create a calendar 
-//TODO create a add epic functionality
-//TODO when you click it itwill show you prompt ask you
 //TODO  for the epic name and the color of the epi and then the day of begin an the day of finish
 //TODO when you click the eipic you can modifie it and delete i 
 //TODO add a colorful line in the calendar of each epic with the coloryou choose
