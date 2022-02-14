@@ -24,8 +24,7 @@
 		font-family: var(--ff_Poppins);
 		margin-bottom: 6px;
 		position: relative;
-		/* NOTE increace height by 20% when the date is two week */
-		/* height: 60%; */
+
 
 		& img {
 			transform: rotate(90deg) translate(-18px, 22px);

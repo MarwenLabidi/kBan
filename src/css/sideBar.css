@@ -1,11 +1,7 @@
 aside {
 	transition: all 0.5s ease-in-out;
-
 	background-color: var(--clr_black);
 	color: var(--clr_white);
-	/* NOTE if there is a side bar */
-	/* width: 28%; */
-	/*NOTE if there is note a side bar */
 	width: 5.2%;
 	height: 100vh;
 	min-width: 100px;
@@ -27,8 +23,6 @@ aside main {
 	display: grid;
 	justify-items: center;
 	background-color: var(--clr_dark);
-	/* NOTE if there is a side bar  */
-	/* width: 30%; */
 	height: 100vh;
 	min-width: 100px;
 

@@ -8,9 +8,6 @@
 
 body>main{
 	background-color: var(--clr_black2);
-	/* NOTE if there is a seconde side bar */
-	/* width: 90%; */
-	/* NOTE if there is not a seconde side bar */
 	width: 100%;
 	height: 100vh;
 	overflow: hidden;

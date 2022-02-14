@@ -8,12 +8,15 @@ const blue = "#008080"
 let fontColor = "white"
 let backgroundColor = black
 
+
+//TODO get the real statistic 
 let openBugs = 50
 let doneBugs = 50
-
 let backLog = 40
 let inProgress = 40
 let done = 20
+
+
 const report = document.querySelector('#report')
 const reports = document.querySelector('.reports')
 const workspace = document.querySelector('.workspace')
