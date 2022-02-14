@@ -1,12 +1,21 @@
 let dataBases = await indexedDB.databases()
+const components = await import('./ajaj.js')
+const calendar = await import('./calendar.js')
 const workspace = document.querySelector('.workspace')
 const rightbar = document.querySelector('.rightbar')
 const project = document.querySelector('#project')
-let prevSibling = null
-const components = await import('./ajaj.js')
 const aside = document.querySelector('aside')
 const main = document.querySelector('main')
-const calendar = await import('./calendar.js')
+
+let prevSibling = null
+let monthDom = null
+let yearDom = null
+let daysDom = null
+let thisYear = null
+let thisMonth = null
+let firstDayMth = null
+let evrySingleDays = null
+
 const waitUntilReturnName = (value, vl) => {
 	return new Promise((resolve, reject) => {
 		const waitUntilReturn = setInterval(() => {
@@ -18,6 +27,42 @@ const waitUntilReturnName = (value, vl) => {
 		}, 4000)
 	})
 }
+const createCalender = () => {
+	daysDom.innerHTML = ''
+	yearDom.innerText = thisYear
+	monthDom.innerText = calendar.MONTHS[thisMonth]
+	for (let index = 1; index < firstDayMth; index++) {
+		let div = document.createElement('div')
+		daysDom.append(div)
+	}
+	for (let index = 1; index <= calendar.monthDaysNumber[thisMonth]; index++) {
+		let div = document.createElement('div')
+		div.innerText = index
+		daysDom.append(div)
+	}
+}
+const getDayMonthYear = (date) => {
+	const dateArr = date.split('-')
+	return {
+		day: dateArr[2],
+		month: dateArr[1],
+		year: dateArr[0]
+	}
+}
+const runOneTime = (firstDay, arrDays) => {
+	let run = true
+	return () => {
+		if (run === true) {
+			for (let index = 1; index < firstDay; index++) {
+				arrDays.shift()
+			}
+			run = false
+		}
+	}
+}
+
+
+
 
 project.addEventListener('click', () => {
 	workspace.innerHTML = ''
@@ -91,26 +136,13 @@ const observerSideBar = new MutationObserver((mutations) => {
 		workspace.style.gridTemplateColumns = '1fr'
 		workspace.innerHTML = ''
 		workspace.append(components.roadmapHtml)
-		//!calendar
-		const monthDom = document.querySelector('.mounth')
-		monthDom.innerText = calendar.currentMounth
-		const yearDom = document.querySelector('.year')
-		yearDom.innerText = calendar.currentyear
-		const daysDom = document.querySelector('.days')
-		daysDom.innerText = ''
-
-		const firstDayMth = calendar.getFirstDaysOfSpesificMonth(calendar.currentMounthNumber, calendar.currentyear)
-		for (let index = 1; index < firstDayMth; index++) {
-			let div = document.createElement('div')
-			daysDom.append(div)
-		}
-		for (let index = 1; index <= calendar.monthDaysNumber[calendar.currentMounthNumber]; index++) {
-			let div = document.createElement('div')
-			div.innerText = index
-			daysDom.append(div)
-		}
-
-
+		monthDom = document.querySelector('.mounth')
+		yearDom = document.querySelector('.year')
+		daysDom = document.querySelector('.days')
+		thisYear = calendar.currentyear
+		thisMonth = calendar.currentMounthNumber
+		firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
+		createCalender()
 	})
 	Roadmap.click()
 
@@ -140,56 +172,34 @@ report.addEventListener('click', () => {
 
 })
 const observerWorkspace = new MutationObserver((mutations) => {
-	const daysDom = document.querySelector('.days')
-	const monthDom = document.querySelector('.mounth')
-	const yearDom = document.querySelector('.year')
 	const epicButton = document.querySelector('#epicButton')
 	const btnPrevious = document.querySelector('.btn_previous')
 	const btnNext = document.querySelector('.btn_next')
 
-	let thisYear = calendar.currentyear
-	let thisMonth = calendar.currentMounthNumber
-	const createCalender = () => {
-		daysDom.innerHTML = ''
-		yearDom.innerText = thisYear
-		monthDom.innerText = calendar.MONTHS[thisMonth]
-		const PfirstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
-		for (let index = 1; index < PfirstDayMth; index++) {
-			let div = document.createElement('div')
-			daysDom.append(div)
-		}
-		for (let index = 1; index <= calendar.monthDaysNumber[thisMonth]; index++) {
-			let div = document.createElement('div')
-			div.innerText = index
-			daysDom.append(div)
-		}
-	}
-	//!NOTE
-	const evrySingleDays = [...document.querySelectorAll('.days div')]
-        
 	if (!btnPrevious || !btnNext) {
 		return
 	}
 	btnPrevious.addEventListener('click', () => {
-		evrySingleDays = [...document.querySelectorAll('.days div')]
-
+		// evrySingleDays = [...document.querySelectorAll('.days div')]
 		if (thisMonth === 0) {
 			thisYear--
 			thisMonth = 11
 		} else {
 			thisMonth--
+
 		}
+		firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
 		createCalender()
 	})
 	btnNext.addEventListener('click', () => {
-		evrySingleDays = [...document.querySelectorAll('.days div')]
-
+		// evrySingleDays = [...document.querySelectorAll('.days div')]
 		if (thisMonth === 11) {
 			thisYear++
 			thisMonth = 0
 		} else {
 			thisMonth++
 		}
+		firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
 		createCalender()
 	})
 	if (!epicButton) {
@@ -209,40 +219,23 @@ const observerWorkspace = new MutationObserver((mutations) => {
 		waitUntilReturnName(epicName, 'epicName').then((epic) => {
 			waitUntilReturnName(startDate, 'startDate').then((sDate) => {
 				waitUntilReturnName(endDate, 'endDate').then((eDate) => {
-					// thisMonth  thisYear
-					const getDayMonthYear = (date) => {
-						const dateArr = date.split('-')
-						return {
-							day: dateArr[2],
-							month: dateArr[1],
-							year: dateArr[0]
-						}
-					}
+					
+					//! NOTE send epic sDate  and eDate to the servece worker
 					const startDayMonthYear = getDayMonthYear(sDate)
 					const endDayMonthYear = getDayMonthYear(eDate)
-					const firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
+					firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
+					evrySingleDays = [...document.querySelectorAll('.days div')]
 
 
-					//! NOTE send epic sDate  and eDate to the servece worker
 					const epicTask = document.querySelector('.epic_task')
 					let epicTaskHtml = components.epicHtml
 					epicTaskHtml.childNodes[1].innerHTML = epic
+
 					// TODO create multiple color function random color
 					epicTask.append(epicTaskHtml.cloneNode(true))
 					//NOTE UPDATE EVERY SINGLE DAY WHEN UOU CALL COLOR FUNCTION
-					// const evrySingleDays = [...document.querySelectorAll('.days div')]
-					const runOneTime = (firstDay,arrDays) => {
-						let run = true
-						return () => {
-							if (run === true) {
-								for (let index = 1; index < firstDay; index++) {
-									arrDays.shift()
-								}
-								run = false
-							}
-						}
-					}
-					runOneTime(firstDayMth,evrySingleDays)()
+
+					runOneTime(firstDayMth, evrySingleDays)()
 					//! NOTE this is function 
 					let s = null
 					let e = null
