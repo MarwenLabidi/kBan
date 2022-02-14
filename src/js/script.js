@@ -233,18 +233,13 @@ const observerWorkspace = new MutationObserver((mutations) => {
 
 					// TODO create multiple color function random color
 					epicTask.append(epicTaskHtml.cloneNode(true))
-					//NOTE UPDATE EVERY SINGLE DAY WHEN UOU CALL COLOR FUNCTION
-
 					runOneTime(firstDayMth, evrySingleDays)()
+
 					//! NOTE this is function 
-					let s = null
-					let e = null
+					let s = +startDayMonthYear.day - 1
+					let e = +endDayMonthYear.day
 					if ((thisYear + '') === startDayMonthYear.year) {
 						if (('0' + (thisMonth + 1)) === startDayMonthYear.month) {
-							s = +startDayMonthYear.day - 1
-							e = +endDayMonthYear.day
-							console.log(s)
-							console.log(e)
 							for (let index = s; index < e; index++) {
 								if (!evrySingleDays[index]) {
 									break
