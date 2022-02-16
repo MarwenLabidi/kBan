@@ -17,6 +17,7 @@ let firstDayMth = null
 let btnPrevious = null
 let btnNext = null
 let evrySingleDays = []
+let  color=null
 
 
 const waitUntilReturnName = (value, vl) => {
@@ -114,9 +115,16 @@ const colorSelectedDays = (currentMonth, currentYear) => {
 	}
 }
 
-const generateColor = () =>{
-	//TODO create a function that generate a random color exept black and dark colors
+
+const generateRandomBrightestHSLColor=()=> {
+	return "hsla(" + ~~(360 * Math.random()) + "," +
+		"70%," +
+		"80%)"
 }
+
+
+
+
 
 project.addEventListener('click', () => {
 	workspace.innerHTML = ''
@@ -289,20 +297,19 @@ const observerWorkspace = new MutationObserver((mutations) => {
 					let epicTaskHtml = components.epicHtml
 					epicTaskHtml.childNodes[1].innerHTML = epic
 
-					// TODO create multiple color function random color
-					//TODO add the color to the epcic task and days 
-					//TODO create a global varilble for the color
+					color=generateRandomBrightestHSLColor()
+					epicTaskHtml.style.backgroundColor = color
 
 
 
 					epicTask.append(epicTaskHtml.cloneNode(true))
-					runOneTime(firstDayMth, evrySingleDays)() 
+					runOneTime(firstDayMth, evrySingleDays)()
 
-					colorSelectedDays(thisMonth + 1, thisYear)(+startDayMonthYear.day, +startDayMonthYear.month, +startDayMonthYear.year)(+endDayMonthYear.day, +endDayMonthYear.month, +endDayMonthYear.year)('#f5f5f5')
+					colorSelectedDays(thisMonth + 1, thisYear)(+startDayMonthYear.day, +startDayMonthYear.month, +startDayMonthYear.year)(+endDayMonthYear.day, +endDayMonthYear.month, +endDayMonthYear.year)(color)
 					//!NOTE send all the data to the service worker to color when there is a colorfull
-					
+
 					//TODO add data attribute to he epic task {debutdate and findate and month....} when you dlete it you know the days to uncolor it
-					
+
 					startDate = null
 					epicName = null
 					endDate = null
