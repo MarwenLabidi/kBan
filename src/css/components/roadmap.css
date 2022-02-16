@@ -24,7 +24,7 @@
 		font-family: var(--ff_Poppins);
 		margin-bottom: 6px;
 		position: relative;
-
+/*  */
 
 		& img {
 			transform: rotate(90deg) translate(-18px, 22px);

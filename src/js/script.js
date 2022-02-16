@@ -14,7 +14,10 @@ let daysDom = null
 let thisYear = null
 let thisMonth = null
 let firstDayMth = null
-let evrySingleDays = null
+let btnPrevious = null
+let btnNext = null
+let evrySingleDays = []
+
 
 const waitUntilReturnName = (value, vl) => {
 	return new Promise((resolve, reject) => {
@@ -61,7 +64,55 @@ const runOneTime = (firstDay, arrDays) => {
 	}
 }
 
+const colorSelectedDays = (currentMonth, currentYear) => {
+	let multipleWeekColor = 0
+	let count = 0
+	return (startday, startMonth, startYear) => {
+		return (endday, endMonth, endYear) => {
+			return (color) => {
+				if (currentMonth === startMonth && currentYear === startYear) {
+					let allDaysSelected = [...document.querySelectorAll('.days div')]
+					firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
+					runOneTime(firstDayMth, allDaysSelected)()
+					evrySingleDays.push(allDaysSelected)
+					while (currentMonth < endMonth || currentYear < endYear) {
+						currentMonth++
+						btnNext.click()
+						let allDaysSelected2 = [...document.querySelectorAll('.days div')]
+						firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
+						runOneTime(firstDayMth, allDaysSelected2)()
+						evrySingleDays.push(allDaysSelected2)
+						multipleWeekColor += evrySingleDays[count].length
+						count++
+					}
+					let s = startday - 1
+					let e = endday + multipleWeekColor
 
+					let allDaysInOneTable = evrySingleDays.flat()
+
+					for (let i = 0; i < allDaysInOneTable.length; i++) {
+						for (let index = s; index < e; index++) {
+							if (!allDaysInOneTable[index]) {
+								break
+							}
+							allDaysInOneTable[index].style.backgroundColor = color
+						}
+					}
+					return
+				} else if (startMonth > currentMonth || startYear > currentYear) {
+					currentMonth++
+					btnNext.click()
+					colorSelectedDays(currentMonth, currentYear)(startday, startMonth, startYear)(endday, endMonth, endYear)(color)
+				} else {
+					currentMonth--
+					btnPrevious.click()
+					colorSelectedDays(currentMonth, currentYear)(startday, startMonth, startYear)(endday, endMonth, endYear)(color)
+				}
+
+			}
+		}
+	}
+}
 
 
 project.addEventListener('click', () => {
@@ -173,8 +224,8 @@ report.addEventListener('click', () => {
 })
 const observerWorkspace = new MutationObserver((mutations) => {
 	const epicButton = document.querySelector('#epicButton')
-	const btnPrevious = document.querySelector('.btn_previous')
-	const btnNext = document.querySelector('.btn_next')
+	btnPrevious = document.querySelector('.btn_previous')
+	btnNext = document.querySelector('.btn_next')
 
 	if (!btnPrevious || !btnNext) {
 		return
@@ -219,12 +270,11 @@ const observerWorkspace = new MutationObserver((mutations) => {
 		waitUntilReturnName(epicName, 'epicName').then((epic) => {
 			waitUntilReturnName(startDate, 'startDate').then((sDate) => {
 				waitUntilReturnName(endDate, 'endDate').then((eDate) => {
-					
+
 					//! NOTE send epic sDate  and eDate to the servece worker
 					const startDayMonthYear = getDayMonthYear(sDate)
 					const endDayMonthYear = getDayMonthYear(eDate)
 					firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
-					evrySingleDays = [...document.querySelectorAll('.days div')]
 
 
 					const epicTask = document.querySelector('.epic_task')
@@ -233,22 +283,10 @@ const observerWorkspace = new MutationObserver((mutations) => {
 
 					// TODO create multiple color function random color
 					epicTask.append(epicTaskHtml.cloneNode(true))
-					runOneTime(firstDayMth, evrySingleDays)()
+					runOneTime(firstDayMth, evrySingleDays)()					// if ((thisYear + '') === startDayMonthYear.year) {
 
-					//! NOTE this is function 
-					let s = +startDayMonthYear.day - 1
-					let e = +endDayMonthYear.day
-					if ((thisYear + '') === startDayMonthYear.year) {
-						if (('0' + (thisMonth + 1)) === startDayMonthYear.month) {
-							for (let index = s; index < e; index++) {
-								if (!evrySingleDays[index]) {
-									break
-								}
-								evrySingleDays[index].style.backgroundColor = '#f5f5f5'
-							}
+					colorSelectedDays(thisMonth + 1, thisYear)(+startDayMonthYear.day, +startDayMonthYear.month, +startDayMonthYear.year)(+endDayMonthYear.day, +endDayMonthYear.month, +endDayMonthYear.year)('#f5f5f5')
 
-						}
-					}
 					startDate = null
 					epicName = null
 					endDate = null
@@ -298,3 +336,5 @@ observerWorkspace.observe(workspace, {
 
 
 // TODO use pwa pluging and use the offline data base and use service worker with index dbTODO5 use background sync TODO6 crete instal button functionality
+
+// TODO voice controll : a button to active voice controll and when you talk it show your voice and there is a little note beside the button when you click it show the instruction 

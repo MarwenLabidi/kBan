@@ -1,6 +1,7 @@
 ## Welcome to  kBan
 #### Next Generation  kanban board 
-## very fast ⚡ ⚡ ⚡ 
+## very fast ⚡  
+## voice controll  🗣️
 ## you can install it or use it directly the link bellow
 
 # [APP link]()
@@ -17,5 +18,6 @@
 - canvasJs libarary
 - dexie.js(indexdDB library)
 - QuantumAlert libraty
+SpeechRecognition API
 
 
