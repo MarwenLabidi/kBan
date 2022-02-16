@@ -114,6 +114,9 @@ const colorSelectedDays = (currentMonth, currentYear) => {
 	}
 }
 
+const generateColor = () =>{
+	//TODO create a function that generate a random color exept black and dark colors
+}
 
 project.addEventListener('click', () => {
 	workspace.innerHTML = ''
@@ -194,6 +197,8 @@ const observerSideBar = new MutationObserver((mutations) => {
 		thisMonth = calendar.currentMounthNumber
 		firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
 		createCalender()
+		//TODO add color fucntion days and get the data from indexdb
+
 	})
 	Roadmap.click()
 
@@ -241,6 +246,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 		}
 		firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
 		createCalender()
+		//TODO add color fucntion days and get the data from indexdb
 	})
 	btnNext.addEventListener('click', () => {
 		// evrySingleDays = [...document.querySelectorAll('.days div')]
@@ -252,6 +258,8 @@ const observerWorkspace = new MutationObserver((mutations) => {
 		}
 		firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
 		createCalender()
+		//TODO add color fucntion days and get the data from indexdb
+
 	})
 	if (!epicButton) {
 		return
@@ -282,11 +290,19 @@ const observerWorkspace = new MutationObserver((mutations) => {
 					epicTaskHtml.childNodes[1].innerHTML = epic
 
 					// TODO create multiple color function random color
+					//TODO add the color to the epcic task and days 
+					//TODO create a global varilble for the color
+
+
+
 					epicTask.append(epicTaskHtml.cloneNode(true))
-					runOneTime(firstDayMth, evrySingleDays)()					// if ((thisYear + '') === startDayMonthYear.year) {
+					runOneTime(firstDayMth, evrySingleDays)() 
 
 					colorSelectedDays(thisMonth + 1, thisYear)(+startDayMonthYear.day, +startDayMonthYear.month, +startDayMonthYear.year)(+endDayMonthYear.day, +endDayMonthYear.month, +endDayMonthYear.year)('#f5f5f5')
-
+					//!NOTE send all the data to the service worker to color when there is a colorfull
+					
+					//TODO add data attribute to he epic task {debutdate and findate and month....} when you dlete it you know the days to uncolor it
+					
 					startDate = null
 					epicName = null
 					endDate = null
