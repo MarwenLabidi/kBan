@@ -16,6 +16,6 @@
 	--clr_blue:hsl(210, 100%, 50%);
 }
 @custom-media --small (width <= 400px);
-@custom-media --tablets (width >= 450px);
+@custom-media --tablets (width <= 850px);
 @custom-media --desktop (width >= 900px);
 @custom-media --desktop-large (width >= 1300px);

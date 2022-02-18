@@ -65,6 +65,12 @@ const runOneTime = (firstDay, arrDays) => {
 	}
 }
 
+const generateRandomBrightestHSLColor=()=> {
+	return "hsla(" + ~~(360 * Math.random()) + "," +
+		"70%," +
+		"80%)"
+}
+
 const colorSelectedDays = (currentMonth, currentYear) => {
 	let multipleWeekColor = 0
 	let count = 0
@@ -116,11 +122,7 @@ const colorSelectedDays = (currentMonth, currentYear) => {
 }
 
 
-const generateRandomBrightestHSLColor=()=> {
-	return "hsla(" + ~~(360 * Math.random()) + "," +
-		"70%," +
-		"80%)"
-}
+
 
 
 
@@ -180,6 +182,8 @@ cardAdd.addEventListener('click', () => {
 	waitUntilReturnName(projectName, 'projectName').then((Name) => {
 		//! console.log(Name) NOTE : send the name to the service worker
 		aside.style.width = '28%'
+		aside.style.minWidth = '300px'
+
 		rightbar.append(components.sideBarRightHtml)
 		const projectnamesHtml = document.querySelector('.projectnames')
 		projectnamesHtml.innerText = Name
@@ -230,6 +234,8 @@ observerSideBar.observe(rightbar, {
 report.addEventListener('click', () => {
 	workspace.style.gridTemplateColumns = '1fr'
 	aside.style.width = '5.2%'
+	aside.style.minWidth = '100px'
+
 	rightbar.style.display = 'none'
 	workspace.innerHTML = ''
 	workspace.append(components.reportHtml)
@@ -302,6 +308,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 
 
 
+
 					epicTask.append(epicTaskHtml.cloneNode(true))
 					runOneTime(firstDayMth, evrySingleDays)()
 
@@ -326,6 +333,7 @@ observerWorkspace.observe(workspace, {
 	// subtree: true
 })
 
+//!TODO observer for epic tak and create delete functionality
 
 // create data base
 // var db = new Dexie('aaaaaa');
@@ -344,9 +352,6 @@ observerWorkspace.observe(workspace, {
 // 	year: "2022",
 // }])
 
-//TODO  for the epic name and the color of the epi and then the day of begin an the day of finish
-//TODO when you click the eipic you can modifie it and delete i 
-//TODO add a colorful line in the calendar of each epic with the coloryou choose
 
 //TODO create functionality of kanban
 //TODO create the add functionality it will show you prompt adked you for the name of the

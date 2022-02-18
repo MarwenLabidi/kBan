@@ -8,6 +8,7 @@ aside {
 
 }
 
+
 .logo {
 	background-color: var(--clr_white);
 	position: relative;
@@ -41,7 +42,7 @@ aside main {
 	fonts-family: var(--ff_Anton);
 	padding: 5px;
 	text-align: center;
-
+	min-width: min-content;
 	& img {
 		width: 20%;
 		height: 20%;
