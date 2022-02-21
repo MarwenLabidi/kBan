@@ -5,9 +5,9 @@
 	const SubmitFun = () => {
 		projectName = inx;
 		// Qual.successd('DONE');
-		setTimeout(() => {
+		// setTimeout(() => {
 			close_qual()
-		}, 1000);
+		// }, 1000);
 	}
 	const endDateF = () => {
 		endDate = inx

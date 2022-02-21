@@ -1,41 +1,75 @@
-.bugs{
+.bugs {
 	height: 100%;
 	overflow-Y: scroll;
-	& table{
-		height:10px;
-		width:100%;
-		& thead{
-			background-color:var(--clr_orange);
-			& tr{
-				& th{
-					font-size:1.5em;
-					padding:1em;
-					& span{
-						position:relative;
-						left:20%;
-						background-color:var(--clr_green);
+
+	& table {
+		height: 10px;
+		width: 100%;
+
+		& thead {
+			background-color: var(--clr_orange);
+
+			& tr {
+				& th {
+					font-size: 1.5em;
+					padding: 1em;
+
+					& span {
+						position: relative;
+						left: 20%;
+						background-color: var(--clr_green);
 						border-radius: 20px;
 					}
 				}
 			}
 		}
-		& tbody{
-			background-color:var(--clr_green);
+
+		& tbody {
+			background-color: var(--clr_green);
+
 			/* color:var(--clr_white); */
-			& tr{
-				& td{
-					padding:1em;
-					font-size:1.5em;
-					font-family:'Poppins', sans-serif;
+			& tr {
+				& td {
+					padding: 1em;
+					font-size: 1.5em;
+					font-family: 'Poppins', sans-serif;
 				}
-				& td:first-child img{
-					transform:rotate(90deg) translate(-10px,-800%);	
-					width:10%;
+
+				& td:first-child img {
+					transform: rotate(90deg) translate(-10%, -800%);
+					width: 10%;
+					position: relative;
 				}
-					& td:first-child img:hover{
-						cursor:pointer;
+
+				& td:first-child img:hover {
+					cursor: pointer;
 				}
+
 			}
 		}
+	}
+}
+
+
+.bugsoptions {
+	position: absolute;
+	color: var(--clr_white);
+	border-radius: 5px;
+	height: 0;
+	transform: translate(47%,-24px);
+	
+
+	& h4 {
+		/* NOTE When you click to the three point change display */
+		/* display:none; */
+		background-color: var(--clr_black);
+		margin-top: 3px;
+		padding: 5px;
+		border-radius: 5px;
+
+	}
+
+	& h4:hover {
+		cursor: pointer;
 	}
 }

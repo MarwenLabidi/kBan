@@ -114,6 +114,7 @@
 						top: -10px;
 						left: 25px;
 						color: var(--clr_dark);
+						z-index:2;
 					}
 
 					& img:last-child {
@@ -128,6 +129,7 @@
 						width: 20%;
 						margin-right: 10px;
 					}
+					
 				}
 			}
 

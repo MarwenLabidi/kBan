@@ -24,10 +24,10 @@
 		font-family: var(--ff_Poppins);
 		margin-bottom: 6px;
 		position: relative;
-/*  */
+
 
 		& img {
-			transform: rotate(90deg) translate(-18px, 22px);
+			transform: rotate(90deg) translate(-18px, -50px);
 			width: 11%;
 			position: absolute;
 		}
@@ -35,6 +35,31 @@
 		& img:hover {
 			cursor: pointer;
 		}
+
+		& .options {
+			position: absolute;
+			top: 20px;
+			left: 20px;
+			color: var(--clr_white);
+			/* opacity: 0.9; */
+			border-radius: 5px;
+			height: 0;
+			display:none;
+			z-index: 5;
+			
+			& h4 {
+				background-color: var(--clr_black);
+				margin-top:3px;
+				padding: 5px;
+				border-radius: 5px;
+
+			}
+			& h4:hover {
+				cursor: pointer;
+			}
+
+		}
+
 	}
 
 	& .epic_task {

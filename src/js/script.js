@@ -17,7 +17,7 @@ let firstDayMth = null
 let btnPrevious = null
 let btnNext = null
 let evrySingleDays = []
-let  color=null
+let color = null
 
 
 const waitUntilReturnName = (value, vl) => {
@@ -65,7 +65,7 @@ const runOneTime = (firstDay, arrDays) => {
 	}
 }
 
-const generateRandomBrightestHSLColor=()=> {
+const generateRandomBrightestHSLColor = () => {
 	return "hsla(" + ~~(360 * Math.random()) + "," +
 		"70%," +
 		"80%)"
@@ -211,6 +211,7 @@ const observerSideBar = new MutationObserver((mutations) => {
 		createCalender()
 		//TODO add color fucntion days and get the data from indexdb
 
+
 	})
 	Roadmap.click()
 
@@ -303,7 +304,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 					let epicTaskHtml = components.epicHtml
 					epicTaskHtml.childNodes[1].innerHTML = epic
 
-					color=generateRandomBrightestHSLColor()
+					color = generateRandomBrightestHSLColor()
 					epicTaskHtml.style.backgroundColor = color
 
 
@@ -317,6 +318,22 @@ const observerWorkspace = new MutationObserver((mutations) => {
 
 					//TODO add data attribute to he epic task {debutdate and findate and month....} when you dlete it you know the days to uncolor it
 
+
+					//?show the options in the epic task
+					const epic3dots = document.querySelectorAll('.epic3dots')
+					const options = document.querySelectorAll('.options')
+					if (epic3dots) {
+						epic3dots.forEach((epic3dot, index) => {
+							epic3dot.addEventListener('click', () => {
+								options[index].style.display = 'block'
+								setTimeout(() => {
+									options[index].style.display = 'none'
+								}, 2000);
+							})
+						})
+					}
+
+					//!FIXME delete epic task create a function 
 					startDate = null
 					epicName = null
 					endDate = null
@@ -334,6 +351,12 @@ observerWorkspace.observe(workspace, {
 })
 
 //!TODO observer for epic tak and create delete functionality
+
+// window.onclick = e => {
+// 	console.log(e.target);
+// }
+
+
 
 // create data base
 // var db = new Dexie('aaaaaa');

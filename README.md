@@ -2,6 +2,7 @@
 #### Next Generation  kanban board 
 ## very fast ⚡  
 ## voice controll  🗣️
+## remote voice controll with you phone 📱
 ## you can install it or use it directly the link bellow
 
 # [APP link]()
@@ -18,6 +19,6 @@
 - canvasJs libarary
 - dexie.js(indexdDB library)
 - QuantumAlert libraty
-SpeechRecognition API
+-SpeechRecognition API
 
 
