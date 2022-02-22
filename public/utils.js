@@ -2,6 +2,7 @@
 	var epicName = null;
 	var startDate = null;
 	var endDate = null;
+	var KboardName = null;
 	const SubmitFun = () => {
 		projectName = inx;
 		// Qual.successd('DONE');
@@ -40,4 +41,10 @@
 			"date", //type of input you want whether a text ,password or number
 			"Enter start date" //Placeholder text of input field
 		)
+	}
+
+	const createKboardPopUp = () => {
+		KboardName = inx;
+		close_qual();
+
 	}

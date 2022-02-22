@@ -43,3 +43,6 @@ const epicString=await epic.text()
 export const epicHtml=stringToHTML(epicString)
 // export const epicHtmlSecondChild=epicHtml.childNodes[1]
 
+const cardBoardkanban = await fetch('./src/html/card-Board-kanban.html')
+const cardBoardkanbanString=await cardBoardkanban.text()
+export const cardBoardkanbanHtml=stringToHTML(cardBoardkanbanString)

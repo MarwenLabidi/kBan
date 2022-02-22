@@ -77,12 +77,20 @@
 
 				& span {
 					background-color: var(--clr_white);
+					display: inline-block;
 					padding: 6px;
 					border-radius: 10%;
 					position: relative;
 					left: 30px;
 					top: -5px;
 					font-size: 18px;
+				}
+				& span:hover {
+					cursor: pointer;
+					transform: scale(1.2);
+				}
+				& span:active {
+					transform: scale(1);
 				}
 			}
 

@@ -250,114 +250,113 @@ const observerWorkspace = new MutationObserver((mutations) => {
 	btnNext = document.querySelector('.btn_next')
 
 	if (btnPrevious || btnNext) {
-		
-	
-	btnPrevious.addEventListener('click', () => {
-		// evrySingleDays = [...document.querySelectorAll('.days div')]
-		if (thisMonth === 0) {
-			thisYear--
-			thisMonth = 11
-		} else {
-			thisMonth--
 
-		}
-		firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
-		createCalender()
-		//TODO add color fucntion days and get the data from indexdb
-	})
-	btnNext.addEventListener('click', () => {
-		// evrySingleDays = [...document.querySelectorAll('.days div')]
-		if (thisMonth === 11) {
-			thisYear++
-			thisMonth = 0
-		} else {
-			thisMonth++
-		}
-		firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
-		createCalender()
-		//TODO add color fucntion days and get the data from indexdb
 
-	})}
+		btnPrevious.addEventListener('click', () => {
+			// evrySingleDays = [...document.querySelectorAll('.days div')]
+			if (thisMonth === 0) {
+				thisYear--
+				thisMonth = 11
+			} else {
+				thisMonth--
+
+			}
+			firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
+			createCalender()
+			//TODO add color fucntion days and get the data from indexdb
+		})
+		btnNext.addEventListener('click', () => {
+			// evrySingleDays = [...document.querySelectorAll('.days div')]
+			if (thisMonth === 11) {
+				thisYear++
+				thisMonth = 0
+			} else {
+				thisMonth++
+			}
+			firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
+			createCalender()
+			//TODO add color fucntion days and get the data from indexdb
+
+		})
+	}
 	if (epicButton) {
-		
-	
-	epicButton.addEventListener('click', () => {
-		Qual.confirmd("ADD EPIC ", //For heading
-			"", //For sub heading
-			inf, //icon variable we can define our own also by giving th link in double quotes
-			"ADD", //blue button string
-			"", // cancel button string
-			"addEpic", //function name that is to be called on click on blue button
-			"", //function name that is to be called on click on cancel button
-			"string", //type of input you want whether a text ,password or number
-			"Enter EPIC" //Placeholder text of input field
-		)
-		waitUntilReturnName(epicName, 'epicName').then((epic) => {
-			waitUntilReturnName(startDate, 'startDate').then((sDate) => {
-				waitUntilReturnName(endDate, 'endDate').then((eDate) => {
-
-					//!NOTE send epic sDate  and eDate to the servece worker
-					const startDayMonthYear = getDayMonthYear(sDate)
-					const endDayMonthYear = getDayMonthYear(eDate)
-					firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
 
 
-					const epicTask = document.querySelector('.epic_task')
-					let epicTaskHtml = components.epicHtml
-					epicTaskHtml.childNodes[1].innerHTML = epic
+		epicButton.addEventListener('click', () => {
+			Qual.confirmd("ADD EPIC ", //For heading
+				"", //For sub heading
+				inf, //icon variable we can define our own also by giving th link in double quotes
+				"ADD", //blue button string
+				"", // cancel button string
+				"addEpic", //function name that is to be called on click on blue button
+				"", //function name that is to be called on click on cancel button
+				"string", //type of input you want whether a text ,password or number
+				"Enter EPIC" //Placeholder text of input field
+			)
+			waitUntilReturnName(epicName, 'epicName').then((epic) => {
+				waitUntilReturnName(startDate, 'startDate').then((sDate) => {
+					waitUntilReturnName(endDate, 'endDate').then((eDate) => {
 
-					color = generateRandomBrightestHSLColor()
-					epicTaskHtml.style.backgroundColor = color
+						//!NOTE send epic sDate  and eDate to the servece worker
+						const startDayMonthYear = getDayMonthYear(sDate)
+						const endDayMonthYear = getDayMonthYear(eDate)
+						firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
 
 
+						const epicTask = document.querySelector('.epic_task')
+						let epicTaskHtml = components.epicHtml
+						epicTaskHtml.childNodes[1].innerHTML = epic
+
+						color = generateRandomBrightestHSLColor()
+						epicTaskHtml.style.backgroundColor = color
 
 
 
-					epicTask.append(epicTaskHtml.cloneNode(true))
-					runOneTime(firstDayMth, evrySingleDays)()
-
-					colorSelectedDays(thisMonth + 1, thisYear)(+startDayMonthYear.day, +startDayMonthYear.month, +startDayMonthYear.year)(+endDayMonthYear.day, +endDayMonthYear.month, +endDayMonthYear.year)(color)
-					//!NOTE send all the data to the service worker to color when there is a colorfull
-
-					//TODO add data attribute to he epic task {debutdate and findate and month....} when you dlete it you know the days to uncolor it
 
 
-					//?show the options in the epic task
-					const epic3dots = document.querySelectorAll('.epic3dots')
-					const options = document.querySelectorAll('.options')
-					const epicH3 = document.querySelectorAll('.epicH3')
-					let indexOfChosenEpic = null
+						epicTask.append(epicTaskHtml.cloneNode(true))
+						runOneTime(firstDayMth, evrySingleDays)()
 
-					if (epic3dots) {
+						colorSelectedDays(thisMonth + 1, thisYear)(+startDayMonthYear.day, +startDayMonthYear.month, +startDayMonthYear.year)(+endDayMonthYear.day, +endDayMonthYear.month, +endDayMonthYear.year)(color)
+						//!NOTE send all the data to the service worker to color when there is a colorfull
 
-						epic3dots.forEach((epic3dot, index) => {
-							epic3dot.addEventListener('click', () => {
-								options[index].style.display = 'block'
-								let indexOfChosenEpic = index
-								setTimeout(() => {
-									options[index].style.display = 'none'
-								}, 2000);
-
-								options[indexOfChosenEpic].firstChild.addEventListener('click', () => {
-									//TODO create a kanban board from the epic
-									// console.log('create kanban from epic');
-									options[index].style.display = 'none'
-
-									indexOfChosenEpic = null
-								})
-								options[indexOfChosenEpic].lastChild.addEventListener('click', () => {
-									// console.log('delete epic');
-									options[index].style.display = 'none'
-									epicH3[index].remove()
-									//TODO delete the color in the calendar call color function with gray color
-									//TODO delete the epic from the indexdb
-									indexOfChosenEpic = null
-								})
-							});
-
-						})
+						//TODO add data attribute to he epic task {debutdate and findate and month....} when you dlete it you know the days to uncolor it
 
 
+						//?show the options in the epic task
+						const epic3dots = document.querySelectorAll('.epic3dots')
+						const options = document.querySelectorAll('.options')
+						const epicH3 = document.querySelectorAll('.epicH3')
+						let indexOfChosenEpic = null
+
+						if (epic3dots) {
+
+							epic3dots.forEach((epic3dot, index) => {
+								epic3dot.addEventListener('click', () => {
+									options[index].style.display = 'block'
+									let indexOfChosenEpic = index
+									setTimeout(() => {
+										options[index].style.display = 'none'
+									}, 2000);
+
+									options[indexOfChosenEpic].firstChild.addEventListener('click', () => {
+										//TODO create a kanban board from the epic
+										// console.log('create kanban from epic');
+										options[index].style.display = 'none'
+
+										indexOfChosenEpic = null
+									})
+									options[indexOfChosenEpic].lastChild.addEventListener('click', () => {
+										// console.log('delete epic');
+										options[index].style.display = 'none'
+										epicH3[index].remove()
+										//TODO delete the color in the calendar call color function with gray color
+										//TODO delete the epic from the indexdb
+										indexOfChosenEpic = null
+									})
+								});
+
+							})
 
 
 
@@ -366,32 +365,75 @@ const observerWorkspace = new MutationObserver((mutations) => {
 
 
 
-					}
+
+
+						}
 
 
 
 
-					//!FIXME delete epic task create a function 
-					startDate = null
-					epicName = null
-					endDate = null
+						//!FIXME delete epic task create a function 
+						startDate = null
+						epicName = null
+						endDate = null
+					})
 				})
 			})
 		})
-	})
-}
+	}
 	//*KANBAN FUNCTIONALITY
 	const nameKboard = document.querySelector('#nameKboard')
 	const buttonNewKboard = document.querySelector('#newKboard')
 	const kbanBoardList = document.querySelector('#kbanBoardList')
+	const Backlog = document.querySelector('#Backlog')
+	const InProgress = document.querySelector('#inProgress')
+	const Done = document.querySelector('#done')
 	// console.log(nameKboard)
 	// console.log(buttonNewKboard)
 	// console.log(kbanBoardList);
 
 	if (buttonNewKboard) {
-	buttonNewKboard.addEventListener('click', () => {
-		console.log('create new kanban board');
-	})}
+		buttonNewKboard.addEventListener('click', () => {
+			Qual.confirmd("NEW KBOARD ", //For heading
+
+				"", //For sub heading
+				inf, //icon variable we can define our own also by giving th link in double quotes
+				"CREATE", //blue button string
+				"", // cancel button string
+				"createKboardPopUp", //function name that is to be called on click on blue button
+				"", //function name that is to be called on click on cancel button
+				"string", //type of input you want whether a text ,password or number
+				"Enter the name of kBoard" //Placeholder text of input field
+			)
+			waitUntilReturnName(KboardName, 'KboardName').then((nameKBOARD) => {
+				nameKboard.innerHTML = nameKBOARD
+				//TODO send it to servie worker and create table
+			})
+
+		})
+		// TODO get the kanban board list from the service worker @kanbanBoardlist
+		const nameKBOARDFromDB = `hello` //!FIXME get the name of the kanban board from the service worker
+
+		const optionListKboard = [...kbanBoardList.children]
+		optionListKboard.forEach((option) => {
+			if (option.value === nameKBOARDFromDB) {
+				option.selected = true
+				//TODO load the data [kbanBoardList.value] in the board from service worker
+
+
+				const addCardKbanBoardInProgress = document.querySelector('#addCardKbanBoardInProgress')
+				addCardKbanBoardInProgress.addEventListener('click', () => {
+					// !console.log(components.cardBoardkanbanHtml);
+					//TODO get te contenu of the card and add it to the card befor you ad it to the backlog
+					
+
+
+
+					Backlog.append(components.cardBoardkanbanHtml.cloneNode(true))
+				})
+			}
+		})
+	}
 
 
 })
