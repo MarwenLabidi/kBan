@@ -249,9 +249,9 @@ const observerWorkspace = new MutationObserver((mutations) => {
 	btnPrevious = document.querySelector('.btn_previous')
 	btnNext = document.querySelector('.btn_next')
 
-	if (!btnPrevious || !btnNext) {
-		return
-	}
+	if (btnPrevious || btnNext) {
+		
+	
 	btnPrevious.addEventListener('click', () => {
 		// evrySingleDays = [...document.querySelectorAll('.days div')]
 		if (thisMonth === 0) {
@@ -277,10 +277,10 @@ const observerWorkspace = new MutationObserver((mutations) => {
 		createCalender()
 		//TODO add color fucntion days and get the data from indexdb
 
-	})
-	if (!epicButton) {
-		return
-	}
+	})}
+	if (epicButton) {
+		
+	
 	epicButton.addEventListener('click', () => {
 		Qual.confirmd("ADD EPIC ", //For heading
 			"", //For sub heading
@@ -308,7 +308,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 
 					color = generateRandomBrightestHSLColor()
 					epicTaskHtml.style.backgroundColor = color
-					
+
 
 
 
@@ -337,7 +337,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 								setTimeout(() => {
 									options[index].style.display = 'none'
 								}, 2000);
-							
+
 								options[indexOfChosenEpic].firstChild.addEventListener('click', () => {
 									//TODO create a kanban board from the epic
 									// console.log('create kanban from epic');
@@ -379,9 +379,19 @@ const observerWorkspace = new MutationObserver((mutations) => {
 			})
 		})
 	})
-
+}
 	//*KANBAN FUNCTIONALITY
-	
+	const nameKboard = document.querySelector('#nameKboard')
+	const buttonNewKboard = document.querySelector('#newKboard')
+	const kbanBoardList = document.querySelector('#kbanBoardList')
+	// console.log(nameKboard)
+	// console.log(buttonNewKboard)
+	// console.log(kbanBoardList);
+
+	if (buttonNewKboard) {
+	buttonNewKboard.addEventListener('click', () => {
+		console.log('create new kanban board');
+	})}
 
 
 })
