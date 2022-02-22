@@ -243,6 +243,8 @@ report.addEventListener('click', () => {
 
 })
 const observerWorkspace = new MutationObserver((mutations) => {
+
+	//*ROADMAP FUNCTIONLITY
 	const epicButton = document.querySelector('#epicButton')
 	btnPrevious = document.querySelector('.btn_previous')
 	btnNext = document.querySelector('.btn_next')
@@ -294,7 +296,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 			waitUntilReturnName(startDate, 'startDate').then((sDate) => {
 				waitUntilReturnName(endDate, 'endDate').then((eDate) => {
 
-					//! NOTE send epic sDate  and eDate to the servece worker
+					//!NOTE send epic sDate  and eDate to the servece worker
 					const startDayMonthYear = getDayMonthYear(sDate)
 					const endDayMonthYear = getDayMonthYear(eDate)
 					firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
@@ -306,6 +308,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 
 					color = generateRandomBrightestHSLColor()
 					epicTaskHtml.style.backgroundColor = color
+					
 
 
 
@@ -322,16 +325,51 @@ const observerWorkspace = new MutationObserver((mutations) => {
 					//?show the options in the epic task
 					const epic3dots = document.querySelectorAll('.epic3dots')
 					const options = document.querySelectorAll('.options')
+					const epicH3 = document.querySelectorAll('.epicH3')
+					let indexOfChosenEpic = null
+
 					if (epic3dots) {
+
 						epic3dots.forEach((epic3dot, index) => {
 							epic3dot.addEventListener('click', () => {
 								options[index].style.display = 'block'
+								let indexOfChosenEpic = index
 								setTimeout(() => {
 									options[index].style.display = 'none'
 								}, 2000);
-							})
+							
+								options[indexOfChosenEpic].firstChild.addEventListener('click', () => {
+									//TODO create a kanban board from the epic
+									// console.log('create kanban from epic');
+									options[index].style.display = 'none'
+
+									indexOfChosenEpic = null
+								})
+								options[indexOfChosenEpic].lastChild.addEventListener('click', () => {
+									// console.log('delete epic');
+									options[index].style.display = 'none'
+									epicH3[index].remove()
+									//TODO delete the color in the calendar call color function with gray color
+									//TODO delete the epic from the indexdb
+									indexOfChosenEpic = null
+								})
+							});
+
 						})
+
+
+
+
+
+
+
+
+
+
 					}
+
+
+
 
 					//!FIXME delete epic task create a function 
 					startDate = null
@@ -342,6 +380,9 @@ const observerWorkspace = new MutationObserver((mutations) => {
 		})
 	})
 
+	//*KANBAN FUNCTIONALITY
+	
+
 
 })
 
@@ -349,13 +390,6 @@ observerWorkspace.observe(workspace, {
 	childList: true,
 	// subtree: true
 })
-
-//!TODO observer for epic tak and create delete functionality
-
-// window.onclick = e => {
-// 	console.log(e.target);
-// }
-
 
 
 // create data base
