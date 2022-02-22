@@ -18,7 +18,7 @@
 - MutationObservers API
 - canvasJs libarary
 - dexie.js(indexdDB library)
-- QuantumAlert libraty
--SpeechRecognition API
+- QuantumAlert libraty 
+- SpeechRecognition API
 
 
