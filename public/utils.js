@@ -3,6 +3,10 @@
 	var startDate = null;
 	var endDate = null;
 	var KboardName = null;
+	var cardKanbanContent = null;
+	var comment = null;
+
+
 	const SubmitFun = () => {
 		projectName = inx;
 		// Qual.successd('DONE');
@@ -48,3 +52,13 @@
 		close_qual();
 
 	}
+
+	const createcardKanban = () => {
+		cardKanbanContent = inx;
+		close_qual();
+	}
+
+	const addComment = () => {
+		comment = inx;
+		close_qual();
+	}	

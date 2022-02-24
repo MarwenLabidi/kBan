@@ -58,7 +58,7 @@
 
 		& div {
 			width: 31.2%;
-			height: 85vh;
+			height: 78vh;
 			border-radius: 20px;
 			overflow-Y: scroll;
 
@@ -98,7 +98,7 @@
 				/* background-color: var(--clr_orange); */
 				color: var(--clr_dark);
 				box-shadow: 0px 0px 10px var(--clr_dark);
-				margin-top: 20px;
+				margin-top: 18px;
 				width: 320px;
 				border-radius: 20px;
 
@@ -123,6 +123,7 @@
 						left: 25px;
 						color: var(--clr_dark);
 						z-index:2;
+						transform:scale(0.6);
 					}
 
 					& img:last-child {
@@ -159,5 +160,18 @@
 }
 
 section.workspace div.kBord section.board:nth-child(3) div>section.cardBoard:nth-child(2) {
-	margin-top: 70px;
+	/* margin-top: 70px; */
+	/* margin-bottom: 70px; */
+}
+
+
+.showComment{
+	background-color: var(--clr_white);
+	border-radius: 0px 0px 20px 20px;
+	padding: 5px;
+	font-size: 20px;
+	& li{
+		margin: 25px;
+	}
+	display: none;
 }

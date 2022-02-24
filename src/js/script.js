@@ -388,9 +388,6 @@ const observerWorkspace = new MutationObserver((mutations) => {
 	const Backlog = document.querySelector('#Backlog')
 	const InProgress = document.querySelector('#inProgress')
 	const Done = document.querySelector('#done')
-	// console.log(nameKboard)
-	// console.log(buttonNewKboard)
-	// console.log(kbanBoardList);
 
 	if (buttonNewKboard) {
 		buttonNewKboard.addEventListener('click', () => {
@@ -423,14 +420,82 @@ const observerWorkspace = new MutationObserver((mutations) => {
 
 				const addCardKbanBoardInProgress = document.querySelector('#addCardKbanBoardInProgress')
 				addCardKbanBoardInProgress.addEventListener('click', () => {
-					// !console.log(components.cardBoardkanbanHtml);
-					//TODO get te contenu of the card and add it to the card befor you ad it to the backlog
-					
+					//TODO create kban first or choose from the list : impement this sooner befor you  create the card
+					Qual.confirmd("NEW CARD ", //For heading
 
+						"", //For sub heading
+						inf, //icon variable we can define our own also by giving th link in double quotes
+						"CREATE", //blue button string
+						"", // cancel button string
+						"createcardKanban", //function name that is to be called on click on blue button
+						"", //function name that is to be called on click on cancel button
+						"string", //type of input you want whether a text ,password or number
+						"Enter the content of the card" //Placeholder text of input field
+					)
+					waitUntilReturnName(cardKanbanContent, 'cardKanbanContent').then((contentCard) => {
 
+						let card = components.cardBoardkanbanHtml
+						card.children[0].innerHTML = contentCard
 
-					Backlog.append(components.cardBoardkanbanHtml.cloneNode(true))
+						Backlog.append(card.cloneNode(true))
+						//TODO add this canban card to the service worker
+						cardKanbanContent = null
+					})
 				})
+
+
+				const allCardBoard = document.querySelectorAll('.cardBoard')
+				const AllComments = document.querySelectorAll('.comments')
+				const showComment = document.querySelectorAll('.showComment')
+				//TODO delete card and add comment 
+				if (allCardBoard) {
+					allCardBoard.forEach((card, index) => {
+						//*delete card
+						AllComments[index].children[3].addEventListener('click', () => {
+							card.remove()
+						})
+						//*add comment
+						AllComments[index].children[2].addEventListener('click', () => {
+							Qual.confirmd("ADD COMMENT", //For heading
+
+								"", //For sub heading
+								inf, //icon variable we can define our own also by giving th link in double quotes
+								"ADD", //blue button string
+								"", // cancel button string
+								"addComment", //function name that is to be called on click on blue button
+								"", //function name that is to be called on click on cancel button
+								"string", //type of input you want whether a text ,password or number
+								"Enter your comment" //Placeholder text of input field
+							)
+							waitUntilReturnName(comment, 'comment').then((comments) => {
+								//TODO add this comment to the data base 
+								const li =document.createElement('li')
+								li.innerHTML = comments
+								showComment[index].append(li)
+								comment = null
+							})
+						})
+
+						
+						//*show comment
+						AllComments[index].children[1].addEventListener('click', () => {
+
+							showComment[index].style.display = 'block'
+							setTimeout(() => {
+								showComment[index].style.display = 'none'
+
+							}, 5000);
+						})
+						//* the number of comments
+						AllComments[index].children[0].addEventListener('click', () => {
+							//TODO get the numberrof comment and add it [change p inner text]
+							// console.log('delete card');	
+						})
+					})
+				}
+
+
+
 			}
 		})
 	}
@@ -440,7 +505,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 
 observerWorkspace.observe(workspace, {
 	childList: true,
-	// subtree: true
+	subtree: true
 })
 
 
@@ -462,8 +527,7 @@ observerWorkspace.observe(workspace, {
 // }])
 
 
-//TODO create functionality of kanban
-//TODO create the add functionality it will show you prompt adked you for the name of the
+
 //TODO create the delete functionality  and the drag and drop functionality
 
 //TODO create functionality of bugs: it will show you a promp and when the bug is open the color is red and when you close it the color become green
