@@ -249,113 +249,114 @@ const observerWorkspace = new MutationObserver((mutations) => {
 	btnPrevious = document.querySelector('.btn_previous')
 	btnNext = document.querySelector('.btn_next')
 
-	if (!btnPrevious || !btnNext) {
-		return
+	if (btnPrevious || btnNext) {
+
+
+		btnPrevious.addEventListener('click', () => {
+			// evrySingleDays = [...document.querySelectorAll('.days div')]
+			if (thisMonth === 0) {
+				thisYear--
+				thisMonth = 11
+			} else {
+				thisMonth--
+
+			}
+			firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
+			createCalender()
+			//TODO add color fucntion days and get the data from indexdb
+		})
+		btnNext.addEventListener('click', () => {
+			// evrySingleDays = [...document.querySelectorAll('.days div')]
+			if (thisMonth === 11) {
+				thisYear++
+				thisMonth = 0
+			} else {
+				thisMonth++
+			}
+			firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
+			createCalender()
+			//TODO add color fucntion days and get the data from indexdb
+
+		})
 	}
-	btnPrevious.addEventListener('click', () => {
-		// evrySingleDays = [...document.querySelectorAll('.days div')]
-		if (thisMonth === 0) {
-			thisYear--
-			thisMonth = 11
-		} else {
-			thisMonth--
-
-		}
-		firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
-		createCalender()
-		//TODO add color fucntion days and get the data from indexdb
-	})
-	btnNext.addEventListener('click', () => {
-		// evrySingleDays = [...document.querySelectorAll('.days div')]
-		if (thisMonth === 11) {
-			thisYear++
-			thisMonth = 0
-		} else {
-			thisMonth++
-		}
-		firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
-		createCalender()
-		//TODO add color fucntion days and get the data from indexdb
-
-	})
-	if (!epicButton) {
-		return
-	}
-	epicButton.addEventListener('click', () => {
-		Qual.confirmd("ADD EPIC ", //For heading
-			"", //For sub heading
-			inf, //icon variable we can define our own also by giving th link in double quotes
-			"ADD", //blue button string
-			"", // cancel button string
-			"addEpic", //function name that is to be called on click on blue button
-			"", //function name that is to be called on click on cancel button
-			"string", //type of input you want whether a text ,password or number
-			"Enter EPIC" //Placeholder text of input field
-		)
-		waitUntilReturnName(epicName, 'epicName').then((epic) => {
-			waitUntilReturnName(startDate, 'startDate').then((sDate) => {
-				waitUntilReturnName(endDate, 'endDate').then((eDate) => {
-
-					//!NOTE send epic sDate  and eDate to the servece worker
-					const startDayMonthYear = getDayMonthYear(sDate)
-					const endDayMonthYear = getDayMonthYear(eDate)
-					firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
+	if (epicButton) {
 
 
-					const epicTask = document.querySelector('.epic_task')
-					let epicTaskHtml = components.epicHtml
-					epicTaskHtml.childNodes[1].innerHTML = epic
+		epicButton.addEventListener('click', () => {
+			Qual.confirmd("ADD EPIC ", //For heading
+				"", //For sub heading
+				inf, //icon variable we can define our own also by giving th link in double quotes
+				"ADD", //blue button string
+				"", // cancel button string
+				"addEpic", //function name that is to be called on click on blue button
+				"", //function name that is to be called on click on cancel button
+				"string", //type of input you want whether a text ,password or number
+				"Enter EPIC" //Placeholder text of input field
+			)
+			waitUntilReturnName(epicName, 'epicName').then((epic) => {
+				waitUntilReturnName(startDate, 'startDate').then((sDate) => {
+					waitUntilReturnName(endDate, 'endDate').then((eDate) => {
 
-					color = generateRandomBrightestHSLColor()
-					epicTaskHtml.style.backgroundColor = color
-					
+						//!NOTE send epic sDate  and eDate to the servece worker
+						const startDayMonthYear = getDayMonthYear(sDate)
+						const endDayMonthYear = getDayMonthYear(eDate)
+						firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
+
+
+						const epicTask = document.querySelector('.epic_task')
+						let epicTaskHtml = components.epicHtml
+						epicTaskHtml.childNodes[1].innerHTML = epic
+
+						color = generateRandomBrightestHSLColor()
+						epicTaskHtml.style.backgroundColor = color
 
 
 
 
-					epicTask.append(epicTaskHtml.cloneNode(true))
-					runOneTime(firstDayMth, evrySingleDays)()
 
-					colorSelectedDays(thisMonth + 1, thisYear)(+startDayMonthYear.day, +startDayMonthYear.month, +startDayMonthYear.year)(+endDayMonthYear.day, +endDayMonthYear.month, +endDayMonthYear.year)(color)
-					//!NOTE send all the data to the service worker to color when there is a colorfull
+						epicTask.append(epicTaskHtml.cloneNode(true))
+						runOneTime(firstDayMth, evrySingleDays)()
 
-					//TODO add data attribute to he epic task {debutdate and findate and month....} when you dlete it you know the days to uncolor it
+						colorSelectedDays(thisMonth + 1, thisYear)(+startDayMonthYear.day, +startDayMonthYear.month, +startDayMonthYear.year)(+endDayMonthYear.day, +endDayMonthYear.month, +endDayMonthYear.year)(color)
+						//!NOTE send all the data to the service worker to color when there is a colorfull
+
+						//TODO add data attribute to he epic task {debutdate and findate and month....} when you dlete it you know the days to uncolor it
 
 
-					//?show the options in the epic task
-					const epic3dots = document.querySelectorAll('.epic3dots')
-					const options = document.querySelectorAll('.options')
-					const epicH3 = document.querySelectorAll('.epicH3')
-					let indexOfChosenEpic = null
+						//?show the options in the epic task
+						const epic3dots = document.querySelectorAll('.epic3dots')
+						const options = document.querySelectorAll('.options')
+						const epicH3 = document.querySelectorAll('.epicH3')
+						let indexOfChosenEpic = null
 
-					if (epic3dots) {
+						if (epic3dots) {
 
-						epic3dots.forEach((epic3dot, index) => {
-							epic3dot.addEventListener('click', () => {
-								options[index].style.display = 'block'
-								let indexOfChosenEpic = index
-								setTimeout(() => {
-									options[index].style.display = 'none'
-								}, 2000);
-							
-								options[indexOfChosenEpic].firstChild.addEventListener('click', () => {
-									//TODO create a kanban board from the epic
-									// console.log('create kanban from epic');
-									options[index].style.display = 'none'
+							epic3dots.forEach((epic3dot, index) => {
+								epic3dot.addEventListener('click', () => {
+									options[index].style.display = 'block'
+									let indexOfChosenEpic = index
+									setTimeout(() => {
+										options[index].style.display = 'none'
+									}, 2000);
 
-									indexOfChosenEpic = null
-								})
-								options[indexOfChosenEpic].lastChild.addEventListener('click', () => {
-									// console.log('delete epic');
-									options[index].style.display = 'none'
-									epicH3[index].remove()
-									//TODO delete the color in the calendar call color function with gray color
-									//TODO delete the epic from the indexdb
-									indexOfChosenEpic = null
-								})
-							});
+									options[indexOfChosenEpic].firstChild.addEventListener('click', () => {
+										//TODO create a kanban board from the epic
+										// console.log('create kanban from epic');
+										options[index].style.display = 'none'
 
-						})
+										indexOfChosenEpic = null
+									})
+									options[indexOfChosenEpic].lastChild.addEventListener('click', () => {
+										// console.log('delete epic');
+										options[index].style.display = 'none'
+										epicH3[index].remove()
+										//TODO delete the color in the calendar call color function with gray color
+										//TODO delete the epic from the indexdb
+										indexOfChosenEpic = null
+									})
+								});
+
+							})
 
 
 
@@ -366,29 +367,145 @@ const observerWorkspace = new MutationObserver((mutations) => {
 
 
 
-					}
+						}
 
 
 
 
-					//!FIXME delete epic task create a function 
-					startDate = null
-					epicName = null
-					endDate = null
+						//!FIXME delete epic task create a function 
+						startDate = null
+						epicName = null
+						endDate = null
+					})
 				})
 			})
 		})
-	})
-
+	}
 	//*KANBAN FUNCTIONALITY
-	
+	const nameKboard = document.querySelector('#nameKboard')
+	const buttonNewKboard = document.querySelector('#newKboard')
+	const kbanBoardList = document.querySelector('#kbanBoardList')
+	const Backlog = document.querySelector('#Backlog')
+	const InProgress = document.querySelector('#inProgress')
+	const Done = document.querySelector('#done')
+
+	if (buttonNewKboard) {
+		buttonNewKboard.addEventListener('click', () => {
+			Qual.confirmd("NEW KBOARD ", //For heading
+
+				"", //For sub heading
+				inf, //icon variable we can define our own also by giving th link in double quotes
+				"CREATE", //blue button string
+				"", // cancel button string
+				"createKboardPopUp", //function name that is to be called on click on blue button
+				"", //function name that is to be called on click on cancel button
+				"string", //type of input you want whether a text ,password or number
+				"Enter the name of kBoard" //Placeholder text of input field
+			)
+			waitUntilReturnName(KboardName, 'KboardName').then((nameKBOARD) => {
+				nameKboard.innerHTML = nameKBOARD
+				//TODO send it to servie worker and create table
+			})
+
+		})
+		// TODO get the kanban board list from the service worker @kanbanBoardlist
+		const nameKBOARDFromDB = `hello` //!FIXME get the name of the kanban board from the service worker
+
+		const optionListKboard = [...kbanBoardList.children]
+		optionListKboard.forEach((option) => {
+			if (option.value === nameKBOARDFromDB) {
+				option.selected = true
+				//TODO load the data [kbanBoardList.value] in the board from service worker
+
+
+				const addCardKbanBoardInProgress = document.querySelector('#addCardKbanBoardInProgress')
+				addCardKbanBoardInProgress.addEventListener('click', () => {
+					//TODO create kban first or choose from the list : impement this sooner befor you  create the card
+					Qual.confirmd("NEW CARD ", //For heading
+
+						"", //For sub heading
+						inf, //icon variable we can define our own also by giving th link in double quotes
+						"CREATE", //blue button string
+						"", // cancel button string
+						"createcardKanban", //function name that is to be called on click on blue button
+						"", //function name that is to be called on click on cancel button
+						"string", //type of input you want whether a text ,password or number
+						"Enter the content of the card" //Placeholder text of input field
+					)
+					waitUntilReturnName(cardKanbanContent, 'cardKanbanContent').then((contentCard) => {
+
+						let card = components.cardBoardkanbanHtml
+						card.children[0].innerHTML = contentCard
+
+						Backlog.append(card.cloneNode(true))
+						//TODO add this canban card to the service worker
+						cardKanbanContent = null
+					})
+				})
+
+
+				const allCardBoard = document.querySelectorAll('.cardBoard')
+				const AllComments = document.querySelectorAll('.comments')
+				const showComment = document.querySelectorAll('.showComment')
+				//TODO delete card and add comment 
+				if (allCardBoard) {
+					allCardBoard.forEach((card, index) => {
+						//*delete card
+						AllComments[index].children[3].addEventListener('click', () => {
+							card.remove()
+						})
+						//*add comment
+						AllComments[index].children[2].addEventListener('click', () => {
+							Qual.confirmd("ADD COMMENT", //For heading
+
+								"", //For sub heading
+								inf, //icon variable we can define our own also by giving th link in double quotes
+								"ADD", //blue button string
+								"", // cancel button string
+								"addComment", //function name that is to be called on click on blue button
+								"", //function name that is to be called on click on cancel button
+								"string", //type of input you want whether a text ,password or number
+								"Enter your comment" //Placeholder text of input field
+							)
+							waitUntilReturnName(comment, 'comment').then((comments) => {
+								//TODO add this comment to the data base 
+								const li =document.createElement('li')
+								li.innerHTML = comments
+								showComment[index].append(li)
+								comment = null
+							})
+						})
+
+						
+						//*show comment
+						AllComments[index].children[1].addEventListener('click', () => {
+
+							showComment[index].style.display = 'block'
+							setTimeout(() => {
+								showComment[index].style.display = 'none'
+
+							}, 5000);
+						})
+						//* the number of comments
+						AllComments[index].children[0].addEventListener('click', () => {
+							//TODO get the numberrof comment and add it [change p inner text]
+							// console.log('delete card');	
+						})
+					})
+				}
+
+
+
+			}
+		})
+	}
 
 
 })
 
 observerWorkspace.observe(workspace, {
 	childList: true,
-	// subtree: true
+	subtree: true
 })
 
 
@@ -410,8 +527,7 @@ observerWorkspace.observe(workspace, {
 // }])
 
 
-//TODO create functionality of kanban
-//TODO create the add functionality it will show you prompt adked you for the name of the
+
 //TODO create the delete functionality  and the drag and drop functionality
 
 //TODO create functionality of bugs: it will show you a promp and when the bug is open the color is red and when you close it the color become green

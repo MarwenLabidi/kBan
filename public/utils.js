@@ -2,6 +2,11 @@
 	var epicName = null;
 	var startDate = null;
 	var endDate = null;
+	var KboardName = null;
+	var cardKanbanContent = null;
+	var comment = null;
+
+
 	const SubmitFun = () => {
 		projectName = inx;
 		// Qual.successd('DONE');
@@ -41,3 +46,19 @@
 			"Enter start date" //Placeholder text of input field
 		)
 	}
+
+	const createKboardPopUp = () => {
+		KboardName = inx;
+		close_qual();
+
+	}
+
+	const createcardKanban = () => {
+		cardKanbanContent = inx;
+		close_qual();
+	}
+
+	const addComment = () => {
+		comment = inx;
+		close_qual();
+	}	
