@@ -491,6 +491,28 @@ const observerWorkspace = new MutationObserver((mutations) => {
 							//TODO get the numberrof comment and add it [change p inner text]
 							// console.log('delete card');	
 						})
+
+						//!NOTE drag and drop functionality
+						card.addEventListener('dragstart', (e) => {
+							console.log('dragstart');
+							//TODO ADD CLASS TO THE CARD : change opacity andmake a cool animatiom
+						})
+						card.addEventListener('dragend', (e) => {
+							console.log('dragend');
+							//TODO REMOVE CLASS FROM THE CARD
+						})
+
+					})
+					const backlogInprogressDones =[Backlog,InProgress,Done]
+					backlogInprogressDones.forEach((backlogInprogressDone) => {
+						backlogInprogressDone.addEventListener('dragover', (e) => {
+							console.log('dragover');
+							e.preventDefault()
+						})
+						backlogInprogressDone.addEventListener('drop', (e) => {
+							console.log('drop');
+							e.preventDefault()
+						})
 					})
 				}
 

@@ -55,12 +55,14 @@
 		justify-content: space-between;
 		margin-left: 19px;
 		height: 91%;
+		
 
 		& div {
 			width: 31.2%;
 			height: 78vh;
 			border-radius: 20px;
 			overflow-Y: scroll;
+			
 
 			/* margin-top: 50px; */
 			& h2:first-child {
@@ -100,7 +102,7 @@
 				box-shadow: 0px 0px 10px var(--clr_dark);
 				margin-top: 18px;
 				width: 320px;
-				border-radius: 20px;
+				
 
 				& h3 {
 					border-radius: 20px;
