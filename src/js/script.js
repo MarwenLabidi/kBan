@@ -391,6 +391,10 @@ const observerWorkspace = new MutationObserver((mutations) => {
 
 	if (buttonNewKboard) {
 		buttonNewKboard.addEventListener('click', () => {
+			observerWorkspace.observe(workspace, {
+				childList: true,
+				subtree: true
+			})
 			Qual.confirmd("NEW KBOARD ", //For heading
 
 				"", //For sub heading
@@ -420,6 +424,10 @@ const observerWorkspace = new MutationObserver((mutations) => {
 
 				const addCardKbanBoardInProgress = document.querySelector('#addCardKbanBoardInProgress')
 				addCardKbanBoardInProgress.addEventListener('click', () => {
+					observerWorkspace.observe(workspace, {
+						childList: true,
+						subtree: true
+					})
 					//TODO create kban first or choose from the list : impement this sooner befor you  create the card
 					Qual.confirmd("NEW CARD ", //For heading
 
@@ -469,14 +477,14 @@ const observerWorkspace = new MutationObserver((mutations) => {
 							)
 							waitUntilReturnName(comment, 'comment').then((comments) => {
 								//TODO add this comment to the data base 
-								const li =document.createElement('li')
+								const li = document.createElement('li')
 								li.innerHTML = comments
 								showComment[index].append(li)
 								comment = null
 							})
 						})
 
-						
+
 						//*show comment
 						AllComments[index].children[1].addEventListener('click', () => {
 
@@ -494,24 +502,40 @@ const observerWorkspace = new MutationObserver((mutations) => {
 
 						//!NOTE drag and drop functionality
 						card.addEventListener('dragstart', (e) => {
-							console.log('dragstart');
 							//TODO ADD CLASS TO THE CARD : change opacity andmake a cool animatiom
+							card.classList.add('dragging')
+
+
 						})
 						card.addEventListener('dragend', (e) => {
-							console.log('dragend');
 							//TODO REMOVE CLASS FROM THE CARD
+							card.classList.remove('dragging')
+
 						})
 
 					})
-					const backlogInprogressDones =[Backlog,InProgress,Done]
+					const backlogInprogressDones = [Backlog, InProgress, Done]
 					backlogInprogressDones.forEach((backlogInprogressDone) => {
 						backlogInprogressDone.addEventListener('dragover', (e) => {
-							console.log('dragover');
 							e.preventDefault()
+							observerWorkspace.disconnect()
+							const dragable = document.querySelector('.dragging')
+							backlogInprogressDone.appendChild(dragable)
+							console.log(`drop in ${backlogInprogressDone.id}`);
+
+							//TODO send card iformation to the service worker 
+							//TODO SEND THE POSIONN OF EEACH CARD TO THE DATABASE
+
+							let childCardexpectMe = [...backlogInprogressDone.children]
+							childCardexpectMe.shift()
+							console.log(childCardexpectMe);
+
 						})
 						backlogInprogressDone.addEventListener('drop', (e) => {
-							console.log('drop');
+
 							e.preventDefault()
+
+
 						})
 					})
 				}
