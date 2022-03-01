@@ -67,7 +67,7 @@
 .board div span {
 	cursor: pointer;
 }
-.cardBoard:hover {	cursor: pointer;
+.cardBoard:hover {	cursor: move;
 }
 
 .cardBoard img:hover {
