@@ -122,7 +122,15 @@ const colorSelectedDays = (currentMonth, currentYear) => {
 }
 
 
-
+const getCardToInsertBeforItOtherCard = (allCard, mousePosition) => {
+	if (allCard.length === 0) {
+		return
+	}
+	const aftercard = allCard.filter(card => {
+		return card.getBoundingClientRect().top > mousePosition
+	})
+	return aftercard[0]
+}
 
 
 
@@ -515,29 +523,44 @@ const observerWorkspace = new MutationObserver((mutations) => {
 
 					})
 					const backlogInprogressDones = [Backlog, InProgress, Done]
+					// let cardDomRec = []
+
 					backlogInprogressDones.forEach((backlogInprogressDone) => {
 						backlogInprogressDone.addEventListener('dragover', (e) => {
 							e.preventDefault()
 							observerWorkspace.disconnect()
+							// cardDomRec.length = 0
+
+
+						})
+						backlogInprogressDone.addEventListener('drop', (e) => {
+
+							e.preventDefault()
 							const dragable = document.querySelector('.dragging')
-							backlogInprogressDone.appendChild(dragable)
+							// backlogInprogressDone.appendChild(dragable)
 							console.log(`drop in ${backlogInprogressDone.id}`);
 
 							//TODO send card iformation to the service worker 
 							//TODO SEND THE POSIONN OF EEACH CARD TO THE DATABASE
 
 							let childCardexpectMe = [...backlogInprogressDone.children]
+							// let cardDomRec = []
 							childCardexpectMe.shift()
 							console.log(childCardexpectMe);
+							console.log(e.clientY);
+							let minC = getCardToInsertBeforItOtherCard(childCardexpectMe, e.clientY)
+							console.log(minC);
+							if (childCardexpectMe.length > 0) {
 
-						})
-						backlogInprogressDone.addEventListener('drop', (e) => {
-
-							e.preventDefault()
-
+								backlogInprogressDone.insertBefore(dragable, minC)
+							} else {
+								backlogInprogressDone.appendChild(dragable)
+							}
+							//!TODO make the change in the database
 
 						})
 					})
+
 				}
 
 
