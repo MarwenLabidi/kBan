@@ -121,7 +121,7 @@ const colorSelectedDays = (currentMonth, currentYear) => {
 	}
 }
 
-
+//!FIXME: add the half of the height to the position expected
 const getCardToInsertBeforItOtherCard = (allCard, mousePosition) => {
 	if (allCard.length === 0) {
 		return
@@ -207,6 +207,10 @@ const observerSideBar = new MutationObserver((mutations) => {
 	const Bugs = document.querySelector('.Bugs')
 
 	Roadmap.addEventListener('click', () => {
+		observerWorkspace.observe(workspace, {
+			childList: true,
+			subtree: true
+		})
 		workspace.style.gridTemplateColumns = '1fr'
 		workspace.innerHTML = ''
 		workspace.append(components.roadmapHtml)
@@ -224,11 +228,19 @@ const observerSideBar = new MutationObserver((mutations) => {
 	Roadmap.click()
 
 	KanbanBoard.addEventListener('click', () => {
+		observerWorkspace.observe(workspace, {
+			childList: true,
+			subtree: true
+		})
 		workspace.style.gridTemplateColumns = '1fr'
 		workspace.innerHTML = ''
 		workspace.append(components.kanbanboardHtml)
 	})
 	Bugs.addEventListener('click', () => {
+		observerWorkspace.observe(workspace, {
+			childList: true,
+			subtree: true
+		})
 		workspace.style.gridTemplateColumns = '1fr'
 		workspace.innerHTML = ''
 		workspace.append(components.bugsTemplateHtml)
@@ -396,7 +408,6 @@ const observerWorkspace = new MutationObserver((mutations) => {
 	const Backlog = document.querySelector('#Backlog')
 	const InProgress = document.querySelector('#inProgress')
 	const Done = document.querySelector('#done')
-
 	if (buttonNewKboard) {
 		buttonNewKboard.addEventListener('click', () => {
 			observerWorkspace.observe(workspace, {
@@ -569,6 +580,83 @@ const observerWorkspace = new MutationObserver((mutations) => {
 		})
 	}
 
+	//*BUGS FUNCTIONALITY
+	const bugAddButton = document.querySelector('#bugAddButton')
+	const tbody = document.querySelector('tbody')
+	if (bugAddButton) {
+		bugAddButton.addEventListener('click', () => {
+			Qual.confirmd("ADD Bug ", //For heading
+				"", //For sub heading
+				inf, //icon variable we can define our own also by giving th link in double quotes
+				"ADD", //blue button string
+				"", // cancel button string
+				"addBug", //function name that is to be called on click on blue button
+				"", //function name that is to be called on click on cancel button
+				"string", //type of input you want whether a text ,password or number
+				"Enter Bug" //Placeholder text of input field
+			)
+			waitUntilReturnName(bugName, 'bugName').then((bug) => {
+				observerWorkspace.disconnect()
+				let BUG = components.bugbarHtml
+				BUG.childNodes[1].childNodes[1].childNodes[1].innerText = bug
+				BUG.childNodes[3].childNodes[3].innerHTML = new Date().toLocaleDateString()
+				BUG.childNodes[5].innerHTML = "on going"
+				BUG.childNodes[7].innerHTML = "open"
+				tbody.append(BUG.cloneNode(true))
+				bugName = null
+				//TODO add this bug to the data base
+
+				const getBUGS = [...document.querySelectorAll('.BUG')]
+				const options3dot = [...document.querySelectorAll('.options3dot')]
+				const bugsoptions = [...document.querySelectorAll('.bugsoptions')]
+				if (getBUGS) {
+
+
+					//TODO create the funtionality of delete and change status
+					options3dot.forEach((o3dot, index) => {
+						o3dot.addEventListener('click', () => {
+
+							bugsoptions[index].style.display = 'block'
+							// setTimeout(() => {
+							// 	bugsoptions[index].style.display = 'none'
+							// }, 5000);
+
+							//*change status
+							bugsoptions[index].childNodes[1].addEventListener('click', () => {
+
+								bugsoptions[index].style.display = 'none'
+								//TODO send it to the database
+								if (getBUGS[index].childNodes[7].textContent == 'open') {
+									getBUGS[index].childNodes[7].innerHTML = 'closed'
+
+
+								} else {
+									//!FIXME figure out a solution for the bug getbugs[index] not updated use mutation observef 
+									getBUGS[index].childNodes[7].innerHTML = 'open'
+									
+								}
+
+							})
+							//*delete
+							bugsoptions[index].childNodes[3].addEventListener('click', () => {
+								bugsoptions[index].style.display = 'none'
+								getBUGS[index].remove()
+							})
+						})
+					})
+
+
+				}
+
+
+
+
+			})
+		})
+	}
+
+
+
 
 })
 
@@ -597,7 +685,6 @@ observerWorkspace.observe(workspace, {
 
 
 
-//TODO create the delete functionality  and the drag and drop functionality
 
 //TODO create functionality of bugs: it will show you a promp and when the bug is open the color is red and when you close it the color become green
 //TODO CReate delete functionality
@@ -608,3 +695,7 @@ observerWorkspace.observe(workspace, {
 // TODO use pwa pluging and use the offline data base and use service worker with index dbTODO5 use background sync TODO6 crete instal button functionality
 
 // TODO voice controll : a button to active voice controll and when you talk it show your voice and there is a little note beside the button when you click it show the instruction 
+
+//TODO  create a delete function to the cards of the projects in the first page
+
+// !FIXME chen to toggle the show comment in kba boared and in the three point in epic and in the bugs and look for other

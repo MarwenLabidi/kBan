@@ -5,6 +5,7 @@
 	var KboardName = null;
 	var cardKanbanContent = null;
 	var comment = null;
+	var bugName = null;
 
 
 	const SubmitFun = () => {
@@ -62,3 +63,8 @@
 		comment = inx;
 		close_qual();
 	}	
+
+const addBug = () => {
+		bugName = inx;
+		close_qual();
+	}
