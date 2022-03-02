@@ -20,28 +20,38 @@
 						background-color: var(--clr_white);
 						border-radius: 20px;
 						padding: 10px;
-						display: inline-block;;
+						display: inline-block;
+						;
 					}
 				}
 			}
 		}
 
 		& tbody {
-			background-color: var(--clr_green);
+			/* NOTE change it to green when you close it  */
+			background-color: var(--clr_red);
 
 			/* color:var(--clr_white); */
+			/* position: relative; */
 			& tr {
 				& td {
 					padding: 1em;
 					font-size: 1.5em;
 					font-family: 'Poppins', sans-serif;
+
+					& span {
+						display: block;
+					}
 				}
 
 				& td:first-child img {
-					transform: rotate(90deg) translate(-10%, -800%);
-					width: 10%;
-					position: relative;
+					transform: rotate(90deg) translate(0%, 0%);
+					width: 30px;
+					/* position: absolute; */
+
 				}
+
+				;
 
 				& td:first-child img:hover {
 					cursor: pointer;
@@ -54,24 +64,35 @@
 
 
 .bugsoptions {
+	/* FIXME DELTE THE LPOSTION ABSOLUTE TEST IT FIRST */
 	position: absolute;
 	color: var(--clr_white);
 	border-radius: 5px;
 	height: 0;
-	transform: translate(47%,-24px);
-	
+	transform: translate(-30%, -70px);
+	/* NOTE When you click to the three point change display */
+	display: none;
+
+
+
 
 	& h4 {
-		/* NOTE When you click to the three point change display */
-		/* display:none; */
 		background-color: var(--clr_black);
 		margin-top: 3px;
 		padding: 5px;
 		border-radius: 5px;
+
+
 
 	}
 
 	& h4:hover {
 		cursor: pointer;
 	}
+}
+
+.bugFirstColums {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
 }

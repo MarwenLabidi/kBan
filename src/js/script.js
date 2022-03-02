@@ -207,6 +207,10 @@ const observerSideBar = new MutationObserver((mutations) => {
 	const Bugs = document.querySelector('.Bugs')
 
 	Roadmap.addEventListener('click', () => {
+		observerWorkspace.observe(workspace, {
+			childList: true,
+			subtree: true
+		})
 		workspace.style.gridTemplateColumns = '1fr'
 		workspace.innerHTML = ''
 		workspace.append(components.roadmapHtml)
@@ -224,11 +228,19 @@ const observerSideBar = new MutationObserver((mutations) => {
 	Roadmap.click()
 
 	KanbanBoard.addEventListener('click', () => {
+		observerWorkspace.observe(workspace, {
+			childList: true,
+			subtree: true
+		})
 		workspace.style.gridTemplateColumns = '1fr'
 		workspace.innerHTML = ''
 		workspace.append(components.kanbanboardHtml)
 	})
 	Bugs.addEventListener('click', () => {
+		observerWorkspace.observe(workspace, {
+			childList: true,
+			subtree: true
+		})
 		workspace.style.gridTemplateColumns = '1fr'
 		workspace.innerHTML = ''
 		workspace.append(components.bugsTemplateHtml)
@@ -570,7 +582,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 
 	//*BUGS FUNCTIONALITY
 	const bugAddButton = document.querySelector('#bugAddButton')
-	const tbody= document.querySelector('tbody')
+	const tbody = document.querySelector('tbody')
 	if (bugAddButton) {
 		bugAddButton.addEventListener('click', () => {
 			Qual.confirmd("ADD Bug ", //For heading
@@ -585,21 +597,60 @@ const observerWorkspace = new MutationObserver((mutations) => {
 			)
 			waitUntilReturnName(bugName, 'bugName').then((bug) => {
 				observerWorkspace.disconnect()
-				let BUG=components.bugbarHtml
-				BUG.childNodes[1].childNodes[0].innerText=bug
-				BUG.childNodes[3].innerHTML=new Date().toLocaleDateString()
-				BUG.childNodes[5].innerHTML="on going"
-				BUG.childNodes[7].innerHTML="open"
+				let BUG = components.bugbarHtml
+				BUG.childNodes[1].childNodes[1].childNodes[1].innerText = bug
+				BUG.childNodes[3].childNodes[3].innerHTML = new Date().toLocaleDateString()
+				BUG.childNodes[5].innerHTML = "on going"
+				BUG.childNodes[7].innerHTML = "open"
 				tbody.append(BUG.cloneNode(true))
-				// console.log(BUG);
-
 				bugName = null
-				// console.log(components.bugbarString);
-				// console.log(components.bugbarHtml);
-				// tbody.innerHTML += components.bugbarString
+				//TODO add this bug to the data base
 
-				// console.log(components.bugbarHtml);
-				
+				const getBUGS = [...document.querySelectorAll('.BUG')]
+				const options3dot = [...document.querySelectorAll('.options3dot')]
+				const bugsoptions = [...document.querySelectorAll('.bugsoptions')]
+				if (getBUGS) {
+
+
+					//TODO create the funtionality of delete and change status
+					options3dot.forEach((o3dot, index) => {
+						o3dot.addEventListener('click', () => {
+
+							bugsoptions[index].style.display = 'block'
+							// setTimeout(() => {
+							// 	bugsoptions[index].style.display = 'none'
+							// }, 5000);
+
+							//*change status
+							bugsoptions[index].childNodes[1].addEventListener('click', () => {
+
+								bugsoptions[index].style.display = 'none'
+								//TODO send it to the database
+								if (getBUGS[index].childNodes[7].textContent == 'open') {
+									getBUGS[index].childNodes[7].innerHTML = 'closed'
+
+
+								} else {
+									//!FIXME figure out a solution for the bug getbugs[index] not updated use mutation observef 
+									getBUGS[index].childNodes[7].innerHTML = 'open'
+									
+								}
+
+							})
+							//*delete
+							bugsoptions[index].childNodes[3].addEventListener('click', () => {
+								bugsoptions[index].style.display = 'none'
+								getBUGS[index].remove()
+							})
+						})
+					})
+
+
+				}
+
+
+
+
 			})
 		})
 	}
