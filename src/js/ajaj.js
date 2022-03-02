@@ -32,7 +32,7 @@ export const bugsTemplateHtml=stringToHTML(bugsTemplateString)
 
 const bugbar = await fetch('./src/html/bug-bar.html')
 const bugbarString=await bugbar.text()
-export const bugbarHtml=stringToHTML(bugbarString)
+export const bugbarHtml=stringToHTML(bugbarString).childNodes[1].childNodes[1]
 
 const report = await fetch('./src/html/report.html')
 const reportString=await report.text()
@@ -46,3 +46,5 @@ export const epicHtml=stringToHTML(epicString)
 const cardBoardkanban = await fetch('./src/html/card-Board-kanban.html')
 const cardBoardkanbanString=await cardBoardkanban.text()
 export const cardBoardkanbanHtml=stringToHTML(cardBoardkanbanString)
+
+
