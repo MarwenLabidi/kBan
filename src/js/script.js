@@ -18,13 +18,31 @@ let btnPrevious = null
 let btnNext = null
 let evrySingleDays = []
 let color = null
+// var indexDeleteStats = null
 
 
+const waitUntilDefferentToNull = (value) => {
+	value=value
+	return new Promise((resolve, reject) => {
+		const waitUntilReturn = setInterval(() => {
+			console.log('waiting');
+			// let value = eval(vl)
+			// value = value
+			if (value!==null) {
+				console.log('done');
+				console.log(value);
+				clearInterval(waitUntilReturn)
+				resolve(value)
+			}
+		}, 4000)
+	})
+}
 const waitUntilReturnName = (value, vl) => {
 	return new Promise((resolve, reject) => {
 		const waitUntilReturn = setInterval(() => {
-			let value = eval(vl)
-			if (value) {
+			console.log('waiting');
+			value = eval(vl)
+			if (value!==null) {
 				clearInterval(waitUntilReturn)
 				resolve(value)
 			}
@@ -579,6 +597,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 			}
 		})
 	}
+	//
 
 	//*BUGS FUNCTIONALITY
 	const bugAddButton = document.querySelector('#bugAddButton')
@@ -596,54 +615,90 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				"Enter Bug" //Placeholder text of input field
 			)
 			waitUntilReturnName(bugName, 'bugName').then((bug) => {
-				observerWorkspace.disconnect()
+				// observerWorkspace.disconnect()
 				let BUG = components.bugbarHtml
 				BUG.childNodes[1].childNodes[1].childNodes[1].innerText = bug
-				BUG.childNodes[3].childNodes[3].innerHTML = new Date().toLocaleDateString()
+				BUG.childNodes[3].childNodes[1].innerHTML = new Date().toLocaleDateString()
 				BUG.childNodes[5].innerHTML = "on going"
 				BUG.childNodes[7].innerHTML = "open"
 				tbody.append(BUG.cloneNode(true))
 				bugName = null
 				//TODO add this bug to the data base
-
-				const getBUGS = [...document.querySelectorAll('.BUG')]
-				const options3dot = [...document.querySelectorAll('.options3dot')]
-				const bugsoptions = [...document.querySelectorAll('.bugsoptions')]
+				// observerWorkspace.observe(workspace, {
+				// 	childList: true,
+				// 	subtree: true
+				// })
+				let getBUGS = [...document.querySelectorAll('.BUG')]
+				let options3dot = [...document.querySelectorAll('.options3dot')]
+				//!FIXME delete bugs options
+				//TODO get the parent element of the bug option and add it in the begin
+				// let bugsoptions = [...document.querySelectorAll('.bugsoptions')]
 				if (getBUGS) {
+					// create the funtionality of delete and change status
+									// observerWorkspace.disconnect()
 
+					let indexDeleteStats = null
+					setTimeout(() => {
+						indexDeleteStats=9999
+                                                console.log("🚀 ~ file: script.js ~ line 639 ~ setTimeout ~ indexDeleteStats", indexDeleteStats)
+						
+					}, 5000);
+					setTimeout(() => {
+						// indexDeleteStats=9999
+                                                console.log("🚀 ~ file: script.js ~ line 639 ~ setTimeout ~ indexDeleteStats", indexDeleteStats)
+						
+					}, 10000);
 
-					//TODO create the funtionality of delete and change status
 					options3dot.forEach((o3dot, index) => {
 						o3dot.addEventListener('click', () => {
 
-							bugsoptions[index].style.display = 'block'
+							getBUGS[index].childNodes[3].insertBefore(components.bugOptionHtml.cloneNode(true), getBUGS[index].childNodes[3].childNodes[1]);
+
+							getBUGS[index].childNodes[3].childNodes[1].setAttribute('id', `bugOption${index}`)
+							indexDeleteStats = index
+							// console.log(indexDeleteStats);
 							// setTimeout(() => {
 							// 	bugsoptions[index].style.display = 'none'
 							// }, 5000);
-
-							//*change status
-							bugsoptions[index].childNodes[1].addEventListener('click', () => {
-
-								bugsoptions[index].style.display = 'none'
-								//TODO send it to the database
-								if (getBUGS[index].childNodes[7].textContent == 'open') {
-									getBUGS[index].childNodes[7].innerHTML = 'closed'
-
-
-								} else {
-									//!FIXME figure out a solution for the bug getbugs[index] not updated use mutation observef 
-									getBUGS[index].childNodes[7].innerHTML = 'open'
-									
-								}
-
-							})
-							//*delete
-							bugsoptions[index].childNodes[3].addEventListener('click', () => {
-								bugsoptions[index].style.display = 'none'
-								getBUGS[index].remove()
-							})
+							// getBUGS = [...document.querySelectorAll('.BUG')]
+							// options3dot = [...document.querySelectorAll('.options3dot')]
+							// bugsoptions = [...document.querySelectorAll('.bugsoptions')]
+							
 						})
 					})
+					console.log(indexDeleteStats);
+					//!FIXME GET OUT THE NEXT EVENT LISTENNER FROM THE LOOP YOU CHOULD FIGURE OUT A SULUTION
+					waitUntilDefferentToNull(indexDeleteStats).then((INDEX) => {
+							console.log('inside wait until function');
+							console.log(INDEX);
+
+
+							//  //*delete
+							// getBUGS[INDEX].childNodes[3].childNodes[1].childNodes[3].addEventListener('click', () => {
+
+							// 	getBUGS[INDEX].remove()
+							// 	getBUGS[INDEX].childNodes[3].childNodes[1].remove()
+							// })
+
+							// // *change status
+							// getBUGS[INDEX].childNodes[3].childNodes[1].childNodes[1].addEventListener('click', () => {
+							// 	getBUGS[INDEX].childNodes[3].childNodes[1].remove()
+
+							// 		//TODO send it to the database
+							// 	if (getBUGS[INDEX].childNodes[7].textContent == 'open') {
+							// 		getBUGS[INDEX].childNodes[7].innerHTML = 'closed'
+							// 		console.log('assign closed');
+
+							// 	} else {
+							// 		getBUGS[INDEX].childNodes[7].innerHTML = 'open'
+							// 		console.log('assign open');
+
+							// 	}
+							// })
+
+							// indexDeleteStats = null
+						})
+	
 
 
 				}
@@ -664,6 +719,7 @@ observerWorkspace.observe(workspace, {
 	childList: true,
 	subtree: true
 })
+
 
 
 // create data base

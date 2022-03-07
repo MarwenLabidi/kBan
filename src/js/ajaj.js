@@ -48,3 +48,6 @@ const cardBoardkanbanString=await cardBoardkanban.text()
 export const cardBoardkanbanHtml=stringToHTML(cardBoardkanbanString)
 
 
+const bugOption = await fetch('./src/html/bugOption.html')
+const bugOptionString=await bugOption.text()
+export const bugOptionHtml=stringToHTML(bugOptionString)
