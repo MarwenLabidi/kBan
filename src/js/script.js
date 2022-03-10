@@ -46,7 +46,7 @@ const waitUntilReturnName = (value, vl) => {
 				clearInterval(waitUntilReturn)
 				resolve(value)
 			}
-		}, 4000)
+		}, 2000)
 	})
 }
 const createCalender = () => {

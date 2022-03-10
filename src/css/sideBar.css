@@ -1,5 +1,5 @@
 aside {
-	transition: all 0.5s ease-in-out;
+	transition: all 0.2s ease-in;
 	background-color: var(--clr_black);
 	color: var(--clr_white);
 	width: 5.2%;
@@ -43,6 +43,7 @@ aside main {
 	padding: 5px;
 	text-align: center;
 	min-width: min-content;
+
 	& img {
 		width: 20%;
 		height: 20%;
