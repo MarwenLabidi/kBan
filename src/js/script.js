@@ -536,19 +536,23 @@ const observerWorkspace = new MutationObserver((mutations) => {
 							getBUGS[index].childNodes[3].childNodes[1].setAttribute('id', `bugOption${index}`)
 							//delete
 							getBUGS[index].childNodes[3].childNodes[1].childNodes[3].addEventListener('click', () => {
-								getBUGS[index].remove()
-								getBUGS[index].childNodes[3].childNodes[1].remove()
+								if (getBUGS[index].childNodes[3].childNodes[1]) {
+									getBUGS[index].remove()
+									getBUGS[index].childNodes[3].childNodes[1].remove()
+								}
 							},{once:true})
 							//change status
 							getBUGS[index].childNodes[3].childNodes[1].childNodes[1].addEventListener('click', () => {
-								getBUGS[index].childNodes[3].childNodes[1].remove()
-								//TODO send it to the database
-								if (getBUGS[index].childNodes[7].textContent == 'open') {
-									getBUGS[index].childNodes[7].innerHTML = 'closed'
-									console.log('assign closed');
-								} else {
-									getBUGS[index].childNodes[7].innerHTML = 'open'
-									console.log('assign open');
+								if (getBUGS[index].childNodes[3].childNodes[1]) {
+									getBUGS[index].childNodes[3].childNodes[1].remove()
+									//TODO send it to the database
+									if (getBUGS[index].childNodes[7].textContent == 'open') {
+										getBUGS[index].childNodes[7].innerHTML = 'closed'
+										console.log('assign closed');
+									} else {
+										getBUGS[index].childNodes[7].innerHTML = 'open'
+										console.log('assign open');
+									}
 								}
 							},{once:true})
 						})
