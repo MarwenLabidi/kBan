@@ -501,7 +501,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 	const tbody = document.querySelector('tbody')
 	if (bugAddButton) {
 		//TODO desconenet mutation observer 
-		// observerWorkspace.disconnect()
+		observerWorkspace.disconnect()
 		// observerWorkspace.observe(workspace, {
 				// 	childList: true,
 				// 	subtree: true
@@ -538,7 +538,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 							getBUGS[index].childNodes[3].childNodes[1].childNodes[3].addEventListener('click', () => {
 								getBUGS[index].remove()
 								getBUGS[index].childNodes[3].childNodes[1].remove()
-							})
+							},{once:true})
 							//change status
 							getBUGS[index].childNodes[3].childNodes[1].childNodes[1].addEventListener('click', () => {
 								getBUGS[index].childNodes[3].childNodes[1].remove()
@@ -550,7 +550,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 									getBUGS[index].childNodes[7].innerHTML = 'open'
 									console.log('assign open');
 								}
-							})
+							},{once:true})
 						})
 					})
 				}
