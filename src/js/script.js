@@ -18,25 +18,8 @@ let btnPrevious = null
 let btnNext = null
 let evrySingleDays = []
 let color = null
-// var indexDeleteStats = null
 
 
-const waitUntilDefferentToNull = (value) => {
-	value=value
-	return new Promise((resolve, reject) => {
-		const waitUntilReturn = setInterval(() => {
-			console.log('waiting');
-			// let value = eval(vl)
-			// value = value
-			if (value!==null) {
-				console.log('done');
-				console.log(value);
-				clearInterval(waitUntilReturn)
-				resolve(value)
-			}
-		}, 4000)
-	})
-}
 const waitUntilReturnName = (value, vl) => {
 	return new Promise((resolve, reject) => {
 		const waitUntilReturn = setInterval(() => {
@@ -542,20 +525,13 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				BUG.childNodes[7].innerHTML = "open"
 				tbody.append(BUG.cloneNode(true))
 				bugName = null
-				//TODO add this bug to the data base
-				// observerWorkspace.observe(workspace, {
-				// 	childList: true,
-				// 	subtree: true
-				// })
 				let getBUGS = [...document.querySelectorAll('.BUG')]
 				let options3dot = [...document.querySelectorAll('.options3dot')]
 				//FIXME delete bugs options
 				//TODO get the parent element of the bug option and add it in the begin
 				if (getBUGS) {
 					options3dot.forEach((o3dot, index) => {
-						o3dot.addEventListener('click', () => {
-							console.log(components.bugOptionHtml);
-							
+						o3dot.addEventListener('click', () => {							
 							getBUGS[index].childNodes[3].insertBefore(components.bugOptionHtml, getBUGS[index].childNodes[3].childNodes[1]);
 							getBUGS[index].childNodes[3].childNodes[1].setAttribute('id', `bugOption${index}`)
 							//delete
