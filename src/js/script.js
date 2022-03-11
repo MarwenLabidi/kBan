@@ -40,9 +40,14 @@ const waitUntilDefferentToNull = (value) => {
 const waitUntilReturnName = (value, vl) => {
 	return new Promise((resolve, reject) => {
 		const waitUntilReturn = setInterval(() => {
+<<<<<<< HEAD
 			console.log('waiting');
 			value = eval(vl)
 			if (value!==null) {
+=======
+			value = eval(vl)
+			if (value !== null) {
+>>>>>>> main
 				clearInterval(waitUntilReturn)
 				resolve(value)
 			}
@@ -112,9 +117,7 @@ const colorSelectedDays = (currentMonth, currentYear) => {
 					}
 					let s = startday - 1
 					let e = endday + multipleWeekColor
-
 					let allDaysInOneTable = evrySingleDays.flat()
-
 					for (let i = 0; i < allDaysInOneTable.length; i++) {
 						for (let index = s; index < e; index++) {
 							if (!allDaysInOneTable[index]) {
@@ -133,13 +136,12 @@ const colorSelectedDays = (currentMonth, currentYear) => {
 					btnPrevious.click()
 					colorSelectedDays(currentMonth, currentYear)(startday, startMonth, startYear)(endday, endMonth, endYear)(color)
 				}
-
 			}
 		}
 	}
 }
 
-//!FIXME: add the half of the height to the position expected
+//FIXME: add the half of the height to the position expected
 const getCardToInsertBeforItOtherCard = (allCard, mousePosition) => {
 	if (allCard.length === 0) {
 		return
@@ -203,13 +205,10 @@ cardAdd.addEventListener('click', () => {
 		"string", //type of input you want whether a text ,password or number
 		"Enter Project Name" //Placeholder text of input field
 	)
-
-
 	waitUntilReturnName(projectName, 'projectName').then((Name) => {
 		//! console.log(Name) NOTE : send the name to the service worker
 		aside.style.width = '28%'
 		aside.style.minWidth = '300px'
-
 		rightbar.append(components.sideBarRightHtml)
 		const projectnamesHtml = document.querySelector('.projectnames')
 		projectnamesHtml.innerText = Name
@@ -223,7 +222,6 @@ const observerSideBar = new MutationObserver((mutations) => {
 	const Roadmap = document.querySelector('.Roadmap')
 	const KanbanBoard = document.querySelector('.KanbanBoard')
 	const Bugs = document.querySelector('.Bugs')
-
 	Roadmap.addEventListener('click', () => {
 		observerWorkspace.observe(workspace, {
 			childList: true,
@@ -240,11 +238,8 @@ const observerSideBar = new MutationObserver((mutations) => {
 		firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
 		createCalender()
 		//TODO add color fucntion days and get the data from indexdb
-
-
 	})
 	Roadmap.click()
-
 	KanbanBoard.addEventListener('click', () => {
 		observerWorkspace.observe(workspace, {
 			childList: true,
@@ -262,7 +257,6 @@ const observerSideBar = new MutationObserver((mutations) => {
 		workspace.style.gridTemplateColumns = '1fr'
 		workspace.innerHTML = ''
 		workspace.append(components.bugsTemplateHtml)
-
 	})
 
 })
@@ -274,7 +268,6 @@ report.addEventListener('click', () => {
 	workspace.style.gridTemplateColumns = '1fr'
 	aside.style.width = '5.2%'
 	aside.style.minWidth = '100px'
-
 	rightbar.style.display = 'none'
 	workspace.innerHTML = ''
 	workspace.append(components.reportHtml)
@@ -282,14 +275,11 @@ report.addEventListener('click', () => {
 })
 const observerWorkspace = new MutationObserver((mutations) => {
 
-	//*ROADMAP FUNCTIONLITY
+	//ROADMAP FUNCTIONLITY
 	const epicButton = document.querySelector('#epicButton')
 	btnPrevious = document.querySelector('.btn_previous')
 	btnNext = document.querySelector('.btn_next')
-
 	if (btnPrevious || btnNext) {
-
-
 		btnPrevious.addEventListener('click', () => {
 			// evrySingleDays = [...document.querySelectorAll('.days div')]
 			if (thisMonth === 0) {
@@ -297,7 +287,6 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				thisMonth = 11
 			} else {
 				thisMonth--
-
 			}
 			firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
 			createCalender()
@@ -314,12 +303,9 @@ const observerWorkspace = new MutationObserver((mutations) => {
 			firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
 			createCalender()
 			//TODO add color fucntion days and get the data from indexdb
-
 		})
 	}
 	if (epicButton) {
-
-
 		epicButton.addEventListener('click', () => {
 			Qual.confirmd("ADD EPIC ", //For heading
 				"", //For sub heading
@@ -334,41 +320,26 @@ const observerWorkspace = new MutationObserver((mutations) => {
 			waitUntilReturnName(epicName, 'epicName').then((epic) => {
 				waitUntilReturnName(startDate, 'startDate').then((sDate) => {
 					waitUntilReturnName(endDate, 'endDate').then((eDate) => {
-
-						//!NOTE send epic sDate  and eDate to the servece worker
+						//NOTE send epic sDate  and eDate to the servece worker
 						const startDayMonthYear = getDayMonthYear(sDate)
 						const endDayMonthYear = getDayMonthYear(eDate)
 						firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
-
-
 						const epicTask = document.querySelector('.epic_task')
 						let epicTaskHtml = components.epicHtml
 						epicTaskHtml.childNodes[1].innerHTML = epic
-
 						color = generateRandomBrightestHSLColor()
 						epicTaskHtml.style.backgroundColor = color
-
-
-
-
-
 						epicTask.append(epicTaskHtml.cloneNode(true))
 						runOneTime(firstDayMth, evrySingleDays)()
-
 						colorSelectedDays(thisMonth + 1, thisYear)(+startDayMonthYear.day, +startDayMonthYear.month, +startDayMonthYear.year)(+endDayMonthYear.day, +endDayMonthYear.month, +endDayMonthYear.year)(color)
-						//!NOTE send all the data to the service worker to color when there is a colorfull
-
+						//NOTE send all the data to the service worker to color when there is a colorfull
 						//TODO add data attribute to he epic task {debutdate and findate and month....} when you dlete it you know the days to uncolor it
-
-
 						//?show the options in the epic task
 						const epic3dots = document.querySelectorAll('.epic3dots')
 						const options = document.querySelectorAll('.options')
 						const epicH3 = document.querySelectorAll('.epicH3')
 						let indexOfChosenEpic = null
-
 						if (epic3dots) {
-
 							epic3dots.forEach((epic3dot, index) => {
 								epic3dot.addEventListener('click', () => {
 									options[index].style.display = 'block'
@@ -376,12 +347,10 @@ const observerWorkspace = new MutationObserver((mutations) => {
 									setTimeout(() => {
 										options[index].style.display = 'none'
 									}, 2000);
-
 									options[indexOfChosenEpic].firstChild.addEventListener('click', () => {
 										//TODO create a kanban board from the epic
 										// console.log('create kanban from epic');
 										options[index].style.display = 'none'
-
 										indexOfChosenEpic = null
 									})
 									options[indexOfChosenEpic].lastChild.addEventListener('click', () => {
@@ -393,24 +362,9 @@ const observerWorkspace = new MutationObserver((mutations) => {
 										indexOfChosenEpic = null
 									})
 								});
-
 							})
-
-
-
-
-
-
-
-
-
-
 						}
-
-
-
-
-						//!FIXME delete epic task create a function 
+						//FIXME delete epic task create a function 
 						startDate = null
 						epicName = null
 						endDate = null
@@ -419,7 +373,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 			})
 		})
 	}
-	//*KANBAN FUNCTIONALITY
+	//KANBAN FUNCTIONALITY
 	const nameKboard = document.querySelector('#nameKboard')
 	const buttonNewKboard = document.querySelector('#newKboard')
 	const kbanBoardList = document.querySelector('#kbanBoardList')
@@ -433,7 +387,6 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				subtree: true
 			})
 			Qual.confirmd("NEW KBOARD ", //For heading
-
 				"", //For sub heading
 				inf, //icon variable we can define our own also by giving th link in double quotes
 				"CREATE", //blue button string
@@ -447,18 +400,14 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				nameKboard.innerHTML = nameKBOARD
 				//TODO send it to servie worker and create table
 			})
-
 		})
 		// TODO get the kanban board list from the service worker @kanbanBoardlist
 		const nameKBOARDFromDB = `hello` //!FIXME get the name of the kanban board from the service worker
-
 		const optionListKboard = [...kbanBoardList.children]
 		optionListKboard.forEach((option) => {
 			if (option.value === nameKBOARDFromDB) {
 				option.selected = true
 				//TODO load the data [kbanBoardList.value] in the board from service worker
-
-
 				const addCardKbanBoardInProgress = document.querySelector('#addCardKbanBoardInProgress')
 				addCardKbanBoardInProgress.addEventListener('click', () => {
 					observerWorkspace.observe(workspace, {
@@ -467,7 +416,6 @@ const observerWorkspace = new MutationObserver((mutations) => {
 					})
 					//TODO create kban first or choose from the list : impement this sooner befor you  create the card
 					Qual.confirmd("NEW CARD ", //For heading
-
 						"", //For sub heading
 						inf, //icon variable we can define our own also by giving th link in double quotes
 						"CREATE", //blue button string
@@ -478,17 +426,13 @@ const observerWorkspace = new MutationObserver((mutations) => {
 						"Enter the content of the card" //Placeholder text of input field
 					)
 					waitUntilReturnName(cardKanbanContent, 'cardKanbanContent').then((contentCard) => {
-
 						let card = components.cardBoardkanbanHtml
 						card.children[0].innerHTML = contentCard
-
 						Backlog.append(card.cloneNode(true))
 						//TODO add this canban card to the service worker
 						cardKanbanContent = null
 					})
 				})
-
-
 				const allCardBoard = document.querySelectorAll('.cardBoard')
 				const AllComments = document.querySelectorAll('.comments')
 				const showComment = document.querySelectorAll('.showComment')
@@ -502,7 +446,6 @@ const observerWorkspace = new MutationObserver((mutations) => {
 						//*add comment
 						AllComments[index].children[2].addEventListener('click', () => {
 							Qual.confirmd("ADD COMMENT", //For heading
-
 								"", //For sub heading
 								inf, //icon variable we can define our own also by giving th link in double quotes
 								"ADD", //blue button string
@@ -520,15 +463,11 @@ const observerWorkspace = new MutationObserver((mutations) => {
 								comment = null
 							})
 						})
-
-
 						//*show comment
 						AllComments[index].children[1].addEventListener('click', () => {
-
 							showComment[index].style.display = 'block'
 							setTimeout(() => {
 								showComment[index].style.display = 'none'
-
 							}, 5000);
 						})
 						//* the number of comments
@@ -536,42 +475,31 @@ const observerWorkspace = new MutationObserver((mutations) => {
 							//TODO get the numberrof comment and add it [change p inner text]
 							// console.log('delete card');	
 						})
-
-						//!NOTE drag and drop functionality
+						//NOTE drag and drop functionality
 						card.addEventListener('dragstart', (e) => {
 							//TODO ADD CLASS TO THE CARD : change opacity andmake a cool animatiom
 							card.classList.add('dragging')
-
-
 						})
 						card.addEventListener('dragend', (e) => {
 							//TODO REMOVE CLASS FROM THE CARD
 							card.classList.remove('dragging')
-
 						})
-
 					})
 					const backlogInprogressDones = [Backlog, InProgress, Done]
 					// let cardDomRec = []
-
 					backlogInprogressDones.forEach((backlogInprogressDone) => {
 						backlogInprogressDone.addEventListener('dragover', (e) => {
 							e.preventDefault()
 							observerWorkspace.disconnect()
 							// cardDomRec.length = 0
-
-
 						})
 						backlogInprogressDone.addEventListener('drop', (e) => {
-
 							e.preventDefault()
 							const dragable = document.querySelector('.dragging')
 							// backlogInprogressDone.appendChild(dragable)
 							console.log(`drop in ${backlogInprogressDone.id}`);
-
 							//TODO send card iformation to the service worker 
 							//TODO SEND THE POSIONN OF EEACH CARD TO THE DATABASE
-
 							let childCardexpectMe = [...backlogInprogressDone.children]
 							// let cardDomRec = []
 							childCardexpectMe.shift()
@@ -580,29 +508,33 @@ const observerWorkspace = new MutationObserver((mutations) => {
 							let minC = getCardToInsertBeforItOtherCard(childCardexpectMe, e.clientY)
 							console.log(minC);
 							if (childCardexpectMe.length > 0) {
-
 								backlogInprogressDone.insertBefore(dragable, minC)
 							} else {
 								backlogInprogressDone.appendChild(dragable)
 							}
-							//!TODO make the change in the database
-
+							//TODO make the change in the database
 						})
 					})
-
 				}
-
-
-
 			}
 		})
 	}
+<<<<<<< HEAD
 	//
 
 	//*BUGS FUNCTIONALITY
+=======
+	//BUGS FUNCTIONALITY
+>>>>>>> main
 	const bugAddButton = document.querySelector('#bugAddButton')
 	const tbody = document.querySelector('tbody')
 	if (bugAddButton) {
+		//TODO desconenet mutation observer 
+		// observerWorkspace.disconnect()
+		// observerWorkspace.observe(workspace, {
+				// 	childList: true,
+				// 	subtree: true
+				// })
 		bugAddButton.addEventListener('click', () => {
 			Qual.confirmd("ADD Bug ", //For heading
 				"", //For sub heading
@@ -615,7 +547,10 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				"Enter Bug" //Placeholder text of input field
 			)
 			waitUntilReturnName(bugName, 'bugName').then((bug) => {
+<<<<<<< HEAD
 				// observerWorkspace.disconnect()
+=======
+>>>>>>> main
 				let BUG = components.bugbarHtml
 				BUG.childNodes[1].childNodes[1].childNodes[1].innerText = bug
 				BUG.childNodes[3].childNodes[1].innerHTML = new Date().toLocaleDateString()
@@ -630,6 +565,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				// })
 				let getBUGS = [...document.querySelectorAll('.BUG')]
 				let options3dot = [...document.querySelectorAll('.options3dot')]
+<<<<<<< HEAD
 				//!FIXME delete bugs options
 				//TODO get the parent element of the bug option and add it in the begin
 				// let bugsoptions = [...document.querySelectorAll('.bugsoptions')]
@@ -701,11 +637,37 @@ const observerWorkspace = new MutationObserver((mutations) => {
 	
 
 
+=======
+				//FIXME delete bugs options
+				//TODO get the parent element of the bug option and add it in the begin
+				if (getBUGS) {
+					options3dot.forEach((o3dot, index) => {
+						o3dot.addEventListener('click', () => {
+							console.log(components.bugOptionHtml);
+							
+							getBUGS[index].childNodes[3].insertBefore(components.bugOptionHtml, getBUGS[index].childNodes[3].childNodes[1]);
+							getBUGS[index].childNodes[3].childNodes[1].setAttribute('id', `bugOption${index}`)
+							//delete
+							getBUGS[index].childNodes[3].childNodes[1].childNodes[3].addEventListener('click', () => {
+								getBUGS[index].remove()
+								getBUGS[index].childNodes[3].childNodes[1].remove()
+							})
+							//change status
+							getBUGS[index].childNodes[3].childNodes[1].childNodes[1].addEventListener('click', () => {
+								getBUGS[index].childNodes[3].childNodes[1].remove()
+								//TODO send it to the database
+								if (getBUGS[index].childNodes[7].textContent == 'open') {
+									getBUGS[index].childNodes[7].innerHTML = 'closed'
+									console.log('assign closed');
+								} else {
+									getBUGS[index].childNodes[7].innerHTML = 'open'
+									console.log('assign open');
+								}
+							})
+						})
+					})
+>>>>>>> main
 				}
-
-
-
-
 			})
 		})
 	}
@@ -754,4 +716,6 @@ observerWorkspace.observe(workspace, {
 
 //TODO  create a delete function to the cards of the projects in the first page
 
-// !FIXME chen to toggle the show comment in kba boared and in the three point in epic and in the bugs and look for other
+// FIXME chen to toggle the show comment in kba boared and in the three point in epic and in the bugs and look for other
+
+// TODO add delete button in the first project cards and add clear all project functionality
