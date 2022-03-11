@@ -1,53 +1,37 @@
-const stringToHTML =  string=> new DOMParser().parseFromString(string, 'text/html').body.firstChild
+const stringToHTML = string => new DOMParser().parseFromString(string, 'text/html').body.firstChild
 
 
+import cardAddString from '/src/html/card-add.html?raw';
+export const cardAddHtml = stringToHTML(cardAddString)
 
-const cardAdd=await fetch('./src/html/card-add.html')
-const cardAddString=await cardAdd.text()
-export const cardAddHtml=stringToHTML(cardAddString)
-
-const sideBarRights = await fetch('./src/html/sideBar-right.html')
-const sideBarRightString=await sideBarRights.text()
-export const sideBarRightHtml=stringToHTML(sideBarRightString)
+import sideBarRightString from '/src/html/sideBar-right.html?raw';
+export const sideBarRightHtml = stringToHTML(sideBarRightString)
 
 
-const card_projectNames = await fetch('./src/html/card_projectNames.html')
-const card_projectNamesString=await card_projectNames.text()
-export const card_projectNamesHtml=stringToHTML(card_projectNamesString)
+import card_projectNamesString from '/src/html/card_projectNames.html?raw';
+export const card_projectNamesHtml = stringToHTML(card_projectNamesString)
 
 
-const roadmap = await fetch('./src/html/roadmap.html')
-const roadmapString=await roadmap.text()
-export const roadmapHtml=stringToHTML(roadmapString)
+import roadmapString from '/src/html/roadmap.html?raw';
+export const roadmapHtml = stringToHTML(roadmapString)
 
-const kanbanboard = await fetch('./src/html/kanban-board.html')
-const kanbanboardString=await kanbanboard.text()
-export const kanbanboardHtml=stringToHTML(kanbanboardString)
+import kanbanboardString from '/src/html/kanban-board.html?raw';
+export const kanbanboardHtml = stringToHTML(kanbanboardString)
 
 
-const bugsTemplate = await fetch('./src/html/bugsTemplate.html')
-const bugsTemplateString=await bugsTemplate.text()
-export const bugsTemplateHtml=stringToHTML(bugsTemplateString)
+import bugsTemplateString from '/src/html/bugsTemplate.html?raw';
+export const bugsTemplateHtml = stringToHTML(bugsTemplateString)
 
 
-const bugbar = await fetch('./src/html/bug-bar.html')
-const bugbarString=await bugbar.text()
-export const bugbarHtml=stringToHTML(bugbarString).childNodes[1].childNodes[1]
-
-const report = await fetch('./src/html/report.html')
-const reportString=await report.text()
-export const reportHtml=stringToHTML(reportString)
-
-const epic= await fetch('./src/html/epicRoadmap.html')
-const epicString=await epic.text()
-export const epicHtml=stringToHTML(epicString)
-// export const epicHtmlSecondChild=epicHtml.childNodes[1]
-
-const cardBoardkanban = await fetch('./src/html/card-Board-kanban.html')
-const cardBoardkanbanString=await cardBoardkanban.text()
-export const cardBoardkanbanHtml=stringToHTML(cardBoardkanbanString)
+import bugbarString from '/src/html/bug-bar.html?raw';
+export const bugbarHtml = stringToHTML(bugbarString).childNodes[1].childNodes[1]
 
 
-const bugOption = await fetch('./src/html/bugOption.html')
-const bugOptionString=await bugOption.text()
-export const bugOptionHtml=stringToHTML(bugOptionString)
+import reportString from '/src/html/report.html?raw';
+export const reportHtml = stringToHTML(reportString)
+
+import epicString from '/src/html/epicRoadmap.html?raw';
+export const epicHtml = stringToHTML(epicString)
+
+import cardBoardkanbanString from '/src/html/card-Board-kanban.html?raw';
+export const cardBoardkanbanHtml = stringToHTML(cardBoardkanbanString)
