@@ -23,7 +23,6 @@ let color = null
 const waitUntilReturnName = (value, vl) => {
 	return new Promise((resolve, reject) => {
 		const waitUntilReturn = setInterval(() => {
-			console.log('waiting');
 			value = eval(vl)
 			if (value !== null) {
 				clearInterval(waitUntilReturn)
@@ -503,6 +502,10 @@ const observerWorkspace = new MutationObserver((mutations) => {
 	if (bugAddButton) {
 		//TODO desconenet mutation observer 
 		// observerWorkspace.disconnect()
+		// observerWorkspace.observe(workspace, {
+				// 	childList: true,
+				// 	subtree: true
+				// })
 		bugAddButton.addEventListener('click', () => {
 			Qual.confirmd("ADD Bug ", //For heading
 				"", //For sub heading
@@ -534,6 +537,8 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				if (getBUGS) {
 					options3dot.forEach((o3dot, index) => {
 						o3dot.addEventListener('click', () => {
+							console.log(components.bugOptionHtml);
+							
 							getBUGS[index].childNodes[3].insertBefore(components.bugOptionHtml, getBUGS[index].childNodes[3].childNodes[1]);
 							getBUGS[index].childNodes[3].childNodes[1].setAttribute('id', `bugOption${index}`)
 							//delete
