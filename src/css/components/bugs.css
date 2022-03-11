@@ -71,7 +71,8 @@
 	height: 0;
 	transform: translate(-30%, -70px);
 	/* NOTE When you click to the three point change display */
-	display: none;
+	/* display: none; */
+	
 
 
 

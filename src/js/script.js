@@ -18,8 +18,25 @@ let btnPrevious = null
 let btnNext = null
 let evrySingleDays = []
 let color = null
+// var indexDeleteStats = null
 
 
+const waitUntilDefferentToNull = (value) => {
+	value=value
+	return new Promise((resolve, reject) => {
+		const waitUntilReturn = setInterval(() => {
+			console.log('waiting');
+			// let value = eval(vl)
+			// value = value
+			if (value!==null) {
+				console.log('done');
+				console.log(value);
+				clearInterval(waitUntilReturn)
+				resolve(value)
+			}
+		}, 4000)
+	})
+}
 const waitUntilReturnName = (value, vl) => {
 	return new Promise((resolve, reject) => {
 		const waitUntilReturn = setInterval(() => {
