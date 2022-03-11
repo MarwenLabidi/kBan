@@ -600,3 +600,5 @@ observerWorkspace.observe(workspace, {
 // FIXME chen to toggle the show comment in kba boared and in the three point in epic and in the bugs and look for other
 
 // TODO add delete button in the first project cards and add clear all project functionality
+
+// TODO add transition to pop up in delele and close in epic and in bugs
