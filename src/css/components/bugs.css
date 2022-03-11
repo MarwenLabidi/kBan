@@ -63,7 +63,7 @@
 }
 
 
-.bugsoptions {
+.optionsdamn {
 	/* FIXME DELTE THE LPOSTION ABSOLUTE TEST IT FIRST */
 	position: absolute;
 	color: var(--clr_white);
@@ -71,7 +71,7 @@
 	height: 0;
 	transform: translate(-30%, -70px);
 	/* NOTE When you click to the three point change display */
-	/* display: none; */
+	display: none;
 	
 
 
@@ -96,4 +96,8 @@
 	display: flex;
 	justify-content: space-between;
 	width: 100%;
+}
+
+.closegreenclass{
+	background-color: var(--clr_green);
 }

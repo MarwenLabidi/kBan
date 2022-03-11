@@ -501,11 +501,6 @@ const observerWorkspace = new MutationObserver((mutations) => {
 	const tbody = document.querySelector('tbody')
 	if (bugAddButton) {
 		//TODO desconenet mutation observer 
-		observerWorkspace.disconnect()
-		// observerWorkspace.observe(workspace, {
-				// 	childList: true,
-				// 	subtree: true
-				// })
 		bugAddButton.addEventListener('click', () => {
 			Qual.confirmd("ADD Bug ", //For heading
 				"", //For sub heading
@@ -520,23 +515,24 @@ const observerWorkspace = new MutationObserver((mutations) => {
 			waitUntilReturnName(bugName, 'bugName').then((bug) => {
 				let BUG = components.bugbarHtml
 				BUG.childNodes[1].childNodes[1].childNodes[1].innerText = bug
-				BUG.childNodes[3].childNodes[1].innerHTML = new Date().toLocaleDateString()
+				BUG.childNodes[3].childNodes[3].innerHTML = new Date().toLocaleDateString()
 				BUG.childNodes[5].innerHTML = "on going"
 				BUG.childNodes[7].innerHTML = "open"
 				tbody.append(BUG.cloneNode(true))
 				bugName = null
 				let getBUGS = [...document.querySelectorAll('.BUG')]
 				let options3dot = [...document.querySelectorAll('.options3dot')]
+				let optionsdamn = [...document.querySelectorAll('.optionsdamn')]
 				//FIXME delete bugs options
 				//TODO get the parent element of the bug option and add it in the begin
 				if (getBUGS) {
 					options3dot.forEach((o3dot, index) => {
 						o3dot.addEventListener('click', () => {							
-							getBUGS[index].childNodes[3].insertBefore(components.bugOptionHtml, getBUGS[index].childNodes[3].childNodes[1]);
-							getBUGS[index].childNodes[3].childNodes[1].setAttribute('id', `bugOption${index}`)
+							optionsdamn[index].style.display = 'block'
+							//TODO get the elemnts by ID and add th element in the i statement 
 							//delete
 							getBUGS[index].childNodes[3].childNodes[1].childNodes[3].addEventListener('click', () => {
-								if (getBUGS[index].childNodes[3].childNodes[1]) {
+								if (getBUGS[index]&&getBUGS[index].childNodes[3].childNodes[1]) {
 									getBUGS[index].remove()
 									getBUGS[index].childNodes[3].childNodes[1].remove()
 								}
@@ -544,15 +540,10 @@ const observerWorkspace = new MutationObserver((mutations) => {
 							//change status
 							getBUGS[index].childNodes[3].childNodes[1].childNodes[1].addEventListener('click', () => {
 								if (getBUGS[index].childNodes[3].childNodes[1]) {
-									getBUGS[index].childNodes[3].childNodes[1].remove()
+									optionsdamn[index].style.display = 'none'
+									getBUGS[index].childNodes[7].innerHTML = 'closed'
+									getBUGS[index].classList.add('closegreenclass')
 									//TODO send it to the database
-									if (getBUGS[index].childNodes[7].textContent == 'open') {
-										getBUGS[index].childNodes[7].innerHTML = 'closed'
-										console.log('assign closed');
-									} else {
-										getBUGS[index].childNodes[7].innerHTML = 'open'
-										console.log('assign open');
-									}
 								}
 							},{once:true})
 						})
