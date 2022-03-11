@@ -1,5 +1,5 @@
 aside {
-	transition: all 0.2s ease-in;
+	transition: all 0.2s ease-out;
 	background-color: var(--clr_black);
 	color: var(--clr_white);
 	width: 5.2%;
