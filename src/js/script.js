@@ -40,14 +40,8 @@ const waitUntilDefferentToNull = (value) => {
 const waitUntilReturnName = (value, vl) => {
 	return new Promise((resolve, reject) => {
 		const waitUntilReturn = setInterval(() => {
-<<<<<<< HEAD
-			console.log('waiting');
-			value = eval(vl)
-			if (value!==null) {
-=======
 			value = eval(vl)
 			if (value !== null) {
->>>>>>> main
 				clearInterval(waitUntilReturn)
 				resolve(value)
 			}
@@ -519,13 +513,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 			}
 		})
 	}
-<<<<<<< HEAD
-	//
-
-	//*BUGS FUNCTIONALITY
-=======
 	//BUGS FUNCTIONALITY
->>>>>>> main
 	const bugAddButton = document.querySelector('#bugAddButton')
 	const tbody = document.querySelector('tbody')
 	if (bugAddButton) {
@@ -547,10 +535,6 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				"Enter Bug" //Placeholder text of input field
 			)
 			waitUntilReturnName(bugName, 'bugName').then((bug) => {
-<<<<<<< HEAD
-				// observerWorkspace.disconnect()
-=======
->>>>>>> main
 				let BUG = components.bugbarHtml
 				BUG.childNodes[1].childNodes[1].childNodes[1].innerText = bug
 				BUG.childNodes[3].childNodes[1].innerHTML = new Date().toLocaleDateString()
@@ -565,79 +549,6 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				// })
 				let getBUGS = [...document.querySelectorAll('.BUG')]
 				let options3dot = [...document.querySelectorAll('.options3dot')]
-<<<<<<< HEAD
-				//!FIXME delete bugs options
-				//TODO get the parent element of the bug option and add it in the begin
-				// let bugsoptions = [...document.querySelectorAll('.bugsoptions')]
-				if (getBUGS) {
-					// create the funtionality of delete and change status
-									// observerWorkspace.disconnect()
-
-					let indexDeleteStats = null
-					setTimeout(() => {
-						indexDeleteStats=9999
-                                                console.log("🚀 ~ file: script.js ~ line 639 ~ setTimeout ~ indexDeleteStats", indexDeleteStats)
-						
-					}, 5000);
-					setTimeout(() => {
-						// indexDeleteStats=9999
-                                                console.log("🚀 ~ file: script.js ~ line 639 ~ setTimeout ~ indexDeleteStats", indexDeleteStats)
-						
-					}, 10000);
-
-					options3dot.forEach((o3dot, index) => {
-						o3dot.addEventListener('click', () => {
-
-							getBUGS[index].childNodes[3].insertBefore(components.bugOptionHtml.cloneNode(true), getBUGS[index].childNodes[3].childNodes[1]);
-
-							getBUGS[index].childNodes[3].childNodes[1].setAttribute('id', `bugOption${index}`)
-							indexDeleteStats = index
-							// console.log(indexDeleteStats);
-							// setTimeout(() => {
-							// 	bugsoptions[index].style.display = 'none'
-							// }, 5000);
-							// getBUGS = [...document.querySelectorAll('.BUG')]
-							// options3dot = [...document.querySelectorAll('.options3dot')]
-							// bugsoptions = [...document.querySelectorAll('.bugsoptions')]
-							
-						})
-					})
-					console.log(indexDeleteStats);
-					//!FIXME GET OUT THE NEXT EVENT LISTENNER FROM THE LOOP YOU CHOULD FIGURE OUT A SULUTION
-					waitUntilDefferentToNull(indexDeleteStats).then((INDEX) => {
-							console.log('inside wait until function');
-							console.log(INDEX);
-
-
-							//  //*delete
-							// getBUGS[INDEX].childNodes[3].childNodes[1].childNodes[3].addEventListener('click', () => {
-
-							// 	getBUGS[INDEX].remove()
-							// 	getBUGS[INDEX].childNodes[3].childNodes[1].remove()
-							// })
-
-							// // *change status
-							// getBUGS[INDEX].childNodes[3].childNodes[1].childNodes[1].addEventListener('click', () => {
-							// 	getBUGS[INDEX].childNodes[3].childNodes[1].remove()
-
-							// 		//TODO send it to the database
-							// 	if (getBUGS[INDEX].childNodes[7].textContent == 'open') {
-							// 		getBUGS[INDEX].childNodes[7].innerHTML = 'closed'
-							// 		console.log('assign closed');
-
-							// 	} else {
-							// 		getBUGS[INDEX].childNodes[7].innerHTML = 'open'
-							// 		console.log('assign open');
-
-							// 	}
-							// })
-
-							// indexDeleteStats = null
-						})
-	
-
-
-=======
 				//FIXME delete bugs options
 				//TODO get the parent element of the bug option and add it in the begin
 				if (getBUGS) {
@@ -666,7 +577,6 @@ const observerWorkspace = new MutationObserver((mutations) => {
 							})
 						})
 					})
->>>>>>> main
 				}
 			})
 		})
