@@ -1,4 +1,5 @@
-let dataBases = await indexedDB.databases()
+//TODO indexedDB.database() not working in mozila : find alternative
+let dataBases = await indexedDB.databases() 
 const components = await import('./ajaj.js')
 const calendar = await import('./calendar.js')
 const workspace = document.querySelector('.workspace')
@@ -563,7 +564,7 @@ observerWorkspace.observe(workspace, {
 	subtree: true
 })
 
-
+//TODO waiting pop up when you click install until the install is available inservice workers
 
 // create data base
 // var db = new Dexie('aaaaaa');
