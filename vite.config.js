@@ -14,7 +14,12 @@ export default defineConfig({
 	},
 	plugins: [
 		VitePWA({
+			mode: "development",
+			filename: "sw.js",
 			includeAssets: ['favicon.svg', 'favicon.ico', 'robots.txt', 'apple-touch-icon.png'],
+			strategies: "injectManifest",
+			registerType: 'autoUpdate',
+			injectRegister: "inline",
 			manifest: {
 				name: 'KBAN',
 				short_name: 'KBAN',
@@ -38,11 +43,7 @@ export default defineConfig({
 					}
 				]
 			},
-			strategies: 'injectManifest',
-			registerType: 'autoUpdate',
-			srcDir: 'src/js/',
-			filename: 'sw.js',
-			
+
 		})
 	],
 
