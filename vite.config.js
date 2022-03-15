@@ -18,6 +18,7 @@ export default defineConfig({
 			registerType: 'autoUpdate',
 			srcDir: 'src/js/',
 			filename: 'sw.js',
+			injectRegister: "inline",
 			includeAssets: ['favicon.svg', 'favicon.ico', 'robots.txt', 'apple-touch-icon.png'],
 			manifest: {
 				name: 'KBAN',
