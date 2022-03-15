@@ -17,7 +17,7 @@ export default defineConfig({
 			includeAssets: ['favicon.svg', 'favicon.ico', 'robots.txt', 'apple-touch-icon.png'],
 			manifest: {
 				name: 'KBAN',
-				short_name: 'KBAN',
+				short_name: 'KABAN',
 				description: 'Project Management App',
 				theme_color: '#ffffff',
 				icons: [{
