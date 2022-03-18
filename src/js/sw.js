@@ -43,6 +43,6 @@ registerRoute(
 );
 
 
-// Auto update for new content
+// Auto update for new content ...
 self.skipWaiting()
 clientsClaim()
