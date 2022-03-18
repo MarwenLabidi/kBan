@@ -12,7 +12,6 @@ cleanupOutdatedCaches()
 precacheAndRoute(self.__WB_MANIFEST)
 
 
-
 // runtime caching : font caching
 import {
 	registerRoute
@@ -42,21 +41,6 @@ registerRoute(
 		cacheName: 'google-fonts-webfonts',
 	})
 );
-
-//cache the canvas.js library
-// registerRoute(
-// 	({
-// 		url
-// 	}) => url.origin === 'https://canvasjs.com/assets/script/canvasjs.min.js',
-// 	new CacheFirst({
-// 		cacheName: 'canvasjs-library-reports',
-// 	})
-// );
-
-
-
-
-
 
 
 // Auto update for new content
