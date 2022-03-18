@@ -21,9 +21,7 @@ import {
 	CacheFirst,
 	StaleWhileRevalidate
 } from 'workbox-strategies';
-import {
-	CacheableResponsePlugin
-} from 'workbox-cacheable-response';
+
 
 // Cache the Google Fonts stylesheets with a stale-while-revalidate strategy.
 registerRoute(
@@ -42,11 +40,6 @@ registerRoute(
 	}) => url.origin === 'https://fonts.gstatic.com',
 	new CacheFirst({
 		cacheName: 'google-fonts-webfonts',
-		plugins: [
-			new CacheableResponsePlugin({
-				statuses: [0, 200],
-			}),
-		],
 	})
 );
 
