@@ -12,7 +12,7 @@ cleanupOutdatedCaches()
 precacheAndRoute(self.__WB_MANIFEST)
 
 
-// runtime caching : font caching
+// runtime caching => font caching
 import {
 	registerRoute
 } from 'workbox-routing';
