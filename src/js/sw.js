@@ -24,9 +24,6 @@ import {
 import {
 	CacheableResponsePlugin
 } from 'workbox-cacheable-response';
-import {
-	ExpirationPlugin
-} from 'workbox-expiration';
 
 // Cache the Google Fonts stylesheets with a stale-while-revalidate strategy.
 registerRoute(
@@ -49,13 +46,19 @@ registerRoute(
 			new CacheableResponsePlugin({
 				statuses: [0, 200],
 			}),
-			new ExpirationPlugin({
-				maxAgeSeconds: 60 * 60 * 24 * 365,
-				maxEntries: 30,
-			}),
 		],
 	})
 );
+
+//cache the canvas.js library
+// registerRoute(
+// 	({
+// 		url
+// 	}) => url.origin === 'https://canvasjs.com/assets/script/canvasjs.min.js',
+// 	new CacheFirst({
+// 		cacheName: 'canvasjs-library-reports',
+// 	})
+// );
 
 
 
