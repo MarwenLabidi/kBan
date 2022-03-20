@@ -589,7 +589,8 @@ observerWorkspace.observe(workspace, {
 		//TODO waiting pop up when you click install until the install is available inservice workers
 
 //TODO  create a delete function to the cards of the projects in the first page
-
+//TODO create white theme for the app : dark mode white mode
+// TODO change the README : add the api of transfer databwtwen service wrker and app ane delete voice controll struff
 // FIXME chen to toggle the show comment in kba boared and in the three point in epic and in the bugs and look for other
 
 // TODO add delete button in the first project cards and add clear all project functionality
@@ -599,3 +600,4 @@ observerWorkspace.observe(workspace, {
 // FIXME change the finiched in the bug section to the date of closed bug
 // TODO check the database if is full or do a delete technique 
 //FIXME figure out a solution to color calendars days in roadmap 
+//TODO change the theme to black pwa theme instead of white
