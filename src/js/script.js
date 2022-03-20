@@ -564,37 +564,29 @@ observerWorkspace.observe(workspace, {
 	subtree: true
 })
 
-//TODO waiting pop up when you click install until the install is available inservice workers
 
 // create data base
 // var db = new Dexie('aaaaaa');
 // db.version(1).stores({
-// 	Roadmap: `epics,color,startDay,finishDay,startMonth,finshMonth,year`,
-// 	kanban: `backlog,inProgress,done`,
-// 	bugs: `opened,closed`,
-// });
-// await db.Roadmap.bulkPut([{
-// 	epics: "UX design",
-// 	color: "red",
-// 	startDay: "10 ",
-// 	finishDay: "15 ",
-// 	startMounth: "February",
-// 	finshMonth: "March",
-// 	year: "2022",
-// }])
-
-
-
-
-//TODO create functionality of bugs: it will show you a promp and when the bug is open the color is red and when you close it the color become green
-//TODO CReate delete functionality
-
-// TODO count the task open and in progress done and bugs and calcule the percent of each tasks
-
-
-// TODO use pwa pluging and use the offline data base and use service worker with index dbTODO5 use background sync TODO6 crete instal button functionality
-
-// TODO voice controll : a button to active voice controll and when you talk it show your voice and there is a little note beside the button when you click it show the instruction 
+	// 	Roadmap: `epics,color,startDay,finishDay,startMonth,finshMonth,year`,
+	// 	kanban: `backlog,inProgress,done`,
+	// 	bugs: `opened,closed`,
+	// });
+	// await db.Roadmap.bulkPut([{
+		// 	epics: "UX design",
+		// 	color: "red",
+		// 	startDay: "10 ",
+		// 	finishDay: "15 ",
+		// 	startMounth: "February",
+		// 	finshMonth: "March",
+		// 	year: "2022",
+		// }])
+		
+		
+		// TODO count the task open and in progress done and bugs and calcule the percent of each tasks
+		
+		// TODO instal button functionality
+		//TODO waiting pop up when you click install until the install is available inservice workers
 
 //TODO  create a delete function to the cards of the projects in the first page
 
@@ -603,3 +595,7 @@ observerWorkspace.observe(workspace, {
 // TODO add delete button in the first project cards and add clear all project functionality
 
 // TODO add transition to pop up in delele and close in epic and in bugs
+// TODO disable report until you chooose a project or you create new one
+// FIXME change the finiched in the bug section to the date of closed bug
+// TODO check the database if is full or do a delete technique 
+//FIXME figure out a solution to color calendars days in roadmap 
