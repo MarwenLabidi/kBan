@@ -142,7 +142,10 @@ const colorDaysINCalendarNEXTbPREVIOUS = (startDatesarr, endDatesarr, currrentMo
 	evrySingleDays.length = 0
 	evrySingleDays.push(allDaysSelected)
 	console.log(evrySingleDays);
-	//TODO working on this now
+	//check if the current month is in startDatesarr and endDatesarr
+	//check the same column of each startDAtearr[i] and enddatearr[i]
+	//if the same month calculate the number of days you gonna color
+	// if the month defferent color allthe days start from the start days
 }
 
 
@@ -387,6 +390,9 @@ const observerWorkspace = new MutationObserver((mutations) => {
 										//TODO delete the color in the calendar call color function with gray color
 										//TODO delete the epic from the indexdb
 										indexOfChosenEpic = null
+										//-[] delete colors
+										//index of chosen epic is the same index of startdayarr and enddate arr
+										//use color function on this :line 138
 									})
 								});
 							})
