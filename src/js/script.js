@@ -1,5 +1,5 @@
 //TODO indexedDB.database() not working in mozila : find alternative
-let dataBases = await indexedDB.databases() 
+let dataBases = await indexedDB.databases()
 const components = await import('./ajaj.js')
 const calendar = await import('./calendar.js')
 const workspace = document.querySelector('.workspace')
@@ -19,6 +19,11 @@ let btnPrevious = null
 let btnNext = null
 let evrySingleDays = []
 let color = null
+
+let startDaysToColorArr = []
+let endDaysToColorArr = []
+let colorArr = []
+
 
 
 const waitUntilReturnName = (value, vl) => {
@@ -128,6 +133,16 @@ const getCardToInsertBeforItOtherCard = (allCard, mousePosition) => {
 		return card.getBoundingClientRect().top > mousePosition
 	})
 	return aftercard[0]
+}
+
+const colorDaysINCalendarNEXTbPREVIOUS = (startDatesarr, endDatesarr, currrentMonth) => {
+	let allDaysSelected = [...document.querySelectorAll('.days div')]
+	firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
+	runOneTime(firstDayMth, allDaysSelected)()
+	evrySingleDays.length = 0
+	evrySingleDays.push(allDaysSelected)
+	console.log(evrySingleDays);
+	//TODO working on this now
 }
 
 
@@ -258,7 +273,19 @@ const observerWorkspace = new MutationObserver((mutations) => {
 	btnPrevious = document.querySelector('.btn_previous')
 	btnNext = document.querySelector('.btn_next')
 	if (btnPrevious || btnNext) {
+		observerWorkspace.disconnect()
 		btnPrevious.addEventListener('click', () => {
+
+
+
+
+
+			let theOneMonth = thisMonth
+			if (thisMonth === 0) {
+				theOneMonth = 12;
+			}
+			//NOTE CURRENT MONTH theOneMonth
+			console.log(theOneMonth);
 			// evrySingleDays = [...document.querySelectorAll('.days div')]
 			if (thisMonth === 0) {
 				thisYear--
@@ -271,6 +298,17 @@ const observerWorkspace = new MutationObserver((mutations) => {
 			//TODO add color fucntion days and get the data from indexdb
 		})
 		btnNext.addEventListener('click', () => {
+			
+
+
+
+			let theOneMonthss = thisMonth + 2
+			if (theOneMonthss === 13) {
+				theOneMonthss = 12;
+			}
+			//NOTE CURRENT MONTH theOneMonth
+			console.log(theOneMonthss);
+
 			// evrySingleDays = [...document.querySelectorAll('.days div')]
 			if (thisMonth === 11) {
 				thisYear++
@@ -285,6 +323,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 	}
 	if (epicButton) {
 		epicButton.addEventListener('click', () => {
+			console.log(`add epic`);
 			Qual.confirmd("ADD EPIC ", //For heading
 				"", //For sub heading
 				inf, //icon variable we can define our own also by giving th link in double quotes
@@ -301,11 +340,21 @@ const observerWorkspace = new MutationObserver((mutations) => {
 						//NOTE send epic sDate  and eDate to the servece worker
 						const startDayMonthYear = getDayMonthYear(sDate)
 						const endDayMonthYear = getDayMonthYear(eDate)
+
 						firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
 						const epicTask = document.querySelector('.epic_task')
 						let epicTaskHtml = components.epicHtml
 						epicTaskHtml.childNodes[1].innerHTML = epic
 						color = generateRandomBrightestHSLColor()
+						// REVIEW arrays to create the functionality of color
+						startDaysToColorArr.push(startDayMonthYear)
+						console.log('startDaysToColorArr: ', startDaysToColorArr);
+						endDaysToColorArr.push(endDayMonthYear)
+						console.log('endDaysToColorArr: ', endDaysToColorArr);
+						colorArr.push(color)
+						console.log('colorArr: ', colorArr);
+
+
 						epicTaskHtml.style.backgroundColor = color
 						epicTask.append(epicTaskHtml.cloneNode(true))
 						runOneTime(firstDayMth, evrySingleDays)()
@@ -342,7 +391,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 								});
 							})
 						}
-						//FIXME delete epic task create a function 
+						//FIXME delete epic task create a function : delete the color of days in the calendar 
 						startDate = null
 						epicName = null
 						endDate = null
@@ -528,16 +577,18 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				//TODO get the parent element of the bug option and add it in the begin
 				if (getBUGS) {
 					options3dot.forEach((o3dot, index) => {
-						o3dot.addEventListener('click', () => {							
+						o3dot.addEventListener('click', () => {
 							optionsdamn[index].style.display = 'block'
 							//TODO get the elemnts by ID and add th element in the i statement 
 							//delete
 							getBUGS[index].childNodes[3].childNodes[1].childNodes[3].addEventListener('click', () => {
-								if (getBUGS[index]&&getBUGS[index].childNodes[3].childNodes[1]) {
+								if (getBUGS[index] && getBUGS[index].childNodes[3].childNodes[1]) {
 									getBUGS[index].remove()
 									getBUGS[index].childNodes[3].childNodes[1].remove()
 								}
-							},{once:true})
+							}, {
+								once: true
+							})
 							//change status
 							getBUGS[index].childNodes[3].childNodes[1].childNodes[1].addEventListener('click', () => {
 								if (getBUGS[index].childNodes[3].childNodes[1]) {
@@ -546,7 +597,9 @@ const observerWorkspace = new MutationObserver((mutations) => {
 									getBUGS[index].classList.add('closegreenclass')
 									//TODO send it to the database
 								}
-							},{once:true})
+							}, {
+								once: true
+							})
 						})
 					})
 				}
@@ -568,25 +621,25 @@ observerWorkspace.observe(workspace, {
 // create data base
 // var db = new Dexie('aaaaaa');
 // db.version(1).stores({
-	// 	Roadmap: `epics,color,startDay,finishDay,startMonth,finshMonth,year`,
-	// 	kanban: `backlog,inProgress,done`,
-	// 	bugs: `opened,closed`,
-	// });
-	// await db.Roadmap.bulkPut([{
-		// 	epics: "UX design",
-		// 	color: "red",
-		// 	startDay: "10 ",
-		// 	finishDay: "15 ",
-		// 	startMounth: "February",
-		// 	finshMonth: "March",
-		// 	year: "2022",
-		// }])
-		
-		
-		// TODO count the task open and in progress done and bugs and calcule the percent of each tasks
-		
-		// TODO instal button functionality
-		//TODO waiting pop up when you click install until the install is available inservice workers
+// 	Roadmap: `epics,color,startDay,finishDay,startMonth,finshMonth,year`,
+// 	kanban: `backlog,inProgress,done`,
+// 	bugs: `opened,closed`,
+// });
+// await db.Roadmap.bulkPut([{
+// 	epics: "UX design",
+// 	color: "red",
+// 	startDay: "10 ",
+// 	finishDay: "15 ",
+// 	startMounth: "February",
+// 	finshMonth: "March",
+// 	year: "2022",
+// }])
+
+
+// TODO count the task open and in progress done and bugs and calcule the percent of each tasks
+
+// TODO instal button functionality
+//TODO waiting pop up when you click install until the install is available inservice workers
 
 //TODO  create a delete function to the cards of the projects in the first page
 //TODO create white theme for the app : dark mode white mode
