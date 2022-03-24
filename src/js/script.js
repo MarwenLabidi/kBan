@@ -174,8 +174,6 @@ const colorDaysINCalendarNEXTbPREVIOUS = (startDatesarr, endDatesarr, currentMon
 
 
 
-
-
 project.addEventListener('click', () => {
 	workspace.innerHTML = ''
 	workspace.append(components.cardAddHtml)
@@ -309,6 +307,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 			
 			if(startDaysToColorArr.length > 0) {
 				colorDaysINCalendarNEXTbPREVIOUS(startDaysToColorArr,endDaysToColorArr,theOneMonth,thisYear)
+				
 			}
 
 
@@ -375,7 +374,6 @@ const observerWorkspace = new MutationObserver((mutations) => {
 						let epicTaskHtml = components.epicHtml
 						epicTaskHtml.childNodes[1].innerHTML = epic
 						color = generateRandomBrightestHSLColor()
-						// REVIEW arrays to create the functionality of color
 						startDaysToColorArr.push(startDayMonthYear)
 						
 						endDaysToColorArr.push(endDayMonthYear)
@@ -412,13 +410,17 @@ const observerWorkspace = new MutationObserver((mutations) => {
 									options[indexOfChosenEpic].lastChild.addEventListener('click', () => {
 										// 
 										options[index].style.display = 'none'
+										//NOTE modifier the elemet that you dlelete it 
+										
+										startDaysToColorArr.splice(indexOfChosenEpic, 1)
+										endDaysToColorArr.splice(indexOfChosenEpic, 1)
+										colorArr.splice(indexOfChosenEpic, 1)
+										btnPrevious.click()
+										btnNext.click()
+
+
 										epicH3[index].remove()
-										//TODO delete the color in the calendar call color function with gray color
-										//TODO delete the epic from the indexdb
 										indexOfChosenEpic = null
-										//-[] delete colors
-										//index of chosen epic is the same index of startdayarr and enddate arr
-										//use color function on this :line 138
 									})
 								});
 							})
@@ -686,4 +688,4 @@ observerWorkspace.observe(workspace, {
 // TODO check the database if is full or do a delete technique 
 //FIXME figure out a solution to color calendars days in roadmap 
 //TODO change the theme to black pwa theme instead of white
-//TODO ADD to the epic card the start date and the fininish date 
+//TODO change the random color functionality in the r section to array of 20 color
