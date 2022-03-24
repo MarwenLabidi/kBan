@@ -1,4 +1,3 @@
-//TODO indexedDB.database() not working in mozila : find alternative
 let dataBases = await indexedDB.databases()
 const components = await import('./ajaj.js')
 const calendar = await import('./calendar.js')
@@ -135,17 +134,42 @@ const getCardToInsertBeforItOtherCard = (allCard, mousePosition) => {
 	return aftercard[0]
 }
 
-const colorDaysINCalendarNEXTbPREVIOUS = (startDatesarr, endDatesarr, currrentMonth) => {
+const colorDaysINCalendarNEXTbPREVIOUS = (startDatesarr, endDatesarr, currentMonth,currentYear) => {
+	// console.log('currentYear: ', currentYear);
+	// console.log('currentMonth: ', currentMonth);
+	// console.log('startDatesarr: ', startDatesarr);
+	// console.log('endDatesarr: ', endDatesarr);
+
+	setTimeout(() => {
 	let allDaysSelected = [...document.querySelectorAll('.days div')]
-	firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
-	runOneTime(firstDayMth, allDaysSelected)()
-	evrySingleDays.length = 0
-	evrySingleDays.push(allDaysSelected)
-	console.log(evrySingleDays);
-	//check if the current month is in startDatesarr and endDatesarr
-	//check the same column of each startDAtearr[i] and enddatearr[i]
-	//if the same month calculate the number of days you gonna color
-	// if the month defferent color allthe days start from the start days
+	let firstDayMths = calendar.getFirstDaysOfSpesificMonth(currentMonth-1, currentYear)
+	runOneTime(firstDayMths, allDaysSelected)()	
+	// console.log('allDaysSelected: ', allDaysSelected);
+	
+	for(let i=0;i<startDatesarr.length;i++){
+		if(startDatesarr[i].year==currentYear&&startDatesarr[i].month==currentMonth){
+			if (endDatesarr[i].month == startDatesarr[i].month) {
+				for (let index = startDatesarr[i].day; index <= endDatesarr[i].day; index++) {
+					allDaysSelected[index-1].style.backgroundColor = colorArr[i]
+				}
+			}else{
+				for (let index = startDatesarr[i].day; index <= allDaysSelected.length; index++) {
+					allDaysSelected[index-1].style.backgroundColor = colorArr[i]
+				}
+			}
+			
+		}else if (endDatesarr[i].year==currentYear&&endDatesarr[i].month==currentMonth){ 
+			setTimeout(() => {
+				let allDaysSelected2 = [...document.querySelectorAll('.days div')]
+				let firstDayMths2 = calendar.getFirstDaysOfSpesificMonth(currentMonth-1, currentYear)
+				runOneTime(firstDayMths2, allDaysSelected2)()
+			for (let index =0; index < endDatesarr[i].day; index++) {
+					allDaysSelected2[index].style.backgroundColor =colorArr[i]
+				}
+			}, 1000);
+		}
+	}
+}, 1000);
 }
 
 
@@ -202,7 +226,7 @@ cardAdd.addEventListener('click', () => {
 		"Enter Project Name" //Placeholder text of input field
 	)
 	waitUntilReturnName(projectName, 'projectName').then((Name) => {
-		//! console.log(Name) NOTE : send the name to the service worker
+		//!  NOTE : send the name to the service worker
 		aside.style.width = '28%'
 		aside.style.minWidth = '300px'
 		rightbar.append(components.sideBarRightHtml)
@@ -278,17 +302,17 @@ const observerWorkspace = new MutationObserver((mutations) => {
 	if (btnPrevious || btnNext) {
 		observerWorkspace.disconnect()
 		btnPrevious.addEventListener('click', () => {
-
-
-
-
-
 			let theOneMonth = thisMonth
 			if (thisMonth === 0) {
 				theOneMonth = 12;
 			}
-			//NOTE CURRENT MONTH theOneMonth
-			console.log(theOneMonth);
+			
+			if(startDaysToColorArr.length > 0) {
+				colorDaysINCalendarNEXTbPREVIOUS(startDaysToColorArr,endDaysToColorArr,theOneMonth,thisYear)
+			}
+
+
+
 			// evrySingleDays = [...document.querySelectorAll('.days div')]
 			if (thisMonth === 0) {
 				thisYear--
@@ -305,12 +329,14 @@ const observerWorkspace = new MutationObserver((mutations) => {
 
 
 
+
 			let theOneMonthss = thisMonth + 2
 			if (theOneMonthss === 13) {
 				theOneMonthss = 12;
 			}
-			//NOTE CURRENT MONTH theOneMonth
-			console.log(theOneMonthss);
+			if(startDaysToColorArr.length > 0) {
+				colorDaysINCalendarNEXTbPREVIOUS(startDaysToColorArr,endDaysToColorArr,theOneMonthss,thisYear)
+			}
 
 			// evrySingleDays = [...document.querySelectorAll('.days div')]
 			if (thisMonth === 11) {
@@ -326,7 +352,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 	}
 	if (epicButton) {
 		epicButton.addEventListener('click', () => {
-			console.log(`add epic`);
+			
 			Qual.confirmd("ADD EPIC ", //For heading
 				"", //For sub heading
 				inf, //icon variable we can define our own also by giving th link in double quotes
@@ -351,11 +377,11 @@ const observerWorkspace = new MutationObserver((mutations) => {
 						color = generateRandomBrightestHSLColor()
 						// REVIEW arrays to create the functionality of color
 						startDaysToColorArr.push(startDayMonthYear)
-						console.log('startDaysToColorArr: ', startDaysToColorArr);
+						
 						endDaysToColorArr.push(endDayMonthYear)
-						console.log('endDaysToColorArr: ', endDaysToColorArr);
+						
 						colorArr.push(color)
-						console.log('colorArr: ', colorArr);
+						
 
 
 						epicTaskHtml.style.backgroundColor = color
@@ -379,12 +405,12 @@ const observerWorkspace = new MutationObserver((mutations) => {
 									}, 2000);
 									options[indexOfChosenEpic].firstChild.addEventListener('click', () => {
 										//TODO create a kanban board from the epic
-										// console.log('create kanban from epic');
+										// 
 										options[index].style.display = 'none'
 										indexOfChosenEpic = null
 									})
 									options[indexOfChosenEpic].lastChild.addEventListener('click', () => {
-										// console.log('delete epic');
+										// 
 										options[index].style.display = 'none'
 										epicH3[index].remove()
 										//TODO delete the color in the calendar call color function with gray color
@@ -506,7 +532,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 						//* the number of comments
 						AllComments[index].children[0].addEventListener('click', () => {
 							//TODO get the numberrof comment and add it [change p inner text]
-							// console.log('delete card');	
+							// 	
 						})
 						//NOTE drag and drop functionality
 						card.addEventListener('dragstart', (e) => {
@@ -530,16 +556,16 @@ const observerWorkspace = new MutationObserver((mutations) => {
 							e.preventDefault()
 							const dragable = document.querySelector('.dragging')
 							// backlogInprogressDone.appendChild(dragable)
-							console.log(`drop in ${backlogInprogressDone.id}`);
+							
 							//TODO send card iformation to the service worker 
 							//TODO SEND THE POSIONN OF EEACH CARD TO THE DATABASE
 							let childCardexpectMe = [...backlogInprogressDone.children]
 							// let cardDomRec = []
 							childCardexpectMe.shift()
-							console.log(childCardexpectMe);
-							console.log(e.clientY);
+							
+							
 							let minC = getCardToInsertBeforItOtherCard(childCardexpectMe, e.clientY)
-							console.log(minC);
+							
 							if (childCardexpectMe.length > 0) {
 								backlogInprogressDone.insertBefore(dragable, minC)
 							} else {
@@ -660,3 +686,4 @@ observerWorkspace.observe(workspace, {
 // TODO check the database if is full or do a delete technique 
 //FIXME figure out a solution to color calendars days in roadmap 
 //TODO change the theme to black pwa theme instead of white
+//TODO ADD to the epic card the start date and the fininish date 
