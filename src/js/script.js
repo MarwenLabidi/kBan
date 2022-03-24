@@ -22,8 +22,26 @@ let color = null
 let startDaysToColorArr = []
 let endDaysToColorArr = []
 let colorArr = []
-
-
+function* gen() {
+	yield `hsla(203,70%,80%)`;
+	yield `hsl(28, 45%, 55%)`;
+	yield `hsla(299,70%,80%)`;
+	yield `hsl(94, 61%, 68%)`;
+	yield `hsla(53,70%,80%)`;
+	yield `hsl(273, 68%, 59%)`;
+	yield `hsl(39, 100%, 47%)`;
+	yield `hsl(12, 98%, 64%)`;
+	yield `hsl(201, 100%, 36%)`;
+	yield `hsl(60, 90%, 68%)`;
+	yield `hsl(342, 100%, 64%)`;
+	yield `	hsl(85, 97%, 62%)`;
+	yield `hsl(80, 1%, 54%)`;
+	yield `hsl(55, 100%, 60%)`;
+	yield `hsl(179, 78%, 75%)`;
+	yield `green`;
+	
+      }
+      let g = gen();
 
 const waitUntilReturnName = (value, vl) => {
 	return new Promise((resolve, reject) => {
@@ -123,28 +141,23 @@ const colorSelectedDays = (currentMonth, currentYear) => {
 	}
 }
 
-//FIXME: add the half of the height to the position expected
 const getCardToInsertBeforItOtherCard = (allCard, mousePosition) => {
 	if (allCard.length === 0) {
 		return
 	}
 	const aftercard = allCard.filter(card => {
-		return card.getBoundingClientRect().top > mousePosition
+		return card.getBoundingClientRect().top+(card.offsetHeight/2) > mousePosition
 	})
 	return aftercard[0]
 }
 
 const colorDaysINCalendarNEXTbPREVIOUS = (startDatesarr, endDatesarr, currentMonth,currentYear) => {
-	// console.log('currentYear: ', currentYear);
-	// console.log('currentMonth: ', currentMonth);
-	// console.log('startDatesarr: ', startDatesarr);
-	// console.log('endDatesarr: ', endDatesarr);
-
+	
+	
 	setTimeout(() => {
 	let allDaysSelected = [...document.querySelectorAll('.days div')]
 	let firstDayMths = calendar.getFirstDaysOfSpesificMonth(currentMonth-1, currentYear)
 	runOneTime(firstDayMths, allDaysSelected)()	
-	// console.log('allDaysSelected: ', allDaysSelected);
 	
 	for(let i=0;i<startDatesarr.length;i++){
 		if(startDatesarr[i].year==currentYear&&startDatesarr[i].month==currentMonth){
@@ -166,10 +179,10 @@ const colorDaysINCalendarNEXTbPREVIOUS = (startDatesarr, endDatesarr, currentMon
 			for (let index =0; index < endDatesarr[i].day; index++) {
 					allDaysSelected2[index].style.backgroundColor =colorArr[i]
 				}
-			}, 1000);
+			}, 10);
 		}
 	}
-}, 1000);
+}, 10);
 }
 
 
@@ -368,17 +381,17 @@ const observerWorkspace = new MutationObserver((mutations) => {
 						firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
 						const epicTask = document.querySelector('.epic_task')
 						let epicTaskHtml = components.epicHtml
-						epicTaskHtml.childNodes[1].innerHTML = epic
-						color = generateRandomBrightestHSLColor()
+						
+						epicTaskHtml.childNodes[0].innerHTML = epic
+						color=g.next().value
+						if(g.next().done){
+							g = gen()
+						}
 						startDaysToColorArr.push(startDayMonthYear)
-						
 						endDaysToColorArr.push(endDayMonthYear)
-						
 						colorArr.push(color)
-						
-
-
 						epicTaskHtml.style.backgroundColor = color
+						
 						epicTask.append(epicTaskHtml.cloneNode(true))
 						runOneTime(firstDayMth, evrySingleDays)()
 						colorSelectedDays(thisMonth + 1, thisYear)(+startDayMonthYear.day, +startDayMonthYear.month, +startDayMonthYear.year)(+endDayMonthYear.day, +endDayMonthYear.month, +endDayMonthYear.year)(color)
@@ -590,7 +603,6 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				let BUG = components.bugbarHtml
 				BUG.childNodes[1].childNodes[1].childNodes[1].innerText = bug
 				BUG.childNodes[3].childNodes[3].innerHTML = new Date().toLocaleDateString()
-				BUG.childNodes[5].innerHTML = "on going"
 				BUG.childNodes[7].innerHTML = "open"
 				tbody.append(BUG.cloneNode(true))
 				bugName = null
@@ -601,6 +613,10 @@ const observerWorkspace = new MutationObserver((mutations) => {
 					options3dot.forEach((o3dot, index) => {
 						o3dot.addEventListener('click', () => {
 							optionsdamn[index].style.display = 'block'
+							setTimeout(() => {
+								optionsdamn[index].style.display = 'none'
+
+							}, 2000);
 							//delete
 							getBUGS[index].childNodes[3].childNodes[1].childNodes[3].addEventListener('click', () => {
 								if (getBUGS[index] && getBUGS[index].childNodes[3].childNodes[1]) {
@@ -616,6 +632,11 @@ const observerWorkspace = new MutationObserver((mutations) => {
 									optionsdamn[index].style.display = 'none'
 									getBUGS[index].childNodes[7].innerHTML = 'closed'
 									getBUGS[index].classList.add('closegreenclass')
+									
+										let s=document.querySelectorAll('#shit')
+										s[index].innerHTML = new Date().toLocaleDateString()
+									
+							
 									//NOTE send it to the database
 								}
 							}, {
@@ -639,28 +660,8 @@ observerWorkspace.observe(workspace, {
 })
 
 
-// create data base
-// var db = new Dexie('aaaaaa');
-// db.version(1).stores({
-// 	Roadmap: `epics,color,startDay,finishDay,startMonth,finshMonth,year`,
-// 	kanban: `backlog,inProgress,done`,
-// 	bugs: `opened,closed`,
-// });
-// await db.Roadmap.bulkPut([{
-// 	epics: "UX design",
-// 	color: "red",
-// 	startDay: "10 ",
-// 	finishDay: "15 ",
-// 	startMounth: "February",
-// 	finshMonth: "March",
-// 	year: "2022",
-// }])
 
-// FIXME chen to toggle the show comment in kba boared and in the three point in epic and in the bugs and look for other
 
-// FIXME change the finiched in the bug section to the date of closed bug
-
-//FIXME run the randomcolor another time if the color is in the colorArray
 
 // TODO instal button functionality
 
