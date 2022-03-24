@@ -191,7 +191,6 @@ project.addEventListener('click', () => {
 			cardNames[index].innerText = Names[index]
 		}
 		//TODO when you click to any project card it will show you seconde side bar and show you the data
-		//TODO  if you click oneof them
 	}
 
 })
@@ -255,7 +254,6 @@ const observerSideBar = new MutationObserver((mutations) => {
 		thisMonth = calendar.currentMounthNumber
 		firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
 		createCalender()
-		//TODO add color fucntion days and get the data from indexdb
 	})
 	Roadmap.click()
 	KanbanBoard.addEventListener('click', () => {
@@ -321,7 +319,6 @@ const observerWorkspace = new MutationObserver((mutations) => {
 			}
 			firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
 			createCalender()
-			//TODO add color fucntion days and get the data from indexdb
 		})
 		btnNext.addEventListener('click', () => {
 			
@@ -346,7 +343,6 @@ const observerWorkspace = new MutationObserver((mutations) => {
 			}
 			firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
 			createCalender()
-			//TODO add color fucntion days and get the data from indexdb
 		})
 	}
 	if (epicButton) {
@@ -387,8 +383,6 @@ const observerWorkspace = new MutationObserver((mutations) => {
 						runOneTime(firstDayMth, evrySingleDays)()
 						colorSelectedDays(thisMonth + 1, thisYear)(+startDayMonthYear.day, +startDayMonthYear.month, +startDayMonthYear.year)(+endDayMonthYear.day, +endDayMonthYear.month, +endDayMonthYear.year)(color)
 						//NOTE send all the data to the service worker to color when there is a colorfull
-						//TODO add data attribute to he epic task {debutdate and findate and month....} when you dlete it you know the days to uncolor it
-						//?show the options in the epic task
 						const epic3dots = document.querySelectorAll('.epic3dots')
 						const options = document.querySelectorAll('.options')
 						const epicH3 = document.querySelectorAll('.epicH3')
@@ -410,7 +404,6 @@ const observerWorkspace = new MutationObserver((mutations) => {
 									options[indexOfChosenEpic].lastChild.addEventListener('click', () => {
 										// 
 										options[index].style.display = 'none'
-										//NOTE modifier the elemet that you dlelete it 
 										
 										startDaysToColorArr.splice(indexOfChosenEpic, 1)
 										endDaysToColorArr.splice(indexOfChosenEpic, 1)
@@ -425,7 +418,6 @@ const observerWorkspace = new MutationObserver((mutations) => {
 								});
 							})
 						}
-						//FIXME delete epic task create a function : delete the color of days in the calendar 
 						startDate = null
 						epicName = null
 						endDate = null
@@ -459,23 +451,23 @@ const observerWorkspace = new MutationObserver((mutations) => {
 			)
 			waitUntilReturnName(KboardName, 'KboardName').then((nameKBOARD) => {
 				nameKboard.innerHTML = nameKBOARD
-				//TODO send it to servie worker and create table
+				//NOTE send it to servie worker and create table
 			})
 		})
-		// TODO get the kanban board list from the service worker @kanbanBoardlist
+		// NOTE get the kanban board list from the service worker @kanbanBoardlist
 		const nameKBOARDFromDB = `hello` //!FIXME get the name of the kanban board from the service worker
 		const optionListKboard = [...kbanBoardList.children]
 		optionListKboard.forEach((option) => {
 			if (option.value === nameKBOARDFromDB) {
 				option.selected = true
-				//TODO load the data [kbanBoardList.value] in the board from service worker
+				//NOTE load the data [kbanBoardList.value] in the board from service worker
 				const addCardKbanBoardInProgress = document.querySelector('#addCardKbanBoardInProgress')
 				addCardKbanBoardInProgress.addEventListener('click', () => {
 					observerWorkspace.observe(workspace, {
 						childList: true,
 						subtree: true
 					})
-					//TODO create kban first or choose from the list : impement this sooner befor you  create the card
+					//TODO choose KBAN BOARD from the list 
 					Qual.confirmd("NEW CARD ", //For heading
 						"", //For sub heading
 						inf, //icon variable we can define our own also by giving th link in double quotes
@@ -490,14 +482,13 @@ const observerWorkspace = new MutationObserver((mutations) => {
 						let card = components.cardBoardkanbanHtml
 						card.children[0].innerHTML = contentCard
 						Backlog.append(card.cloneNode(true))
-						//TODO add this canban card to the service worker
+						//NOTE add this canban card to the service worker
 						cardKanbanContent = null
 					})
 				})
 				const allCardBoard = document.querySelectorAll('.cardBoard')
 				const AllComments = document.querySelectorAll('.comments')
 				const showComment = document.querySelectorAll('.showComment')
-				//TODO delete card and add comment 
 				if (allCardBoard) {
 					allCardBoard.forEach((card, index) => {
 						//*delete card
@@ -517,7 +508,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 								"Enter your comment" //Placeholder text of input field
 							)
 							waitUntilReturnName(comment, 'comment').then((comments) => {
-								//TODO add this comment to the data base 
+								//NOTE add this comment to the data base 
 								const li = document.createElement('li')
 								li.innerHTML = comments
 								showComment[index].append(li)
@@ -533,16 +524,16 @@ const observerWorkspace = new MutationObserver((mutations) => {
 						})
 						//* the number of comments
 						AllComments[index].children[0].addEventListener('click', () => {
-							//TODO get the numberrof comment and add it [change p inner text]
-							// 	
+							//TODO get the numbeR of comment and add it [change p inner text]
+								
 						})
 						//NOTE drag and drop functionality
 						card.addEventListener('dragstart', (e) => {
-							//TODO ADD CLASS TO THE CARD : change opacity andmake a cool animatiom
+							
 							card.classList.add('dragging')
 						})
 						card.addEventListener('dragend', (e) => {
-							//TODO REMOVE CLASS FROM THE CARD
+							
 							card.classList.remove('dragging')
 						})
 					})
@@ -559,8 +550,8 @@ const observerWorkspace = new MutationObserver((mutations) => {
 							const dragable = document.querySelector('.dragging')
 							// backlogInprogressDone.appendChild(dragable)
 							
-							//TODO send card iformation to the service worker 
-							//TODO SEND THE POSIONN OF EEACH CARD TO THE DATABASE
+							//NOTE send card iformation to the service worker 
+							//NOTE SEND THE POSIONN OF EEACH CARD TO THE DATABASE
 							let childCardexpectMe = [...backlogInprogressDone.children]
 							// let cardDomRec = []
 							childCardexpectMe.shift()
@@ -573,7 +564,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 							} else {
 								backlogInprogressDone.appendChild(dragable)
 							}
-							//TODO make the change in the database
+							//NOTE make the change in the database
 						})
 					})
 				}
@@ -584,7 +575,6 @@ const observerWorkspace = new MutationObserver((mutations) => {
 	const bugAddButton = document.querySelector('#bugAddButton')
 	const tbody = document.querySelector('tbody')
 	if (bugAddButton) {
-		//TODO desconenet mutation observer 
 		bugAddButton.addEventListener('click', () => {
 			Qual.confirmd("ADD Bug ", //For heading
 				"", //For sub heading
@@ -607,13 +597,10 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				let getBUGS = [...document.querySelectorAll('.BUG')]
 				let options3dot = [...document.querySelectorAll('.options3dot')]
 				let optionsdamn = [...document.querySelectorAll('.optionsdamn')]
-				//FIXME delete bugs options
-				//TODO get the parent element of the bug option and add it in the begin
 				if (getBUGS) {
 					options3dot.forEach((o3dot, index) => {
 						o3dot.addEventListener('click', () => {
 							optionsdamn[index].style.display = 'block'
-							//TODO get the elemnts by ID and add th element in the i statement 
 							//delete
 							getBUGS[index].childNodes[3].childNodes[1].childNodes[3].addEventListener('click', () => {
 								if (getBUGS[index] && getBUGS[index].childNodes[3].childNodes[1]) {
@@ -629,7 +616,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 									optionsdamn[index].style.display = 'none'
 									getBUGS[index].childNodes[7].innerHTML = 'closed'
 									getBUGS[index].classList.add('closegreenclass')
-									//TODO send it to the database
+									//NOTE send it to the database
 								}
 							}, {
 								once: true
@@ -669,23 +656,28 @@ observerWorkspace.observe(workspace, {
 // 	year: "2022",
 // }])
 
+// FIXME chen to toggle the show comment in kba boared and in the three point in epic and in the bugs and look for other
+
+// FIXME change the finiched in the bug section to the date of closed bug
+
+//FIXME run the randomcolor another time if the color is in the colorArray
+
+// TODO instal button functionality
 
 // TODO count the task open and in progress done and bugs and calcule the percent of each tasks
 
-// TODO instal button functionality
-//TODO waiting pop up when you click install until the install is available inservice workers
-
 //TODO  create a delete function to the cards of the projects in the first page
+
 //TODO create white theme for the app : dark mode white mode
-// TODO change the README : add the api of transfer databwtwen service wrker and app ane delete voice controll struff
-// FIXME chen to toggle the show comment in kba boared and in the three point in epic and in the bugs and look for other
 
 // TODO add delete button in the first project cards and add clear all project functionality
 
-// TODO add transition to pop up in delele and close in epic and in bugs
+// TODO add transition to pop up in delele and close OPTIONS in epic and in bugs
+
 // TODO disable report until you chooose a project or you create new one
-// FIXME change the finiched in the bug section to the date of closed bug
-// TODO check the database if is full or do a delete technique 
-//FIXME figure out a solution to color calendars days in roadmap 
+
 //TODO change the theme to black pwa theme instead of white
-//TODO change the random color functionality in the r section to array of 20 color
+
+// TODO check the database if is full or do a delete technique 
+
+// TODO change the README : add the api of transfer databwtwen service wrker and app ane delete voice controll struff
