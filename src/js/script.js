@@ -22,6 +22,7 @@ let color = null
 let startDaysToColorArr = []
 let endDaysToColorArr = []
 let colorArr = []
+
 function* gen() {
 	yield `hsla(203,70%,80%)`;
 	yield `hsl(28, 45%, 55%)`;
@@ -39,9 +40,9 @@ function* gen() {
 	yield `hsl(55, 100%, 60%)`;
 	yield `hsl(179, 78%, 75%)`;
 	yield `green`;
-	
-      }
-      let g = gen();
+
+}
+let g = gen();
 
 const waitUntilReturnName = (value, vl) => {
 	return new Promise((resolve, reject) => {
@@ -146,43 +147,43 @@ const getCardToInsertBeforItOtherCard = (allCard, mousePosition) => {
 		return
 	}
 	const aftercard = allCard.filter(card => {
-		return card.getBoundingClientRect().top+(card.offsetHeight/2) > mousePosition
+		return card.getBoundingClientRect().top + (card.offsetHeight / 2) > mousePosition
 	})
 	return aftercard[0]
 }
 
-const colorDaysINCalendarNEXTbPREVIOUS = (startDatesarr, endDatesarr, currentMonth,currentYear) => {
-	
-	
+const colorDaysINCalendarNEXTbPREVIOUS = (startDatesarr, endDatesarr, currentMonth, currentYear) => {
+
+
 	setTimeout(() => {
-	let allDaysSelected = [...document.querySelectorAll('.days div')]
-	let firstDayMths = calendar.getFirstDaysOfSpesificMonth(currentMonth-1, currentYear)
-	runOneTime(firstDayMths, allDaysSelected)()	
-	
-	for(let i=0;i<startDatesarr.length;i++){
-		if(startDatesarr[i].year==currentYear&&startDatesarr[i].month==currentMonth){
-			if (endDatesarr[i].month == startDatesarr[i].month) {
-				for (let index = startDatesarr[i].day; index <= endDatesarr[i].day; index++) {
-					allDaysSelected[index-1].style.backgroundColor = colorArr[i]
+		let allDaysSelected = [...document.querySelectorAll('.days div')]
+		let firstDayMths = calendar.getFirstDaysOfSpesificMonth(currentMonth - 1, currentYear)
+		runOneTime(firstDayMths, allDaysSelected)()
+
+		for (let i = 0; i < startDatesarr.length; i++) {
+			if (startDatesarr[i].year == currentYear && startDatesarr[i].month == currentMonth) {
+				if (endDatesarr[i].month == startDatesarr[i].month) {
+					for (let index = startDatesarr[i].day; index <= endDatesarr[i].day; index++) {
+						allDaysSelected[index - 1].style.backgroundColor = colorArr[i]
+					}
+				} else {
+					for (let index = startDatesarr[i].day; index <= allDaysSelected.length; index++) {
+						allDaysSelected[index - 1].style.backgroundColor = colorArr[i]
+					}
 				}
-			}else{
-				for (let index = startDatesarr[i].day; index <= allDaysSelected.length; index++) {
-					allDaysSelected[index-1].style.backgroundColor = colorArr[i]
-				}
+
+			} else if (endDatesarr[i].year == currentYear && endDatesarr[i].month == currentMonth) {
+				setTimeout(() => {
+					let allDaysSelected2 = [...document.querySelectorAll('.days div')]
+					let firstDayMths2 = calendar.getFirstDaysOfSpesificMonth(currentMonth - 1, currentYear)
+					runOneTime(firstDayMths2, allDaysSelected2)()
+					for (let index = 0; index < endDatesarr[i].day; index++) {
+						allDaysSelected2[index].style.backgroundColor = colorArr[i]
+					}
+				}, 10);
 			}
-			
-		}else if (endDatesarr[i].year==currentYear&&endDatesarr[i].month==currentMonth){ 
-			setTimeout(() => {
-				let allDaysSelected2 = [...document.querySelectorAll('.days div')]
-				let firstDayMths2 = calendar.getFirstDaysOfSpesificMonth(currentMonth-1, currentYear)
-				runOneTime(firstDayMths2, allDaysSelected2)()
-			for (let index =0; index < endDatesarr[i].day; index++) {
-					allDaysSelected2[index].style.backgroundColor =colorArr[i]
-				}
-			}, 10);
 		}
-	}
-}, 10);
+	}, 10);
 }
 
 
@@ -315,10 +316,10 @@ const observerWorkspace = new MutationObserver((mutations) => {
 			if (thisMonth === 0) {
 				theOneMonth = 12;
 			}
-			
-			if(startDaysToColorArr.length > 0) {
-				colorDaysINCalendarNEXTbPREVIOUS(startDaysToColorArr,endDaysToColorArr,theOneMonth,thisYear)
-				
+
+			if (startDaysToColorArr.length > 0) {
+				colorDaysINCalendarNEXTbPREVIOUS(startDaysToColorArr, endDaysToColorArr, theOneMonth, thisYear)
+
 			}
 
 
@@ -334,7 +335,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 			createCalender()
 		})
 		btnNext.addEventListener('click', () => {
-			
+
 
 
 
@@ -343,8 +344,8 @@ const observerWorkspace = new MutationObserver((mutations) => {
 			if (theOneMonthss === 13) {
 				theOneMonthss = 12;
 			}
-			if(startDaysToColorArr.length > 0) {
-				colorDaysINCalendarNEXTbPREVIOUS(startDaysToColorArr,endDaysToColorArr,theOneMonthss,thisYear)
+			if (startDaysToColorArr.length > 0) {
+				colorDaysINCalendarNEXTbPREVIOUS(startDaysToColorArr, endDaysToColorArr, theOneMonthss, thisYear)
 			}
 
 			// evrySingleDays = [...document.querySelectorAll('.days div')]
@@ -360,7 +361,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 	}
 	if (epicButton) {
 		epicButton.addEventListener('click', () => {
-			
+
 			Qual.confirmd("ADD EPIC ", //For heading
 				"", //For sub heading
 				inf, //icon variable we can define our own also by giving th link in double quotes
@@ -381,17 +382,17 @@ const observerWorkspace = new MutationObserver((mutations) => {
 						firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
 						const epicTask = document.querySelector('.epic_task')
 						let epicTaskHtml = components.epicHtml
-						
+
 						epicTaskHtml.childNodes[0].innerHTML = epic
-						color=g.next().value
-						if(g.next().done){
+						color = g.next().value
+						if (g.next().done) {
 							g = gen()
 						}
 						startDaysToColorArr.push(startDayMonthYear)
 						endDaysToColorArr.push(endDayMonthYear)
 						colorArr.push(color)
 						epicTaskHtml.style.backgroundColor = color
-						
+
 						epicTask.append(epicTaskHtml.cloneNode(true))
 						runOneTime(firstDayMth, evrySingleDays)()
 						colorSelectedDays(thisMonth + 1, thisYear)(+startDayMonthYear.day, +startDayMonthYear.month, +startDayMonthYear.year)(+endDayMonthYear.day, +endDayMonthYear.month, +endDayMonthYear.year)(color)
@@ -417,7 +418,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 									options[indexOfChosenEpic].lastChild.addEventListener('click', () => {
 										// 
 										options[index].style.display = 'none'
-										
+
 										startDaysToColorArr.splice(indexOfChosenEpic, 1)
 										endDaysToColorArr.splice(indexOfChosenEpic, 1)
 										colorArr.splice(indexOfChosenEpic, 1)
@@ -538,15 +539,15 @@ const observerWorkspace = new MutationObserver((mutations) => {
 						//* the number of comments
 						AllComments[index].children[0].addEventListener('click', () => {
 							//TODO get the numbeR of comment and add it [change p inner text]
-								
+
 						})
 						//NOTE drag and drop functionality
 						card.addEventListener('dragstart', (e) => {
-							
+
 							card.classList.add('dragging')
 						})
 						card.addEventListener('dragend', (e) => {
-							
+
 							card.classList.remove('dragging')
 						})
 					})
@@ -562,16 +563,16 @@ const observerWorkspace = new MutationObserver((mutations) => {
 							e.preventDefault()
 							const dragable = document.querySelector('.dragging')
 							// backlogInprogressDone.appendChild(dragable)
-							
+
 							//NOTE send card iformation to the service worker 
 							//NOTE SEND THE POSIONN OF EEACH CARD TO THE DATABASE
 							let childCardexpectMe = [...backlogInprogressDone.children]
 							// let cardDomRec = []
 							childCardexpectMe.shift()
-							
-							
+
+
 							let minC = getCardToInsertBeforItOtherCard(childCardexpectMe, e.clientY)
-							
+
 							if (childCardexpectMe.length > 0) {
 								backlogInprogressDone.insertBefore(dragable, minC)
 							} else {
@@ -632,11 +633,11 @@ const observerWorkspace = new MutationObserver((mutations) => {
 									optionsdamn[index].style.display = 'none'
 									getBUGS[index].childNodes[7].innerHTML = 'closed'
 									getBUGS[index].classList.add('closegreenclass')
-									
-										let s=document.querySelectorAll('#shit')
-										s[index].innerHTML = new Date().toLocaleDateString()
-									
-							
+
+									let s = document.querySelectorAll('#shit')
+									s[index].innerHTML = new Date().toLocaleDateString()
+
+
 									//NOTE send it to the database
 								}
 							}, {
