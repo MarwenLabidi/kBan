@@ -28,7 +28,6 @@
 		}
 
 		& tbody {
-			/* NOTE change it to green when you close it  */
 			background-color: var(--clr_red);
 
 			/* color:var(--clr_white); */
