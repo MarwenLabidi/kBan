@@ -18,10 +18,10 @@ let btnPrevious = null
 let btnNext = null
 let evrySingleDays = []
 let color = null
-
 let startDaysToColorArr = []
 let endDaysToColorArr = []
 let colorArr = []
+let kanbanBoardDATA=[]
 
 function* gen() {
 	yield `hsla(203,70%,80%)`;
@@ -409,9 +409,18 @@ const observerWorkspace = new MutationObserver((mutations) => {
 									setTimeout(() => {
 										options[index].style.display = 'none'
 									}, 2000);
+
+									//create a kanban board from the epic
 									options[indexOfChosenEpic].firstChild.addEventListener('click', () => {
-										//TODO create a kanban board from the epic
-										// 
+
+										document.querySelector('.KanbanBoard').click()
+										setTimeout(() => {
+
+											document.querySelector('#newKboard').click()
+										}, 100)
+										KboardName = epic
+										close_qual();
+
 										options[index].style.display = 'none'
 										indexOfChosenEpic = null
 									})
@@ -465,125 +474,144 @@ const observerWorkspace = new MutationObserver((mutations) => {
 			)
 			waitUntilReturnName(KboardName, 'KboardName').then((nameKBOARD) => {
 				nameKboard.innerHTML = nameKBOARD
+				let optionHTML = document.createElement('option')
+				optionHTML.innerHTML = nameKBOARD
+				kanbanBoardDATA.push({name:nameKBOARD,
+					data:{
+						Backlog: [{constent:null,commenst:[]}],
+						InProgress: [{constent:null,commenst:[]}],
+						Done: [{constent:null,commenst:[]}]
+					}
+				})
+				kbanBoardList.append(optionHTML)
+				const optionListKboard = [...kbanBoardList.children]
+				if (optionListKboard.length > 0) {
+					optionListKboard.forEach((option) => {
+						if (option.value === nameKBOARD) {
+							option.selected = true
+						}
+					})
+				}
+				console.log(kanbanBoardDATA);
+				//TODO register the content of each options in object and load it when you picked option
+				//TODO  load the data when you select a kboard
+				//liseten to the event when you click on list
+				KboardName = null
+
 				//NOTE send it to servie worker and create table
 			})
 		})
-		// NOTE get the kanban board list from the service worker @kanbanBoardlist
-		const nameKBOARDFromDB = `hello` //!FIXME get the name of the kanban board from the service worker
-		const optionListKboard = [...kbanBoardList.children]
-		optionListKboard.forEach((option) => {
-			if (option.value === nameKBOARDFromDB) {
-				option.selected = true
-				//NOTE load the data [kbanBoardList.value] in the board from service worker
-				const addCardKbanBoardInProgress = document.querySelector('#addCardKbanBoardInProgress')
-				addCardKbanBoardInProgress.addEventListener('click', () => {
-					observerWorkspace.observe(workspace, {
-						childList: true,
-						subtree: true
-					})
-					//TODO choose KBAN BOARD from the list 
-					Qual.confirmd("NEW CARD ", //For heading
+
+		//NOTE load the data [kbanBoardList.value] in the board from service worker
+		const addCardKbanBoardInProgress = document.querySelector('#addCardKbanBoardInProgress')
+		addCardKbanBoardInProgress.addEventListener('click', () => {
+			observerWorkspace.observe(workspace, {
+				childList: true,
+				subtree: true
+			})
+			//TODO choose KBAN BOARD from the list 
+			Qual.confirmd("NEW CARD ", //For heading
+				"", //For sub heading
+				inf, //icon variable we can define our own also by giving th link in double quotes
+				"CREATE", //blue button string
+				"", // cancel button string
+				"createcardKanban", //function name that is to be called on click on blue button
+				"", //function name that is to be called on click on cancel button
+				"string", //type of input you want whether a text ,password or number
+				"Enter the content of the card" //Placeholder text of input field
+			)
+			waitUntilReturnName(cardKanbanContent, 'cardKanbanContent').then((contentCard) => {
+				let card = components.cardBoardkanbanHtml
+				card.children[0].innerHTML = contentCard
+				Backlog.append(card.cloneNode(true))
+				//NOTE add this canban card to the service worker
+				cardKanbanContent = null
+			})
+		})
+		const allCardBoard = document.querySelectorAll('.cardBoard')
+		const AllComments = document.querySelectorAll('.comments')
+		const showComment = document.querySelectorAll('.showComment')
+		if (allCardBoard) {
+			allCardBoard.forEach((card, index) => {
+				//*delete card
+				AllComments[index].children[3].addEventListener('click', () => {
+					card.remove()
+				})
+				//*add comment
+				AllComments[index].children[2].addEventListener('click', () => {
+					Qual.confirmd("ADD COMMENT", //For heading
 						"", //For sub heading
 						inf, //icon variable we can define our own also by giving th link in double quotes
-						"CREATE", //blue button string
+						"ADD", //blue button string
 						"", // cancel button string
-						"createcardKanban", //function name that is to be called on click on blue button
+						"addComment", //function name that is to be called on click on blue button
 						"", //function name that is to be called on click on cancel button
 						"string", //type of input you want whether a text ,password or number
-						"Enter the content of the card" //Placeholder text of input field
+						"Enter your comment" //Placeholder text of input field
 					)
-					waitUntilReturnName(cardKanbanContent, 'cardKanbanContent').then((contentCard) => {
-						let card = components.cardBoardkanbanHtml
-						card.children[0].innerHTML = contentCard
-						Backlog.append(card.cloneNode(true))
-						//NOTE add this canban card to the service worker
-						cardKanbanContent = null
+					waitUntilReturnName(comment, 'comment').then((comments) => {
+						//NOTE add this comment to the data base 
+						const li = document.createElement('li')
+						li.innerHTML = comments
+						showComment[index].append(li)
+						comment = null
 					})
 				})
-				const allCardBoard = document.querySelectorAll('.cardBoard')
-				const AllComments = document.querySelectorAll('.comments')
-				const showComment = document.querySelectorAll('.showComment')
-				if (allCardBoard) {
-					allCardBoard.forEach((card, index) => {
-						//*delete card
-						AllComments[index].children[3].addEventListener('click', () => {
-							card.remove()
-						})
-						//*add comment
-						AllComments[index].children[2].addEventListener('click', () => {
-							Qual.confirmd("ADD COMMENT", //For heading
-								"", //For sub heading
-								inf, //icon variable we can define our own also by giving th link in double quotes
-								"ADD", //blue button string
-								"", // cancel button string
-								"addComment", //function name that is to be called on click on blue button
-								"", //function name that is to be called on click on cancel button
-								"string", //type of input you want whether a text ,password or number
-								"Enter your comment" //Placeholder text of input field
-							)
-							waitUntilReturnName(comment, 'comment').then((comments) => {
-								//NOTE add this comment to the data base 
-								const li = document.createElement('li')
-								li.innerHTML = comments
-								showComment[index].append(li)
-								comment = null
-							})
-						})
-						//*show comment
-						AllComments[index].children[1].addEventListener('click', () => {
-							showComment[index].style.display = 'block'
-							setTimeout(() => {
-								showComment[index].style.display = 'none'
-							}, 5000);
-						})
-						//* the number of comments
-						AllComments[index].children[0].addEventListener('click', () => {
-							//TODO get the numbeR of comment and add it [change p inner text]
+				//*show comment
+				AllComments[index].children[1].addEventListener('click', () => {
+					showComment[index].style.display = 'block'
+					setTimeout(() => {
+						showComment[index].style.display = 'none'
+					}, 5000);
+				})
+				//* the number of comments
+				AllComments[index].children[0].addEventListener('click', () => {
+					//TODO get the numbeR of comment and add it [change p inner text]
 
-						})
-						//NOTE drag and drop functionality
-						card.addEventListener('dragstart', (e) => {
+				})
+				//NOTE drag and drop functionality
+				card.addEventListener('dragstart', (e) => {
 
-							card.classList.add('dragging')
-						})
-						card.addEventListener('dragend', (e) => {
+					card.classList.add('dragging')
+				})
+				card.addEventListener('dragend', (e) => {
 
-							card.classList.remove('dragging')
-						})
-					})
-					const backlogInprogressDones = [Backlog, InProgress, Done]
+					card.classList.remove('dragging')
+				})
+			})
+			const backlogInprogressDones = [Backlog, InProgress, Done]
+			// let cardDomRec = []
+			backlogInprogressDones.forEach((backlogInprogressDone) => {
+				backlogInprogressDone.addEventListener('dragover', (e) => {
+					e.preventDefault()
+					observerWorkspace.disconnect()
+					// cardDomRec.length = 0
+				})
+				backlogInprogressDone.addEventListener('drop', (e) => {
+					e.preventDefault()
+					const dragable = document.querySelector('.dragging')
+					// backlogInprogressDone.appendChild(dragable)
+
+					//NOTE send card iformation to the service worker 
+					//NOTE SEND THE POSIONN OF EEACH CARD TO THE DATABASE
+					let childCardexpectMe = [...backlogInprogressDone.children]
 					// let cardDomRec = []
-					backlogInprogressDones.forEach((backlogInprogressDone) => {
-						backlogInprogressDone.addEventListener('dragover', (e) => {
-							e.preventDefault()
-							observerWorkspace.disconnect()
-							// cardDomRec.length = 0
-						})
-						backlogInprogressDone.addEventListener('drop', (e) => {
-							e.preventDefault()
-							const dragable = document.querySelector('.dragging')
-							// backlogInprogressDone.appendChild(dragable)
-
-							//NOTE send card iformation to the service worker 
-							//NOTE SEND THE POSIONN OF EEACH CARD TO THE DATABASE
-							let childCardexpectMe = [...backlogInprogressDone.children]
-							// let cardDomRec = []
-							childCardexpectMe.shift()
+					childCardexpectMe.shift()
 
 
-							let minC = getCardToInsertBeforItOtherCard(childCardexpectMe, e.clientY)
+					let minC = getCardToInsertBeforItOtherCard(childCardexpectMe, e.clientY)
 
-							if (childCardexpectMe.length > 0) {
-								backlogInprogressDone.insertBefore(dragable, minC)
-							} else {
-								backlogInprogressDone.appendChild(dragable)
-							}
-							//NOTE make the change in the database
-						})
-					})
-				}
-			}
-		})
+					if (childCardexpectMe.length > 0) {
+						backlogInprogressDone.insertBefore(dragable, minC)
+					} else {
+						backlogInprogressDone.appendChild(dragable)
+					}
+					//NOTE make the change in the database
+				})
+			})
+		}
+
+
 	}
 	//BUGS FUNCTIONALITY
 	const bugAddButton = document.querySelector('#bugAddButton')
@@ -624,7 +652,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 								if (getBUGS[index] && getBUGS[index].childNodes[3].childNodes[1]) {
 									getBUGS[index].remove()
 									getBUGS[index].childNodes[3].childNodes[1].remove()
-									
+
 									//NOTE send numberofdonebug and modifier numberofopenbugs to database
 								}
 							}, {
