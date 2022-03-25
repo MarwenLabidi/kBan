@@ -9,12 +9,11 @@ let fontColor = "white"
 let backgroundColor = black
 
 
-//TODO get the real statistic 
-let openBugs = 50
-let doneBugs = 50
-let backLog = 40
-let inProgress = 40
-let done = 20
+let openBugs = (NumberOFopenBugs/(NumberOFdoneBugs+ NumberOFopenBugs))*100
+let doneBugs = (NumberOFdoneBugs/(NumberOFdoneBugs+ NumberOFopenBugs))*100
+let backLog = (NumberOFbackLog/(NumberOFbackLog+NumberOFinProgress+NumberOFdone))*100
+let inProgress = (NumberOFinProgress/(NumberOFbackLog+NumberOFinProgress+NumberOFdone))*100
+let done = (NumberOFdone/(NumberOFbackLog+NumberOFinProgress+NumberOFdone))*100
 
 
 const report = document.querySelector('#report')
@@ -50,8 +49,8 @@ report.addEventListener('click', function () {
 		backgroundColor: backgroundColor,
 
 		title: {
-			text: "Progress in Statistics",
-			horizontalAlign: "left",
+			text: "Progress",
+			horizontalAlign: "center",
 			fontColor: fontColor,
 		},
 		data: [{
@@ -89,7 +88,7 @@ report.addEventListener('click', function () {
 
 		title: {
 			text: "Bugs",
-			horizontalAlign: "left",
+			horizontalAlign: "center",
 			fontColor: fontColor,
 
 		},

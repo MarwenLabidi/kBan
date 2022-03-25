@@ -7,12 +7,20 @@
 	var comment = null;
 	var bugName = null;
 
+	//statistic for report section
+	//TODO get all of them from database
+	var NumberOFopenBugs = 10
+	var NumberOFdoneBugs = 10
+	var NumberOFbackLog = 10
+	var NumberOFinProgress = 10
+	var NumberOFdone = 10
+
 
 	const SubmitFun = () => {
 		projectName = inx;
 		// Qual.successd('DONE');
 		// setTimeout(() => {
-			close_qual()
+		close_qual()
 		// }, 1000);
 	}
 	const endDateF = () => {
@@ -62,9 +70,9 @@
 	const addComment = () => {
 		comment = inx;
 		close_qual();
-	}	
+	}
 
-const addBug = () => {
+	const addBug = () => {
 		bugName = inx;
 		close_qual();
 	}

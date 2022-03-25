@@ -606,6 +606,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				BUG.childNodes[3].childNodes[3].innerHTML = new Date().toLocaleDateString()
 				BUG.childNodes[7].innerHTML = "open"
 				tbody.append(BUG.cloneNode(true))
+				//NOTE send numberof open bugs to database
 				bugName = null
 				let getBUGS = [...document.querySelectorAll('.BUG')]
 				let options3dot = [...document.querySelectorAll('.options3dot')]
@@ -623,6 +624,8 @@ const observerWorkspace = new MutationObserver((mutations) => {
 								if (getBUGS[index] && getBUGS[index].childNodes[3].childNodes[1]) {
 									getBUGS[index].remove()
 									getBUGS[index].childNodes[3].childNodes[1].remove()
+									
+									//NOTE send numberofdonebug and modifier numberofopenbugs to database
 								}
 							}, {
 								once: true
@@ -664,7 +667,6 @@ observerWorkspace.observe(workspace, {
 
 
 
-// TODO instal button functionality
 
 // TODO count the task open and in progress done and bugs and calcule the percent of each tasks
 
@@ -681,5 +683,7 @@ observerWorkspace.observe(workspace, {
 //TODO change the theme to black pwa theme instead of white
 
 // TODO check the database if is full or do a delete technique 
+
+// TODO instal button functionality
 
 // TODO change the README : add the api of transfer databwtwen service wrker and app ane delete voice controll struff
