@@ -491,6 +491,9 @@ const observerWorkspace = new MutationObserver((mutations) => {
 			// showComment[index].append(li)
 
 			//change the data object to arr and loop in it to create cards
+			//REVIEW CHECK THIS AGAIN
+			const kboardDAtaConvertedToarr=Object.entries(kanbanBoardDATA);
+			console.log( kboardDAtaConvertedToarr);
 			//loop over backglog in progress and done and create cards with the data and comments
 		})
 
