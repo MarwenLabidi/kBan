@@ -21,7 +21,8 @@ let color = null
 let startDaysToColorArr = []
 let endDaysToColorArr = []
 let colorArr = []
-let kanbanBoardDATA=[]
+let kanbanBoardDATA={}
+let cardtoMveinArr={constent:null,commenst:[]}
 
 function* gen() {
 	yield `hsla(203,70%,80%)`;
@@ -457,6 +458,43 @@ const observerWorkspace = new MutationObserver((mutations) => {
 	const InProgress = document.querySelector('#inProgress')
 	const Done = document.querySelector('#done')
 	if (buttonNewKboard) {
+		// load the data when you select a kboard
+		//liseten to the event when you click on list
+		kbanBoardList.addEventListener('change', (e) => {
+			observerWorkspace.disconnect()
+			//delete all element is html with js expect one
+			const allchildrenBacklog = [...Backlog.children]
+			const allchildrenInProgress = [...InProgress.children]
+			const allchildrenDone = [...Done.children]
+			allchildrenBacklog.forEach((child,index) => {
+				if (index < 1) return;
+				Backlog.removeChild(child)
+			})
+			allchildrenInProgress.forEach((child,index) => {
+				if (index < 1) return;
+				InProgress.removeChild(child)
+			})
+			allchildrenDone.forEach((child,index) => {
+				if (index < 1) return;
+				Done.removeChild(child)
+			})
+
+			//TODO ceate the card of each kban
+			// add card
+			// let card = components.cardBoardkanbanHtml
+			// 	card.children[0].innerHTML = contentCard
+			// 	Backlog.append(card.cloneNode(true))
+
+			//add comments
+			// const li = document.createElement('li')
+			// li.innerHTML = comments
+			// showComment[index].append(li)
+
+			//change the data object to arr and loop in it to create cards
+			//loop over backglog in progress and done and create cards with the data and comments
+		})
+
+
 		buttonNewKboard.addEventListener('click', () => {
 			observerWorkspace.observe(workspace, {
 				childList: true,
@@ -476,13 +514,11 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				nameKboard.innerHTML = nameKBOARD
 				let optionHTML = document.createElement('option')
 				optionHTML.innerHTML = nameKBOARD
-				kanbanBoardDATA.push({name:nameKBOARD,
-					data:{
-						Backlog: [{constent:null,commenst:[]}],
-						InProgress: [{constent:null,commenst:[]}],
-						Done: [{constent:null,commenst:[]}]
-					}
-				})
+				kanbanBoardDATA[nameKBOARD]={
+						Backlog: new Set(),
+						InProgress: new Set(),
+						Done: new Set()
+				}
 				kbanBoardList.append(optionHTML)
 				const optionListKboard = [...kbanBoardList.children]
 				if (optionListKboard.length > 0) {
@@ -492,12 +528,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 						}
 					})
 				}
-				console.log(kanbanBoardDATA);
-				//TODO register the content of each options in object and load it when you picked option
-				//TODO  load the data when you select a kboard
-				//liseten to the event when you click on list
 				KboardName = null
-
 				//NOTE send it to servie worker and create table
 			})
 		})
@@ -505,11 +536,11 @@ const observerWorkspace = new MutationObserver((mutations) => {
 		//NOTE load the data [kbanBoardList.value] in the board from service worker
 		const addCardKbanBoardInProgress = document.querySelector('#addCardKbanBoardInProgress')
 		addCardKbanBoardInProgress.addEventListener('click', () => {
+			if(Object.keys(kanbanBoardDATA).length<1){alert("Create a Kban or pick one from the list.");return;}
 			observerWorkspace.observe(workspace, {
 				childList: true,
 				subtree: true
 			})
-			//TODO choose KBAN BOARD from the list 
 			Qual.confirmd("NEW CARD ", //For heading
 				"", //For sub heading
 				inf, //icon variable we can define our own also by giving th link in double quotes
@@ -524,7 +555,11 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				let card = components.cardBoardkanbanHtml
 				card.children[0].innerHTML = contentCard
 				Backlog.append(card.cloneNode(true))
-				//NOTE add this canban card to the service worker
+				// register the content of each options in object and load it when you picked option
+				//get the selected kanban from the list
+				let kbanBoardListSelectedValue=kbanBoardList.options[kbanBoardList.selectedIndex].value
+				kanbanBoardDATA[kbanBoardListSelectedValue].Backlog.add({constent:contentCard,commenst:[]})
+				//NOTE add this canban card to the service worker kanbanBoardDATA
 				cardKanbanContent = null
 			})
 		})
@@ -538,7 +573,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 					card.remove()
 				})
 				//*add comment
-				AllComments[index].children[2].addEventListener('click', () => {
+				AllComments[index].children[2].addEventListener('click', (e) => {
 					Qual.confirmd("ADD COMMENT", //For heading
 						"", //For sub heading
 						inf, //icon variable we can define our own also by giving th link in double quotes
@@ -555,6 +590,23 @@ const observerWorkspace = new MutationObserver((mutations) => {
 						li.innerHTML = comments
 						showComment[index].append(li)
 						comment = null
+						// ADD COMMNET TO ARRAY DATA 
+						//get the kanban boaard of this card
+						let kbanBoardListSelectedValue=kbanBoardList.options[kbanBoardList.selectedIndex].value
+
+						// get the place (backlog,inprogress,done) of this card
+						let theplaceDropit=e.path[3].getAttribute('id')
+						let constetncard=card.childNodes[1].textContent
+
+						//get the content of this card
+						// get the index of this card 
+						// add the comment to it
+						kanbanBoardDATA[kbanBoardListSelectedValue][theplaceDropit].forEach((card,index)=>{
+							if(card.constent==constetncard){
+								card.commenst.push(comments)
+							}
+
+						})
 					})
 				})
 				//*show comment
@@ -580,7 +632,6 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				})
 			})
 			const backlogInprogressDones = [Backlog, InProgress, Done]
-			// let cardDomRec = []
 			backlogInprogressDones.forEach((backlogInprogressDone) => {
 				backlogInprogressDone.addEventListener('dragover', (e) => {
 					e.preventDefault()
@@ -588,14 +639,52 @@ const observerWorkspace = new MutationObserver((mutations) => {
 					// cardDomRec.length = 0
 				})
 				backlogInprogressDone.addEventListener('drop', (e) => {
+					// change the content of arr to in progress or done and delete backglog from arrddata
+					setTimeout(() => {
+					//the place where you drop it
+					let theplaceDropit=e.path[0].innerText.split('')[0]
+					//get the content of curret drage card and 
+					let cardcontenttolll=backlogInprogressDone.lastChild.childNodes[1].textContent
+					let kbanBoardListSelectedValue=kbanBoardList.options[kbanBoardList.selectedIndex].value
+					if (theplaceDropit=='⏳') {
+						//change the current card in the arrdatat to the in progress 
+						cardtoMveinArr['constent']=cardcontenttolll
+						kanbanBoardDATA[kbanBoardListSelectedValue].InProgress.add(cardtoMveinArr)
+						// delete it from backlog
+						kanbanBoardDATA[kbanBoardListSelectedValue].Backlog.forEach((obj) => {
+							if (obj.constent == cardcontenttolll) {
+								kanbanBoardDATA[kbanBoardListSelectedValue].Backlog.delete(obj);
+							}})
+
+					} else if(theplaceDropit=='✅'){
+						//change the current card in the arrdatat to the in progress 
+						cardtoMveinArr['constent']=cardcontenttolll
+						kanbanBoardDATA[kbanBoardListSelectedValue].Done.add(cardtoMveinArr)
+						// delete it from backlog
+						kanbanBoardDATA[kbanBoardListSelectedValue].InProgress.forEach((obj) => {
+							if (obj.constent == cardcontenttolll) {
+								kanbanBoardDATA[kbanBoardListSelectedValue].InProgress.delete(obj);
+							}})
+
+					}else{
+						//change the current card in the arrdatat to the in progress 
+						cardtoMveinArr['constent']=cardcontenttolll
+						kanbanBoardDATA[kbanBoardListSelectedValue].Backlog.add(cardtoMveinArr)
+						// delete it from backlog
+						kanbanBoardDATA[kbanBoardListSelectedValue].Done.forEach((obj) => {
+							if (obj.constent == cardcontenttolll) {
+								kanbanBoardDATA[kbanBoardListSelectedValue].Done.delete(obj);
+							}})
+
+
+					}
+					}, 10);
 					e.preventDefault()
 					const dragable = document.querySelector('.dragging')
-					// backlogInprogressDone.appendChild(dragable)
 
 					//NOTE send card iformation to the service worker 
 					//NOTE SEND THE POSIONN OF EEACH CARD TO THE DATABASE
 					let childCardexpectMe = [...backlogInprogressDone.children]
-					// let cardDomRec = []
 					childCardexpectMe.shift()
 
 
