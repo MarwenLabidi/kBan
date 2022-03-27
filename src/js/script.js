@@ -479,11 +479,8 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				Done.removeChild(child)
 			})
 
-			//TODO ceate the card of each kban
 			//TODO delete the board when you create another kboard
-			// TODO clear the comments sets when you delet the card or  you change the board
 			
-			//REVIEW CHECK THIS AGAIN
 			//get the current kboard and use foreach on it to create the cards
 			let kbanBoardListSelectedValue=kbanBoardList.options[kbanBoardList.selectedIndex].value
 			kanbanBoardDATA[kbanBoardListSelectedValue].Backlog.forEach((crd, index) => {
@@ -495,9 +492,23 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				crd.commenst.forEach((comt, index) => {
 				let lia = document.createElement('li')
 				lia.innerHTML = comt
-				//TODO condition to check if the comment is aleady in 
-				card.childNodes[7].append(lia)
-				})
+				//REVIEW CHECK this again
+				
+				const test=[...card.childNodes[7].children]
+				if(test.length<1){
+					card.childNodes[7].append(lia)
+				}else{
+					test.forEach((child) => {
+						console.log('child: ', );
+						console.log('lia: ', );
+						if(lia.textContent!=child.textContent){ 
+							card.childNodes[7].append(lia)
+						}
+						})
+				}
+				
+			})
+			
 			})
 
 		})
