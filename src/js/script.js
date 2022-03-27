@@ -481,10 +481,10 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				Done.removeChild(child)
 			})
 
-			//TODO delete the board when you create another kboard
 			
 			//get the current kboard and use foreach on it to create the cards
 			let kbanBoardListSelectedValue=kbanBoardList.options[kbanBoardList.selectedIndex].value
+			nameKboard.innerHTML = kbanBoardListSelectedValue
 			kanbanBoardDATA[kbanBoardListSelectedValue].Backlog.forEach((crd, index) => {
 				// add card
 				let card = components.cardBoardkanbanHtml
@@ -523,6 +523,27 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				"Enter the name of kBoard" //Placeholder text of input field
 			)
 			waitUntilReturnName(KboardName, 'KboardName').then((nameKBOARD) => {
+
+
+					//delete all element is html with js expect one
+			const allchildrenBacklog = [...Backlog.children]
+			const allchildrenInProgress = [...InProgress.children]
+			const allchildrenDone = [...Done.children]
+			allchildrenBacklog.forEach((child,index) => {
+				if (index < 1) return;
+				Backlog.removeChild(child)
+			})
+			allchildrenInProgress.forEach((child,index) => {
+				if (index < 1) return;
+				InProgress.removeChild(child)
+			})
+			allchildrenDone.forEach((child,index) => {
+				if (index < 1) return;
+				Done.removeChild(child)
+			})
+
+
+
 				nameKboard.innerHTML = nameKBOARD
 				let optionHTML = document.createElement('option')
 				optionHTML.innerHTML = nameKBOARD
