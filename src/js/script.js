@@ -23,6 +23,8 @@ let endDaysToColorArr = []
 let colorArr = []
 let kanbanBoardDATA={}
 let cardtoMveinArr={constent:null,commenst:[]}
+const chechCommentsExistOrnot=[]
+
 
 function* gen() {
 	yield `hsla(203,70%,80%)`;
@@ -490,23 +492,14 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				Backlog.append(card.cloneNode(true))
 				//add comments
 				crd.commenst.forEach((comt, index) => {
+					// observerWorkspace.disconnect()
 				let lia = document.createElement('li')
 				lia.innerHTML = comt
-				//REVIEW CHECK this again
-				
-				const test=[...card.childNodes[7].children]
-				if(test.length<1){
+				if(!chechCommentsExistOrnot.includes(comt)){
+					chechCommentsExistOrnot.push(comt)
+					console.log('chechCommentsExistOrnot: ', chechCommentsExistOrnot);
 					card.childNodes[7].append(lia)
-				}else{
-					test.forEach((child) => {
-						console.log('child: ', );
-						console.log('lia: ', );
-						if(lia.textContent!=child.textContent){ 
-							card.childNodes[7].append(lia)
-						}
-						})
 				}
-				
 			})
 			
 			})
