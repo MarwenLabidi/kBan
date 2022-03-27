@@ -461,7 +461,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 		// load the data when you select a kboard
 		//liseten to the event when you click on list
 		kbanBoardList.addEventListener('change', (e) => {
-			observerWorkspace.disconnect()
+			// observerWorkspace.disconnect()
 			//delete all element is html with js expect one
 			const allchildrenBacklog = [...Backlog.children]
 			const allchildrenInProgress = [...InProgress.children]
@@ -480,21 +480,26 @@ const observerWorkspace = new MutationObserver((mutations) => {
 			})
 
 			//TODO ceate the card of each kban
-			// add card
-			// let card = components.cardBoardkanbanHtml
-			// 	card.children[0].innerHTML = contentCard
-			// 	Backlog.append(card.cloneNode(true))
-
-			//add comments
-			// const li = document.createElement('li')
-			// li.innerHTML = comments
-			// showComment[index].append(li)
-
-			//change the data object to arr and loop in it to create cards
+			//TODO delete the board when you create another kboard
+			// TODO clear the comments sets when you delet the card or  you change the board
+			
 			//REVIEW CHECK THIS AGAIN
-			const kboardDAtaConvertedToarr=Object.entries(kanbanBoardDATA);
-			console.log( kboardDAtaConvertedToarr);
-			//loop over backglog in progress and done and create cards with the data and comments
+			//get the current kboard and use foreach on it to create the cards
+			let kbanBoardListSelectedValue=kbanBoardList.options[kbanBoardList.selectedIndex].value
+			kanbanBoardDATA[kbanBoardListSelectedValue].Backlog.forEach((crd, index) => {
+				// add card
+				let card = components.cardBoardkanbanHtml
+				card.children[0].innerHTML = crd.constent
+				Backlog.append(card.cloneNode(true))
+				//add comments
+				crd.commenst.forEach((comt, index) => {
+				let lia = document.createElement('li')
+				lia.innerHTML = comt
+				//TODO condition to check if the comment is aleady in 
+				card.childNodes[7].append(lia)
+				})
+			})
+
 		})
 
 
