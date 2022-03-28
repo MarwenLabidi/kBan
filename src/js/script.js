@@ -489,18 +489,20 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				// add card
 				let card = components.cardBoardkanbanHtml
 				card.children[0].innerHTML = crd.constent
-				Backlog.append(card.cloneNode(true))
+				card.childNodes[7].innerHTML = ''
 				//add comments
 				crd.commenst.forEach((comt, index) => {
 					// observerWorkspace.disconnect()
 				let lia = document.createElement('li')
 				lia.innerHTML = comt
-				if(!chechCommentsExistOrnot.includes(comt)){
-					chechCommentsExistOrnot.push(comt)
-					console.log('chechCommentsExistOrnot: ', chechCommentsExistOrnot);
+				// if(!chechCommentsExistOrnot.includes(comt)){
+					// chechCommentsExistOrnot.push(comt)
 					card.childNodes[7].append(lia)
-				}
+					console.log(card.childNodes[7]);
+				// }
 			})
+			Backlog.append(card.cloneNode(true))
+
 			
 			})
 
