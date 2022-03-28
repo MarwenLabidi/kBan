@@ -5,7 +5,7 @@
 #### remote voice controll with you phone 📱
 #### you can install it or use it directly the link bellow
 
-# [APP link](https://truculent-tail.surge.sh/ or https://cold-drop.surge.sh/)
+# [APP link](truculent-tail.surge.sh/ || cold-drop.surge.sh/)
 
 ## Tech Stack:
 - Html , Css , javaScript

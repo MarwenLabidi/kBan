@@ -23,7 +23,6 @@ let endDaysToColorArr = []
 let colorArr = []
 let kanbanBoardDATA={}
 let cardtoMveinArr={constent:null,commenst:[]}
-const chechCommentsExistOrnot=[]
 
 
 function* gen() {
@@ -480,7 +479,6 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				if (index < 1) return;
 				Done.removeChild(child)
 			})
-
 			
 			//get the current kboard and use foreach on it to create the cards
 			let kbanBoardListSelectedValue=kbanBoardList.options[kbanBoardList.selectedIndex].value
@@ -492,17 +490,12 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				card.childNodes[7].innerHTML = ''
 				//add comments
 				crd.commenst.forEach((comt, index) => {
-					// observerWorkspace.disconnect()
 				let lia = document.createElement('li')
 				lia.innerHTML = comt
-				// if(!chechCommentsExistOrnot.includes(comt)){
-					// chechCommentsExistOrnot.push(comt)
 					card.childNodes[7].append(lia)
 					console.log(card.childNodes[7]);
-				// }
 			})
 			Backlog.append(card.cloneNode(true))
-
 			
 			})
 
