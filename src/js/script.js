@@ -24,7 +24,7 @@ let colorArr = []
 let kanbanBoardDATA = {}
 let cardtoMveinArr = {
 	constent: null,
-	commenst: []
+	commenst: null
 }
 
 
@@ -500,7 +500,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 					let lia = document.createElement('li')
 					lia.innerHTML = comt
 					card.childNodes[7].append(lia)
-					console.log(card.childNodes[7]);
+
 				})
 				Backlog.append(card.cloneNode(true))
 				allCardBoard = document.querySelectorAll('.cardBoard')
@@ -522,7 +522,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 					let lia = document.createElement('li')
 					lia.innerHTML = comt
 					card.childNodes[7].append(lia)
-					console.log(card.childNodes[7]);
+
 				})
 				InProgress.append(card.cloneNode(true))
 				allCardBoard = document.querySelectorAll('.cardBoard')
@@ -543,7 +543,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 					let lia = document.createElement('li')
 					lia.innerHTML = comt
 					card.childNodes[7].append(lia)
-					console.log(card.childNodes[7]);
+
 				})
 				Done.append(card.cloneNode(true))
 				allCardBoard = document.querySelectorAll('.cardBoard')
@@ -728,16 +728,31 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				backlogInprogressDone.addEventListener('drop', (e) => {
 					// change the content of arr to in progress or done and delete backglog from arrddata
 					setTimeout(() => {
-						//TODO CHANGE THE COMMENTS FROM DFERNTY  PLACES TO THE NEW PLACE
 						//the place where you drop it
 						let theplaceDropit = e.path[0].innerText.split('')[0]
 						//get the content of curret drage card and 
+						//FIXME figure out a solution for the next child thing
 						let cardcontenttolll = backlogInprogressDone.lastChild.childNodes[1].textContent
+						let cardcontentCommentss = [...backlogInprogressDone.lastChild.childNodes[7].children]
 						let kbanBoardListSelectedValue = kbanBoardList.options[kbanBoardList.selectedIndex].value
 						if (theplaceDropit == '⏳') {
 							//change the current card in the arrdatat to the in progress 
 							cardtoMveinArr['constent'] = cardcontenttolll
 							kanbanBoardDATA[kbanBoardListSelectedValue].InProgress.add(cardtoMveinArr)
+
+							cardtoMveinArr['commenst'] = [...cardcontentCommentss]
+							const cardCommensts = cardtoMveinArr.commenst.map((el, index) => {
+								if (index = 0) {
+									return
+								}else{
+
+									return el.textContent
+								}
+							})
+							cardtoMveinArr['commenst'] = cardCommensts
+							kanbanBoardDATA[kbanBoardListSelectedValue].InProgress.add(cardtoMveinArr)
+							console.log('kanbanBoardDATA: ', kanbanBoardDATA);
+
 							// delete it from backlog
 							kanbanBoardDATA[kbanBoardListSelectedValue].Backlog.forEach((obj) => {
 								if (obj.constent == cardcontenttolll) {
@@ -749,16 +764,48 @@ const observerWorkspace = new MutationObserver((mutations) => {
 							//change the current card in the arrdatat to the in progress 
 							cardtoMveinArr['constent'] = cardcontenttolll
 							kanbanBoardDATA[kbanBoardListSelectedValue].Done.add(cardtoMveinArr)
-							// delete it from backlog
+
+							cardtoMveinArr['commenst'] = [...cardcontentCommentss]
+							const cardCommensts = cardtoMveinArr.commenst.map((el, index) => {
+
+								if (index = 0) {
+									return
+								}else{
+
+									return el.textContent
+								}
+							})
+							cardtoMveinArr['commenst'] = cardCommensts
+							kanbanBoardDATA[kbanBoardListSelectedValue].Done.add(cardtoMveinArr)
+							// delete it from in progress
 							kanbanBoardDATA[kbanBoardListSelectedValue].InProgress.forEach((obj) => {
 								if (obj.constent == cardcontenttolll) {
 									kanbanBoardDATA[kbanBoardListSelectedValue].InProgress.delete(obj);
+								}
+							})
+							//delete from backglog
+							kanbanBoardDATA[kbanBoardListSelectedValue].Backlog.forEach((obj) => {
+								if (obj.constent == cardcontenttolll) {
+									kanbanBoardDATA[kbanBoardListSelectedValue].Backlog.delete(obj);
 								}
 							})
 
 						} else {
 							//change the current card in the arrdatat to the in progress 
 							cardtoMveinArr['constent'] = cardcontenttolll
+							kanbanBoardDATA[kbanBoardListSelectedValue].Backlog.add(cardtoMveinArr)
+
+							cardtoMveinArr['commenst'] = [...cardcontentCommentss]
+							const cardCommensts = cardtoMveinArr.commenst.map((el, index) => {
+
+								if (index = 0) {
+									return
+								}else{
+
+									return el.textContent
+								}
+							})
+							cardtoMveinArr['commenst'] = cardCommensts
 							kanbanBoardDATA[kbanBoardListSelectedValue].Backlog.add(cardtoMveinArr)
 							// delete it from backlog
 							kanbanBoardDATA[kbanBoardListSelectedValue].Done.forEach((obj) => {
@@ -769,6 +816,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 
 
 						}
+
 					}, 10);
 					e.preventDefault()
 					const dragable = document.querySelector('.dragging')
@@ -787,7 +835,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 						backlogInprogressDone.appendChild(dragable)
 					}
 					//NOTE make the change in the database
-					console.log(kanbanBoardDATA);
+
 				})
 			})
 		}
