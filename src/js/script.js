@@ -459,6 +459,9 @@ const observerWorkspace = new MutationObserver((mutations) => {
 	const InProgress = document.querySelector('#inProgress')
 	const Done = document.querySelector('#done')
 	if (buttonNewKboard) {
+		let allCardBoard = document.querySelectorAll('.cardBoard')
+		let AllComments = document.querySelectorAll('.comments')
+		let showComment = document.querySelectorAll('.showComment')
 		// load the data when you select a kboard
 		//liseten to the event when you click on list
 		kbanBoardList.addEventListener('change', (e) => {
@@ -496,6 +499,9 @@ const observerWorkspace = new MutationObserver((mutations) => {
 					console.log(card.childNodes[7]);
 			})
 			Backlog.append(card.cloneNode(true))
+			 allCardBoard = document.querySelectorAll('.cardBoard')
+		 AllComments = document.querySelectorAll('.comments')
+		 showComment = document.querySelectorAll('.showComment')
 			
 			})
 
@@ -591,9 +597,9 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				cardKanbanContent = null
 			})
 		})
-		const allCardBoard = document.querySelectorAll('.cardBoard')
-		const AllComments = document.querySelectorAll('.comments')
-		const showComment = document.querySelectorAll('.showComment')
+		allCardBoard = document.querySelectorAll('.cardBoard')
+		AllComments = document.querySelectorAll('.comments')
+		showComment = document.querySelectorAll('.showComment')
 		if (allCardBoard) {
 			allCardBoard.forEach((card, index) => {
 				//*delete card
