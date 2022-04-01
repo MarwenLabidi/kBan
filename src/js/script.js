@@ -22,10 +22,8 @@ let startDaysToColorArr = []
 let endDaysToColorArr = []
 let colorArr = []
 let kanbanBoardDATA = {}
-let cardtoMveinArr = {
-	constent: null,
-	commenst: null
-}
+
+let checkMeImExist={}
 
 
 function* gen() {
@@ -273,6 +271,8 @@ const observerSideBar = new MutationObserver((mutations) => {
 		thisMonth = calendar.currentMounthNumber
 		firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
 		createCalender()
+		
+		
 	})
 	Roadmap.click()
 	KanbanBoard.addEventListener('click', () => {
@@ -366,6 +366,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 	}
 	if (epicButton) {
 		epicButton.addEventListener('click', () => {
+			
 
 			Qual.confirmd("ADD EPIC ", //For heading
 				"", //For sub heading
@@ -422,12 +423,14 @@ const observerWorkspace = new MutationObserver((mutations) => {
 										setTimeout(() => {
 
 											document.querySelector('#newKboard').click()
+											close_qual();
+											KboardName = epic
+	
+											options[index].style.display = 'none'
+											indexOfChosenEpic = null
 										}, 100)
-										KboardName = epic
-										close_qual();
-
-										options[index].style.display = 'none'
-										indexOfChosenEpic = null
+						
+										
 									})
 									options[indexOfChosenEpic].lastChild.addEventListener('click', () => {
 										// 
@@ -468,6 +471,10 @@ const observerWorkspace = new MutationObserver((mutations) => {
 		// load the data when you select a kboard
 		//liseten to the event when you click on list
 		kbanBoardList.addEventListener('change', (e) => {
+			observerWorkspace.observe(workspace, {
+				childList: true,
+				subtree: true
+			})
 			// observerWorkspace.disconnect()
 			//delete all element is html with js expect one
 			const allchildrenBacklog = [...Backlog.children]
@@ -551,6 +558,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				showComment = document.querySelectorAll('.showComment')
 
 			})
+
 
 		})
 
@@ -658,8 +666,10 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				//*delete card
 				AllComments[index].children[3].addEventListener('click', () => {
 					card.remove()
+					//TODO DELETE THAT CARD FROM ARRAY DATA
 				})
 				//*add comment
+				//FIXME FIX THE ADD COMMENTS
 				AllComments[index].children[2].addEventListener('click', (e) => {
 					Qual.confirmd("ADD COMMENT", //For heading
 						"", //For sub heading
@@ -676,6 +686,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 						const li = document.createElement('li')
 						li.innerHTML = comments
 						showComment[index].append(li)
+						console.log('showComment[index]: ', showComment[index]);
 						comment = null
 						// ADD COMMNET TO ARRAY DATA 
 						//get the kanban boaard of this card
@@ -722,36 +733,45 @@ const observerWorkspace = new MutationObserver((mutations) => {
 			backlogInprogressDones.forEach((backlogInprogressDone) => {
 				backlogInprogressDone.addEventListener('dragover', (e) => {
 					e.preventDefault()
-					// observerWorkspace.disconnect()
+					observerWorkspace.disconnect()
 					// cardDomRec.length = 0
 				})
 				backlogInprogressDone.addEventListener('drop', (e) => {
+					
 					// change the content of arr to in progress or done and delete backglog from arrddata
 					setTimeout(() => {
+						
 						//the place where you drop it
 						let theplaceDropit = e.path[0].innerText.split('')[0]
 						//get the content of curret drage card and 
-						//FIXME figure out a solution for the next child thing
+						//FIXME figure out a solution for the lastchild below
 						let cardcontenttolll = backlogInprogressDone.lastChild.childNodes[1].textContent
 						let cardcontentCommentss = [...backlogInprogressDone.lastChild.childNodes[7].children]
 						let kbanBoardListSelectedValue = kbanBoardList.options[kbanBoardList.selectedIndex].value
 						if (theplaceDropit == '⏳') {
+							
+
+							let cardtoMveinArr = {
+								constent: null,
+								commenst: null
+							}
 							//change the current card in the arrdatat to the in progress 
 							cardtoMveinArr['constent'] = cardcontenttolll
 							kanbanBoardDATA[kbanBoardListSelectedValue].InProgress.add(cardtoMveinArr)
 
+							
 							cardtoMveinArr['commenst'] = [...cardcontentCommentss]
 							const cardCommensts = cardtoMveinArr.commenst.map((el, index) => {
 								if (index = 0) {
 									return
 								}else{
-
 									return el.textContent
 								}
 							})
 							cardtoMveinArr['commenst'] = cardCommensts
-							kanbanBoardDATA[kbanBoardListSelectedValue].InProgress.add(cardtoMveinArr)
-							console.log('kanbanBoardDATA: ', kanbanBoardDATA);
+							let shiiit=JSON.parse(JSON.stringify(cardtoMveinArr))
+							kanbanBoardDATA[kbanBoardListSelectedValue].InProgress.add(shiiit)
+							
 
 							// delete it from backlog
 							kanbanBoardDATA[kbanBoardListSelectedValue].Backlog.forEach((obj) => {
@@ -759,9 +779,32 @@ const observerWorkspace = new MutationObserver((mutations) => {
 									kanbanBoardDATA[kbanBoardListSelectedValue].Backlog.delete(obj);
 								}
 							})
+							kanbanBoardDATA[kbanBoardListSelectedValue].Done.forEach((obj) => {
+								if (obj.constent == cardcontenttolll) {
+									kanbanBoardDATA[kbanBoardListSelectedValue].Done.delete(obj);
+								}
+							})
+
+							
+							kanbanBoardDATA[kbanBoardListSelectedValue].InProgress.forEach((elm=>{
+								
+								if(checkMeImExist[elm.constent]){
+									kanbanBoardDATA[kbanBoardListSelectedValue].InProgress.delete(elm);
+								}
+								checkMeImExist[elm.constent]=true
+							      }))
+							      
+							      
+							      checkMeImExist={}
+
+
 
 						} else if (theplaceDropit == '✅') {
 							//change the current card in the arrdatat to the in progress 
+							let cardtoMveinArr = {
+								constent: null,
+								commenst: null
+							}
 							cardtoMveinArr['constent'] = cardcontenttolll
 							kanbanBoardDATA[kbanBoardListSelectedValue].Done.add(cardtoMveinArr)
 
@@ -776,7 +819,9 @@ const observerWorkspace = new MutationObserver((mutations) => {
 								}
 							})
 							cardtoMveinArr['commenst'] = cardCommensts
-							kanbanBoardDATA[kbanBoardListSelectedValue].Done.add(cardtoMveinArr)
+							let shiiit=JSON.parse(JSON.stringify(cardtoMveinArr))
+
+							kanbanBoardDATA[kbanBoardListSelectedValue].Done.add(shiiit)
 							// delete it from in progress
 							kanbanBoardDATA[kbanBoardListSelectedValue].InProgress.forEach((obj) => {
 								if (obj.constent == cardcontenttolll) {
@@ -790,8 +835,24 @@ const observerWorkspace = new MutationObserver((mutations) => {
 								}
 							})
 
+
+							kanbanBoardDATA[kbanBoardListSelectedValue].Done.forEach((elm=>{
+								
+								if(checkMeImExist[elm.constent]){
+									kanbanBoardDATA[kbanBoardListSelectedValue].Done.delete(elm);
+								}
+								checkMeImExist[elm.constent]=true
+							      }))
+							      
+							      
+							      checkMeImExist={}
+
 						} else {
 							//change the current card in the arrdatat to the in progress 
+							let cardtoMveinArr = {
+								constent: null,
+								commenst: null
+							}
 							cardtoMveinArr['constent'] = cardcontenttolll
 							kanbanBoardDATA[kbanBoardListSelectedValue].Backlog.add(cardtoMveinArr)
 
@@ -806,13 +867,32 @@ const observerWorkspace = new MutationObserver((mutations) => {
 								}
 							})
 							cardtoMveinArr['commenst'] = cardCommensts
-							kanbanBoardDATA[kbanBoardListSelectedValue].Backlog.add(cardtoMveinArr)
+							let shiiit=JSON.parse(JSON.stringify(cardtoMveinArr))
+
+							kanbanBoardDATA[kbanBoardListSelectedValue].Backlog.add(shiiit)
 							// delete it from backlog
 							kanbanBoardDATA[kbanBoardListSelectedValue].Done.forEach((obj) => {
 								if (obj.constent == cardcontenttolll) {
 									kanbanBoardDATA[kbanBoardListSelectedValue].Done.delete(obj);
 								}
 							})
+							kanbanBoardDATA[kbanBoardListSelectedValue].InProgress.forEach((obj) => {
+								if (obj.constent == cardcontenttolll) {
+									kanbanBoardDATA[kbanBoardListSelectedValue].InProgress.delete(obj);
+								}
+							})
+
+
+							kanbanBoardDATA[kbanBoardListSelectedValue].Backlog.forEach((elm=>{
+								
+								if(checkMeImExist[elm.constent]){
+									kanbanBoardDATA[kbanBoardListSelectedValue].Backlog.delete(elm);
+								}
+								checkMeImExist[elm.constent]=true
+							      }))
+							      
+							      
+							      checkMeImExist={}
 
 
 						}
@@ -835,7 +915,10 @@ const observerWorkspace = new MutationObserver((mutations) => {
 						backlogInprogressDone.appendChild(dragable)
 					}
 					//NOTE make the change in the database
+					// checkMeImExist={}
+					// 
 
+					//TODO CREATE A FUNCTION TO DELETE TH SAME CARD IN THE SAME SECTION from set
 				})
 			})
 		}
@@ -920,9 +1003,11 @@ observerWorkspace.observe(workspace, {
 	subtree: true
 })
 
+//FIXME FIX ADING COMMENTS AND DELETE CARD FROM ARRDATA WHEN YOU CLICK DELEETE
 
-
-
+//FIXME : check if there is eplics if its not create epic from epicdata array and create this arr too
+//FIXME : color calendar when you click on roadmap button
+//-[] create a function to execute evry change of spesific varriable : (e.g.: when you add somethng to arr data if updte the dabase)
 
 
 // TODO count the task open and in progress done and bugs and calcule the percent of each tasks
