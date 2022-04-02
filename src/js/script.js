@@ -23,7 +23,7 @@ let endDaysToColorArr = []
 let colorArr = []
 let kanbanBoardDATA = {}
 
-let checkMeImExist={}
+let checkMeImExist = {}
 
 
 function* gen() {
@@ -271,8 +271,8 @@ const observerSideBar = new MutationObserver((mutations) => {
 		thisMonth = calendar.currentMounthNumber
 		firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
 		createCalender()
-		
-		
+
+
 	})
 	Roadmap.click()
 	KanbanBoard.addEventListener('click', () => {
@@ -366,7 +366,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 	}
 	if (epicButton) {
 		epicButton.addEventListener('click', () => {
-			
+
 
 			Qual.confirmd("ADD EPIC ", //For heading
 				"", //For sub heading
@@ -425,12 +425,12 @@ const observerWorkspace = new MutationObserver((mutations) => {
 											document.querySelector('#newKboard').click()
 											close_qual();
 											KboardName = epic
-	
+
 											options[index].style.display = 'none'
 											indexOfChosenEpic = null
 										}, 100)
-						
-										
+
+
 									})
 									options[indexOfChosenEpic].lastChild.addEventListener('click', () => {
 										// 
@@ -466,8 +466,6 @@ const observerWorkspace = new MutationObserver((mutations) => {
 	const Done = document.querySelector('#done')
 	if (buttonNewKboard) {
 		let allCardBoard = document.querySelectorAll('.cardBoard')
-		let AllComments = document.querySelectorAll('.comments')
-		let showComment = document.querySelectorAll('.showComment')
 		// load the data when you select a kboard
 		//liseten to the event when you click on list
 		kbanBoardList.addEventListener('change', (e) => {
@@ -658,42 +656,50 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				cardKanbanContent = null
 			})
 		})
-		allCardBoard = document.querySelectorAll('.cardBoard')
-		AllComments = document.querySelectorAll('.comments')
-		showComment = document.querySelectorAll('.showComment')
+		allCardBoard = [...document.querySelectorAll('.cardBoard')]
+	
 		if (allCardBoard) {
 			allCardBoard.forEach((card, index) => {
+				
 				//*delete card
-				AllComments[index].children[3].addEventListener('click', () => {
+				card.childNodes[5].childNodes[7].addEventListener('click', () => {
 					card.remove()
+					allCardBoard = [...document.querySelectorAll('.cardBoard')]
+
 					//TODO DELETE THAT CARD FROM ARRAY DATA
 				})
 				//*add comment
-				//FIXME FIX THE ADD COMMENTS
-				AllComments[index].children[2].addEventListener('click', (e) => {
+				card.childNodes[5].childNodes[5].addEventListener('click', (e) => {
+
 					Qual.confirmd("ADD COMMENT", //For heading
-						"", //For sub heading
-						inf, //icon variable we can define our own also by giving th link in double quotes
-						"ADD", //blue button string
-						"", // cancel button string
-						"addComment", //function name that is to be called on click on blue button
-						"", //function name that is to be called on click on cancel button
-						"string", //type of input you want whether a text ,password or number
-						"Enter your comment" //Placeholder text of input field
+					"", //For sub heading
+					inf, //icon variable we can define our own also by giving th link in double quotes
+					"ADD", //blue button string
+					"", // cancel button string
+					"addComment", //function name that is to be called on click on blue button
+					"", //function name that is to be called on click on cancel button
+					"string", //type of input you want whether a text ,password or number
+					"Enter your comment" //Placeholder text of input field
 					)
 					waitUntilReturnName(comment, 'comment').then((comments) => {
+
+						
 						//NOTE add this comment to the data base 
 						const li = document.createElement('li')
 						li.innerHTML = comments
-						showComment[index].append(li)
-						console.log('showComment[index]: ', showComment[index]);
+						e.path[2].children[3].append(li)
+						console.log('e.path[2]: ', e.path[2]);
+						
 						comment = null
-						// ADD COMMNET TO ARRAY DATA 
+						//FIXME delete emppty comment awhen you change kboared
+						// FIXME ADD COMMNET TO ARRAY DATA 
 						//get the kanban boaard of this card
 						let kbanBoardListSelectedValue = kbanBoardList.options[kbanBoardList.selectedIndex].value
+						
 
 						// get the place (backlog,inprogress,done) of this card
 						let theplaceDropit = e.path[3].getAttribute('id')
+						theplaceDropit = theplaceDropit.charAt(0).toUpperCase() + theplaceDropit.substring(1);
 						let constetncard = card.childNodes[1].textContent
 
 						//get the content of this card
@@ -703,22 +709,22 @@ const observerWorkspace = new MutationObserver((mutations) => {
 							if (card.constent == constetncard) {
 								card.commenst.push(comments)
 							}
-
+							
 						})
+						
+
 					})
+					//TODO get the numbeR of comment and add it [change p inner text]
 				})
 				//*show comment
-				AllComments[index].children[1].addEventListener('click', () => {
-					showComment[index].style.display = 'block'
+				card.childNodes[5].childNodes[3].addEventListener('click', (e) => {
+					e.path[2].children[3].style.display = 'block'
 					setTimeout(() => {
-						showComment[index].style.display = 'none'
+						e.path[2].children[3].style.display = 'none'
 					}, 5000);
 				})
-				//* the number of comments
-				AllComments[index].children[0].addEventListener('click', () => {
-					//TODO get the numbeR of comment and add it [change p inner text]
-
-				})
+				
+				
 				//NOTE drag and drop functionality
 				card.addEventListener('dragstart', (e) => {
 
@@ -729,18 +735,18 @@ const observerWorkspace = new MutationObserver((mutations) => {
 					card.classList.remove('dragging')
 				})
 			})
+
 			const backlogInprogressDones = [Backlog, InProgress, Done]
 			backlogInprogressDones.forEach((backlogInprogressDone) => {
 				backlogInprogressDone.addEventListener('dragover', (e) => {
 					e.preventDefault()
 					observerWorkspace.disconnect()
-					// cardDomRec.length = 0
 				})
 				backlogInprogressDone.addEventListener('drop', (e) => {
-					
+
 					// change the content of arr to in progress or done and delete backglog from arrddata
 					setTimeout(() => {
-						
+
 						//the place where you drop it
 						let theplaceDropit = e.path[0].innerText.split('')[0]
 						//get the content of curret drage card and 
@@ -749,7 +755,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 						let cardcontentCommentss = [...backlogInprogressDone.lastChild.childNodes[7].children]
 						let kbanBoardListSelectedValue = kbanBoardList.options[kbanBoardList.selectedIndex].value
 						if (theplaceDropit == '⏳') {
-							
+
 
 							let cardtoMveinArr = {
 								constent: null,
@@ -759,19 +765,19 @@ const observerWorkspace = new MutationObserver((mutations) => {
 							cardtoMveinArr['constent'] = cardcontenttolll
 							kanbanBoardDATA[kbanBoardListSelectedValue].InProgress.add(cardtoMveinArr)
 
-							
+
 							cardtoMveinArr['commenst'] = [...cardcontentCommentss]
 							const cardCommensts = cardtoMveinArr.commenst.map((el, index) => {
 								if (index = 0) {
 									return
-								}else{
+								} else {
 									return el.textContent
 								}
 							})
 							cardtoMveinArr['commenst'] = cardCommensts
-							let shiiit=JSON.parse(JSON.stringify(cardtoMveinArr))
+							let shiiit = JSON.parse(JSON.stringify(cardtoMveinArr))
 							kanbanBoardDATA[kbanBoardListSelectedValue].InProgress.add(shiiit)
-							
+
 
 							// delete it from backlog
 							kanbanBoardDATA[kbanBoardListSelectedValue].Backlog.forEach((obj) => {
@@ -785,17 +791,17 @@ const observerWorkspace = new MutationObserver((mutations) => {
 								}
 							})
 
-							
-							kanbanBoardDATA[kbanBoardListSelectedValue].InProgress.forEach((elm=>{
-								
-								if(checkMeImExist[elm.constent]){
+
+							kanbanBoardDATA[kbanBoardListSelectedValue].InProgress.forEach((elm => {
+
+								if (checkMeImExist[elm.constent]) {
 									kanbanBoardDATA[kbanBoardListSelectedValue].InProgress.delete(elm);
 								}
-								checkMeImExist[elm.constent]=true
-							      }))
-							      
-							      
-							      checkMeImExist={}
+								checkMeImExist[elm.constent] = true
+							}))
+
+
+							checkMeImExist = {}
 
 
 
@@ -813,13 +819,13 @@ const observerWorkspace = new MutationObserver((mutations) => {
 
 								if (index = 0) {
 									return
-								}else{
+								} else {
 
 									return el.textContent
 								}
 							})
 							cardtoMveinArr['commenst'] = cardCommensts
-							let shiiit=JSON.parse(JSON.stringify(cardtoMveinArr))
+							let shiiit = JSON.parse(JSON.stringify(cardtoMveinArr))
 
 							kanbanBoardDATA[kbanBoardListSelectedValue].Done.add(shiiit)
 							// delete it from in progress
@@ -836,16 +842,16 @@ const observerWorkspace = new MutationObserver((mutations) => {
 							})
 
 
-							kanbanBoardDATA[kbanBoardListSelectedValue].Done.forEach((elm=>{
-								
-								if(checkMeImExist[elm.constent]){
+							kanbanBoardDATA[kbanBoardListSelectedValue].Done.forEach((elm => {
+
+								if (checkMeImExist[elm.constent]) {
 									kanbanBoardDATA[kbanBoardListSelectedValue].Done.delete(elm);
 								}
-								checkMeImExist[elm.constent]=true
-							      }))
-							      
-							      
-							      checkMeImExist={}
+								checkMeImExist[elm.constent] = true
+							}))
+
+
+							checkMeImExist = {}
 
 						} else {
 							//change the current card in the arrdatat to the in progress 
@@ -861,13 +867,13 @@ const observerWorkspace = new MutationObserver((mutations) => {
 
 								if (index = 0) {
 									return
-								}else{
+								} else {
 
 									return el.textContent
 								}
 							})
 							cardtoMveinArr['commenst'] = cardCommensts
-							let shiiit=JSON.parse(JSON.stringify(cardtoMveinArr))
+							let shiiit = JSON.parse(JSON.stringify(cardtoMveinArr))
 
 							kanbanBoardDATA[kbanBoardListSelectedValue].Backlog.add(shiiit)
 							// delete it from backlog
@@ -883,16 +889,16 @@ const observerWorkspace = new MutationObserver((mutations) => {
 							})
 
 
-							kanbanBoardDATA[kbanBoardListSelectedValue].Backlog.forEach((elm=>{
-								
-								if(checkMeImExist[elm.constent]){
+							kanbanBoardDATA[kbanBoardListSelectedValue].Backlog.forEach((elm => {
+
+								if (checkMeImExist[elm.constent]) {
 									kanbanBoardDATA[kbanBoardListSelectedValue].Backlog.delete(elm);
 								}
-								checkMeImExist[elm.constent]=true
-							      }))
-							      
-							      
-							      checkMeImExist={}
+								checkMeImExist[elm.constent] = true
+							}))
+
+
+							checkMeImExist = {}
 
 
 						}
