@@ -672,13 +672,32 @@ const observerWorkspace = new MutationObserver((mutations) => {
 			allCardBoard.forEach((card, index) => {
 				
 				//*delete card
-				card.childNodes[5].childNodes[7].addEventListener('click', () => {
+				card.childNodes[5].childNodes[7].addEventListener('click', (e) => {
 					card.remove()
 					allCardBoard = [...document.querySelectorAll('.cardBoard')]
 
-					//TODO DELETE THAT CARD FROM ARRAY DATA
+					// DELETE THAT CARD FROM ARRAY DATA
+					//get the current board || the place:backglog inprogress done || delete from set the elemets
+					let kbanBoardListSelectedValue = kbanBoardList.options[kbanBoardList.selectedIndex].value
+					// get the place (backlog,inprogress,done) of this card
+					let theplaceDropit = e.path[3].getAttribute('id')
+					theplaceDropit = theplaceDropit.charAt(0).toUpperCase() + theplaceDropit.substring(1);
+					let constetncard = card.childNodes[1].textContent
+
+					kanbanBoardDATA[kbanBoardListSelectedValue][theplaceDropit].forEach((card, index) => {
+						if (card.constent == constetncard) {
+							
+							kanbanBoardDATA[kbanBoardListSelectedValue][theplaceDropit].delete(card)
+						}
+						
+					})
+
+
+				
+					
 				})
 				//*add comment
+				//FIXME add comment to multiple cards
 				card.childNodes[5].childNodes[5].addEventListener('click', (e) => {
 
 					Qual.confirmd("ADD COMMENT", //For heading
@@ -698,11 +717,9 @@ const observerWorkspace = new MutationObserver((mutations) => {
 						const li = document.createElement('li')
 						li.innerHTML = comments
 						e.path[2].children[3].append(li)
-						console.log('e.path[2]: ', e.path[2]);
+						
 						
 						comment = null
-						//FIXME delete emppty comment awhen you change kboared
-						// FIXME ADD COMMNET TO ARRAY DATA 
 						//get the kanban boaard of this card
 						let kbanBoardListSelectedValue = kbanBoardList.options[kbanBoardList.selectedIndex].value
 						
@@ -724,7 +741,14 @@ const observerWorkspace = new MutationObserver((mutations) => {
 						
 
 					})
-					//TODO get the numbeR of comment and add it [change p inner text]
+					//FIXME comments card numbers
+					//get the current number \\ increment it || add it to the comment
+					let currentcomentNumber= +card.childNodes[5].childNodes[1].textContent
+					card.childNodes[5].childNodes[1].textContent = currentcomentNumber + 1
+
+					
+					
+
 				})
 				//*show comment
 				card.childNodes[5].childNodes[3].addEventListener('click', (e) => {
