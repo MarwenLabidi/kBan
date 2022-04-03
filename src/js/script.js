@@ -736,6 +736,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 
 					})
 					//FIXME comments card numbers
+					//TODO SAVE the comment numbers and load it from the arrDATA
 					//get the current number \\ increment it || add it to the comment
 					let currentcomentNumber= +card.childNodes[5].childNodes[1].textContent
 					card.childNodes[5].childNodes[1].textContent = currentcomentNumber + 1
@@ -1033,8 +1034,9 @@ observerWorkspace.observe(workspace, {
 })
 
 
-//-[] create a function to execute evry change of spesific varriable : (e.g.: when you add somethng to arr data if updte the dabase)
-//-[] : check if there is epics if its not create epic from epicdata array and create this arr too
+//-[] use proxy object to send the data to service workers
+//-[] : create epics array and create the function to add epics in the roadmap section !!!!! if it is empty
+//-[] : create bugs array and create the function to add the bugs !!!!if its empty
 
 
 // TODO count the task open and in progress done and bugs and calcule the percent of each tasks
@@ -1045,11 +1047,8 @@ observerWorkspace.observe(workspace, {
 
 // TODO add delete button in the first project cards and add clear all project functionality
 
-// TODO add transition to pop up in delele and close OPTIONS in epic and in bugs
+// TODO use pop up report until you chooose a project or you create new one
 
-// TODO disable report until you chooose a project or you create new one
-
-//TODO change the theme to black pwa theme instead of white
 
 // TODO check the database if is full or do a delete technique 
 

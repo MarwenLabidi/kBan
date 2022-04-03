@@ -24,7 +24,7 @@ export default defineConfig({
 				name: 'KBAN',
 				short_name: 'KABAN',
 				description: 'Project Management App',
-				theme_color: '#ffffff',
+				theme_color: '#000000.',
 				icons: [{
 						src: 'pwa-192x192.png',
 						sizes: '192x192',
