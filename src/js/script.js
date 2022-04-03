@@ -188,6 +188,13 @@ const colorDaysINCalendarNEXTbPREVIOUS = (startDatesarr, endDatesarr, currentMon
 		}
 	}, 10);
 }
+function sleep(milliseconds) {
+	const date = Date.now();
+	let currentDate = null;
+	do {
+	  currentDate = Date.now();
+	} while (currentDate - date < milliseconds);
+      }
 
 
 
@@ -516,8 +523,6 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				})
 				Backlog.append(card.cloneNode(true))
 				allCardBoard = document.querySelectorAll('.cardBoard')
-				AllComments = document.querySelectorAll('.comments')
-				showComment = document.querySelectorAll('.showComment')
 
 
 			})
@@ -538,8 +543,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				})
 				InProgress.append(card.cloneNode(true))
 				allCardBoard = document.querySelectorAll('.cardBoard')
-				AllComments = document.querySelectorAll('.comments')
-				showComment = document.querySelectorAll('.showComment')
+				
 
 			})
 
@@ -559,8 +563,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				})
 				Done.append(card.cloneNode(true))
 				allCardBoard = document.querySelectorAll('.cardBoard')
-				AllComments = document.querySelectorAll('.comments')
-				showComment = document.querySelectorAll('.showComment')
+				
 
 			})
 
