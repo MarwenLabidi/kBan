@@ -395,7 +395,6 @@ const observerWorkspace = new MutationObserver((mutations) => {
 			waitUntilReturnName(epicName, 'epicName').then((epic) => {
 				waitUntilReturnName(startDate, 'startDate').then((sDate) => {
 					waitUntilReturnName(endDate, 'endDate').then((eDate) => {
-						//NOTE send epic sDate  and eDate to the servece worker
 						const startDayMonthYear = getDayMonthYear(sDate)
 						const endDayMonthYear = getDayMonthYear(eDate)
 
@@ -416,7 +415,6 @@ const observerWorkspace = new MutationObserver((mutations) => {
 						epicTask.append(epicTaskHtml.cloneNode(true))
 						runOneTime(firstDayMth, evrySingleDays)()
 						colorSelectedDays(thisMonth + 1, thisYear)(+startDayMonthYear.day, +startDayMonthYear.month, +startDayMonthYear.year)(+endDayMonthYear.day, +endDayMonthYear.month, +endDayMonthYear.year)(color)
-						//NOTE send all the data to the service worker to color when there is a colorfull
 						const epic3dots = document.querySelectorAll('.epic3dots')
 						const options = document.querySelectorAll('.options')
 						const epicH3 = document.querySelectorAll('.epicH3')
@@ -626,11 +624,9 @@ const observerWorkspace = new MutationObserver((mutations) => {
 					})
 				}
 				KboardName = null
-				//NOTE send it to servie worker and create table
 			})
 		})
 
-		//NOTE load the data [kbanBoardList.value] in the board from service worker
 		const addCardKbanBoardInProgress = document.querySelector('#addCardKbanBoardInProgress')
 		addCardKbanBoardInProgress.addEventListener('click', () => {
 			if (Object.keys(kanbanBoardDATA).length < 1) {
@@ -662,7 +658,6 @@ const observerWorkspace = new MutationObserver((mutations) => {
 					constent: contentCard,
 					commenst: []
 				})
-				//NOTE add this canban card to the service worker kanbanBoardDATA
 				cardKanbanContent = null
 			})
 		})
@@ -713,7 +708,6 @@ const observerWorkspace = new MutationObserver((mutations) => {
 					waitUntilReturnName(comment, 'comment').then((comments) => {
 
 						
-						//NOTE add this comment to the data base 
 						const li = document.createElement('li')
 						li.innerHTML = comments
 						e.path[2].children[3].append(li)
@@ -759,7 +753,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				})
 				
 				
-				//NOTE drag and drop functionality
+				// drag and drop functionality
 				card.addEventListener('dragstart', (e) => {
 
 					card.classList.add('dragging')
@@ -785,6 +779,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 						let theplaceDropit = e.path[0].innerText.split('')[0]
 						//get the content of curret drage card and 
 						//FIXME figure out a solution for the lastchild below
+						// console.log( e.path[0].children[1]);
 						let cardcontenttolll = backlogInprogressDone.lastChild.childNodes[1].textContent
 						let cardcontentCommentss = [...backlogInprogressDone.lastChild.childNodes[7].children]
 						let kbanBoardListSelectedValue = kbanBoardList.options[kbanBoardList.selectedIndex].value
@@ -941,8 +936,6 @@ const observerWorkspace = new MutationObserver((mutations) => {
 					e.preventDefault()
 					const dragable = document.querySelector('.dragging')
 
-					//NOTE send card iformation to the service worker 
-					//NOTE SEND THE POSIONN OF EEACH CARD TO THE DATABASE
 					let childCardexpectMe = [...backlogInprogressDone.children]
 					childCardexpectMe.shift()
 
@@ -954,7 +947,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 					} else {
 						backlogInprogressDone.appendChild(dragable)
 					}
-					//NOTE make the change in the database
+
 					// checkMeImExist={}
 					// 
 
@@ -985,7 +978,6 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				BUG.childNodes[3].childNodes[3].innerHTML = new Date().toLocaleDateString()
 				BUG.childNodes[7].innerHTML = "open"
 				tbody.append(BUG.cloneNode(true))
-				//NOTE send numberof open bugs to database
 				bugName = null
 				let getBUGS = [...document.querySelectorAll('.BUG')]
 				let options3dot = [...document.querySelectorAll('.options3dot')]
@@ -1004,7 +996,6 @@ const observerWorkspace = new MutationObserver((mutations) => {
 									getBUGS[index].remove()
 									getBUGS[index].childNodes[3].childNodes[1].remove()
 
-									//NOTE send numberofdonebug and modifier numberofopenbugs to database
 								}
 							}, {
 								once: true
@@ -1020,7 +1011,6 @@ const observerWorkspace = new MutationObserver((mutations) => {
 									s[index].innerHTML = new Date().toLocaleDateString()
 
 
-									//NOTE send it to the database
 								}
 							}, {
 								once: true
@@ -1043,8 +1033,8 @@ observerWorkspace.observe(workspace, {
 })
 
 
-//FIXME : check if there is eplics if its not create epic from epicdata array and create this arr too
 //-[] create a function to execute evry change of spesific varriable : (e.g.: when you add somethng to arr data if updte the dabase)
+//-[] : check if there is epics if its not create epic from epicdata array and create this arr too
 
 
 // TODO count the task open and in progress done and bugs and calcule the percent of each tasks
