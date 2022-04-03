@@ -271,6 +271,13 @@ const observerSideBar = new MutationObserver((mutations) => {
 		thisMonth = calendar.currentMounthNumber
 		firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
 		createCalender()
+		
+		//color calendar
+
+	let btnPrevious = document.querySelector('.btn_previous')
+	let btnNext = document.querySelector('.btn_next')
+	btnPrevious.click()
+	btnNext.click()
 
 
 	})
@@ -924,7 +931,6 @@ const observerWorkspace = new MutationObserver((mutations) => {
 					// checkMeImExist={}
 					// 
 
-					//TODO CREATE A FUNCTION TO DELETE TH SAME CARD IN THE SAME SECTION from set
 				})
 			})
 		}
@@ -1009,10 +1015,8 @@ observerWorkspace.observe(workspace, {
 	subtree: true
 })
 
-//FIXME FIX ADING COMMENTS AND DELETE CARD FROM ARRDATA WHEN YOU CLICK DELEETE
 
 //FIXME : check if there is eplics if its not create epic from epicdata array and create this arr too
-//FIXME : color calendar when you click on roadmap button
 //-[] create a function to execute evry change of spesific varriable : (e.g.: when you add somethng to arr data if updte the dabase)
 
 
