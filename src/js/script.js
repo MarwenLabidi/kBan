@@ -565,6 +565,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 
 
 		buttonNewKboard.addEventListener('click', () => {
+			let x=true
 			observerWorkspace.observe(workspace, {
 				childList: true,
 				subtree: true
@@ -580,6 +581,22 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				"Enter the name of kBoard" //Placeholder text of input field
 			)
 			waitUntilReturnName(KboardName, 'KboardName').then((nameKBOARD) => {
+				//dont't create the kban if the name is already exist
+				let kbanBoardoptions = [...kbanBoardList.options]
+				if (kbanBoardoptions.length > 0) {
+					kbanBoardoptions.forEach((option => {
+						if (option.value === nameKBOARD) {
+							x = false
+						}
+					}))
+
+				}
+				if (!x) {
+					// alert("the name of this kboard is exist..");
+					KboardName=null
+					return
+				}
+
 
 
 				//delete all element is html with js expect one
@@ -643,8 +660,25 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				"Enter the content of the card" //Placeholder text of input field
 			)
 			waitUntilReturnName(cardKanbanContent, 'cardKanbanContent').then((contentCard) => {
+				//TODO check if the is multiple board the click one of them and return
+				let kbanBoardoptions = [...kbanBoardList.options]
+				if (kbanBoardoptions.length > 0) {
+					kbanBoardoptions.forEach(((option,index) => {
+						if (!option.selected) {
+							console.log(option.value);
+							console.log(option.selected);
+							console.log(index);
+							option.selected = true;
+						}
+					}))
+
+				}
+
+
+
+
 				let card = components.cardBoardkanbanHtml
-				card.children[0].innerHTML='<hr>'
+				card.children[0].innerHTML = '<hr>'
 				card.children[0].innerHTML = contentCard
 				Backlog.append(card.cloneNode(true))
 				// register the content of each options in object and load it when you picked option
