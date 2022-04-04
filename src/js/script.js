@@ -743,6 +743,9 @@ const observerWorkspace = new MutationObserver((mutations) => {
 						let theplaceDropit = e.path[0].innerText.split('')[0]
 						//get the content of curret drage card and 
 						//FIXME figure out a solution for the lastchild below
+						//TODO get the card you drop it : data and comments
+						//TODO get the next card of the drop it card
+						//TODO if there is not next cards add it at the end else add it befor the next card 
 						// console.log( e.path[0].children[1]);
 						let cardcontenttolll = backlogInprogressDone.lastChild.childNodes[1].textContent
 						let cardcontentCommentss = [...backlogInprogressDone.lastChild.childNodes[7].children]
@@ -1020,4 +1023,3 @@ observerWorkspace.observe(workspace, {
 // TODO change the README : add the api of transfer databwtwen service wrker and app ane delete voice controll struff 
 
 
-//REVIEW TRY "onclick" attribute on the HTML FOR COMMENT NUMBER ISSUE
