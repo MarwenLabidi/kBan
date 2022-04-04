@@ -660,26 +660,11 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				"Enter the content of the card" //Placeholder text of input field
 			)
 			waitUntilReturnName(cardKanbanContent, 'cardKanbanContent').then((contentCard) => {
-				//TODO check if the is multiple board the click one of them and return
-				let kbanBoardoptions = [...kbanBoardList.options]
-				if (kbanBoardoptions.length > 0) {
-					kbanBoardoptions.forEach(((option,index) => {
-						if (!option.selected) {
-							console.log(option.value);
-							console.log(option.selected);
-							console.log(index);
-							option.selected = true;
-						}
-					}))
-
-				}
-
-
-
-
+			
 				let card = components.cardBoardkanbanHtml
-				card.children[0].innerHTML = '<hr>'
 				card.children[0].innerHTML = contentCard
+				card.children[2].children[0].textContent = 0
+				card.children[3].innerHTML = '<hr>'
 				Backlog.append(card.cloneNode(true))
 				// register the content of each options in object and load it when you picked option
 				//get the selected kanban from the list
