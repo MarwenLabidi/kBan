@@ -21,7 +21,6 @@ let color = null
 let startDaysToColorArr = []
 let endDaysToColorArr = []
 let colorArr = []
-let kanbanBoardDATA = {}
 
 let checkMeImExist = {}
 
@@ -47,17 +46,6 @@ function* gen() {
 }
 let g = gen();
 
-const waitUntilReturnName = (value, vl) => {
-	return new Promise((resolve, reject) => {
-		const waitUntilReturn = setInterval(() => {
-			value = eval(vl)
-			if (value !== null) {
-				clearInterval(waitUntilReturn)
-				resolve(value)
-			}
-		}, 2000)
-	})
-}
 const createCalender = () => {
 	daysDom.innerHTML = ''
 	yearDom.innerText = thisYear
@@ -188,13 +176,14 @@ const colorDaysINCalendarNEXTbPREVIOUS = (startDatesarr, endDatesarr, currentMon
 		}
 	}, 10);
 }
+
 function sleep(milliseconds) {
 	const date = Date.now();
 	let currentDate = null;
 	do {
-	  currentDate = Date.now();
+		currentDate = Date.now();
 	} while (currentDate - date < milliseconds);
-      }
+}
 
 
 
@@ -278,13 +267,13 @@ const observerSideBar = new MutationObserver((mutations) => {
 		thisMonth = calendar.currentMounthNumber
 		firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
 		createCalender()
-		
+
 		//color calendar
 
-	let btnPrevious = document.querySelector('.btn_previous')
-	let btnNext = document.querySelector('.btn_next')
-	btnPrevious.click()
-	btnNext.click()
+		let btnPrevious = document.querySelector('.btn_previous')
+		let btnNext = document.querySelector('.btn_next')
+		btnPrevious.click()
+		btnNext.click()
 
 
 	})
@@ -519,6 +508,8 @@ const observerWorkspace = new MutationObserver((mutations) => {
 					card.childNodes[7].append(lia)
 
 				})
+				//add number of comments
+				card.children[2].children[0].textContent = crd.commenst.length
 				Backlog.append(card.cloneNode(true))
 				allCardBoard = document.querySelectorAll('.cardBoard')
 
@@ -539,9 +530,11 @@ const observerWorkspace = new MutationObserver((mutations) => {
 					card.childNodes[7].append(lia)
 
 				})
+				//add number of comments
+				card.children[2].children[0].textContent = crd.commenst.length
 				InProgress.append(card.cloneNode(true))
 				allCardBoard = document.querySelectorAll('.cardBoard')
-				
+
 
 			})
 
@@ -559,9 +552,11 @@ const observerWorkspace = new MutationObserver((mutations) => {
 					card.childNodes[7].append(lia)
 
 				})
+				//add number of comments
+				card.children[2].children[0].textContent = crd.commenst.length
 				Done.append(card.cloneNode(true))
 				allCardBoard = document.querySelectorAll('.cardBoard')
-				
+
 
 			})
 
@@ -649,6 +644,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 			)
 			waitUntilReturnName(cardKanbanContent, 'cardKanbanContent').then((contentCard) => {
 				let card = components.cardBoardkanbanHtml
+				card.children[0].innerHTML='<hr>'
 				card.children[0].innerHTML = contentCard
 				Backlog.append(card.cloneNode(true))
 				// register the content of each options in object and load it when you picked option
@@ -662,10 +658,10 @@ const observerWorkspace = new MutationObserver((mutations) => {
 			})
 		})
 		allCardBoard = [...document.querySelectorAll('.cardBoard')]
-	
+
 		if (allCardBoard) {
 			allCardBoard.forEach((card, index) => {
-				
+
 				//*delete card
 				card.childNodes[5].childNodes[7].addEventListener('click', (e) => {
 					card.remove()
@@ -681,70 +677,18 @@ const observerWorkspace = new MutationObserver((mutations) => {
 
 					kanbanBoardDATA[kbanBoardListSelectedValue][theplaceDropit].forEach((card, index) => {
 						if (card.constent == constetncard) {
-							
+
 							kanbanBoardDATA[kbanBoardListSelectedValue][theplaceDropit].delete(card)
 						}
-						
-					})
-
-
-				
-					
-				})
-				//*add comment
-				//FIXME add comment to multiple cards
-				card.childNodes[5].childNodes[5].addEventListener('click', (e) => {
-
-					Qual.confirmd("ADD COMMENT", //For heading
-					"", //For sub heading
-					inf, //icon variable we can define our own also by giving th link in double quotes
-					"ADD", //blue button string
-					"", // cancel button string
-					"addComment", //function name that is to be called on click on blue button
-					"", //function name that is to be called on click on cancel button
-					"string", //type of input you want whether a text ,password or number
-					"Enter your comment" //Placeholder text of input field
-					)
-					waitUntilReturnName(comment, 'comment').then((comments) => {
-
-						
-						const li = document.createElement('li')
-						li.innerHTML = comments
-						e.path[2].children[3].append(li)
-						
-						
-						comment = null
-						//get the kanban boaard of this card
-						let kbanBoardListSelectedValue = kbanBoardList.options[kbanBoardList.selectedIndex].value
-						
-
-						// get the place (backlog,inprogress,done) of this card
-						let theplaceDropit = e.path[3].getAttribute('id')
-						theplaceDropit = theplaceDropit.charAt(0).toUpperCase() + theplaceDropit.substring(1);
-						let constetncard = card.childNodes[1].textContent
-
-						//get the content of this card
-						// get the index of this card 
-						// add the comment to it
-						kanbanBoardDATA[kbanBoardListSelectedValue][theplaceDropit].forEach((card, index) => {
-							if (card.constent == constetncard) {
-								card.commenst.push(comments)
-							}
-							
-						})
-						
 
 					})
-					//FIXME comments card numbers
-					//TODO SAVE the comment numbers and load it from the arrDATA
-					//get the current number \\ increment it || add it to the comment
-					let currentcomentNumber= +card.childNodes[5].childNodes[1].textContent
-					card.childNodes[5].childNodes[1].textContent = currentcomentNumber + 1
 
-					
-					
+
+
 
 				})
+
+
 				//*show comment
 				card.childNodes[5].childNodes[3].addEventListener('click', (e) => {
 					e.path[2].children[3].style.display = 'block'
@@ -752,8 +696,8 @@ const observerWorkspace = new MutationObserver((mutations) => {
 						e.path[2].children[3].style.display = 'none'
 					}, 5000);
 				})
-				
-				
+
+
 				// drag and drop functionality
 				card.addEventListener('dragstart', (e) => {
 
@@ -1054,4 +998,7 @@ observerWorkspace.observe(workspace, {
 
 // TODO instal button functionality
 
-// TODO change the README : add the api of transfer databwtwen service wrker and app ane delete voice controll struff
+// TODO change the README : add the api of transfer databwtwen service wrker and app ane delete voice controll struff 
+
+
+//REVIEW TRY "onclick" attribute on the HTML FOR COMMENT NUMBER ISSUE
