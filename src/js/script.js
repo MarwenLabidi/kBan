@@ -737,16 +737,24 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				backlogInprogressDone.addEventListener('drop', (e) => {
 					// change the content of arr to in progress or done and delete backglog from arrddata
 					setTimeout(() => {
-
-						//the place where you drop it
-						let theplaceDropit = e.path[0].innerText.split('')[0]
-						//get the content of curret drage card and 
 						//FIXME figure out a solution for the lastchild below
 						//FIXME ADD EMPTY COMMENT
 
+						//--->the place where you drop it
+						let theplaceDropit = e.path[0].innerText.split('')[0]
+						//--->selected or current kanban board list
+						let kboardNameSelected = kbanBoardList.options[kbanBoardList.selectedIndex].value
 
 						//---->the card you drag
 						// console.log('Carddragable: ', dragable);
+						//---> card content
+						let cardContent = dragable.children[0].textContent
+						console.log('cardContent: ', cardContent);
+						// ---> arr of all the htlm comment element of the draged card
+						//NOTE convert the comment element to the text comtent when you work
+						let allCommentsOfDragableCard =[...dragable.children[3].children]
+						allCommentsOfDragableCard.shift()
+						console.log('allCommentsOfDragableCard: ', allCommentsOfDragableCard);
 						//---->all the elements i whrere u drop it arr
 						let childCards = [...backlogInprogressDone.children]
 						childCards.shift()
@@ -761,7 +769,6 @@ const observerWorkspace = new MutationObserver((mutations) => {
 						})
 						// console.log(nextCard);
 						//---> convert set to array 
-						let kboardNameSelected = kbanBoardList.options[kbanBoardList.selectedIndex].value
 						let originalSet = kanbanBoardDATA[kboardNameSelected].InProgress
 						// console.log('originalSet: ', originalSet);
 						let convertedSetToArr = Array.from(kanbanBoardDATA[kboardNameSelected].InProgress);
@@ -795,9 +802,10 @@ const observerWorkspace = new MutationObserver((mutations) => {
 
 
 
-						let cardcontenttolll = e.path[0].children[1].childNodes[1].textContent
+						let cardcontenttolll =  backlogInprogressDone.lastChild.childNodes[1].textContent
+						
 
-						let cardcontentCommentss = [...e.path[0].children[1].childNodes[7].children]
+						let cardcontentCommentss = [... backlogInprogressDone.lastChild.childNodes[7].children]
 
 						let kbanBoardListSelectedValue = kbanBoardList.options[kbanBoardList.selectedIndex].value
 
