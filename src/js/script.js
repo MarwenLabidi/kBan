@@ -565,7 +565,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 
 
 		buttonNewKboard.addEventListener('click', () => {
-			let x=true
+			let x = true
 			observerWorkspace.observe(workspace, {
 				childList: true,
 				subtree: true
@@ -593,7 +593,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				}
 				if (!x) {
 					// alert("the name of this kboard is exist..");
-					KboardName=null
+					KboardName = null
 					return
 				}
 
@@ -660,7 +660,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				"Enter the content of the card" //Placeholder text of input field
 			)
 			waitUntilReturnName(cardKanbanContent, 'cardKanbanContent').then((contentCard) => {
-			
+
 				let card = components.cardBoardkanbanHtml
 				card.children[0].innerHTML = contentCard
 				card.children[2].children[0].textContent = 0
@@ -735,7 +735,6 @@ const observerWorkspace = new MutationObserver((mutations) => {
 					observerWorkspace.disconnect()
 				})
 				backlogInprogressDone.addEventListener('drop', (e) => {
-
 					// change the content of arr to in progress or done and delete backglog from arrddata
 					setTimeout(() => {
 
@@ -743,13 +742,65 @@ const observerWorkspace = new MutationObserver((mutations) => {
 						let theplaceDropit = e.path[0].innerText.split('')[0]
 						//get the content of curret drage card and 
 						//FIXME figure out a solution for the lastchild below
-						//TODO get the card you drop it : data and comments
-						//TODO get the next card of the drop it card
-						//TODO if there is not next cards add it at the end else add it befor the next card 
-						// console.log( e.path[0].children[1]);
-						let cardcontenttolll = backlogInprogressDone.lastChild.childNodes[1].textContent
-						let cardcontentCommentss = [...backlogInprogressDone.lastChild.childNodes[7].children]
+						//FIXME ADD EMPTY COMMENT
+
+
+						//---->the card you drag
+						// console.log('Carddragable: ', dragable);
+						//---->all the elements i whrere u drop it arr
+						let childCards = [...backlogInprogressDone.children]
+						childCards.shift()
+						// console.log('childCards: ', childCards);
+
+						// ----> the next card 
+						let nextCard
+						childCards.forEach((childCard, index) => {
+							if (childCard.children[0].textContent == dragable.children[0].textContent) {
+								nextCard = childCards[index + 1]
+							}
+						})
+						// console.log(nextCard);
+						//---> convert set to array 
+						let kboardNameSelected = kbanBoardList.options[kbanBoardList.selectedIndex].value
+						let originalSet = kanbanBoardDATA[kboardNameSelected].InProgress
+						// console.log('originalSet: ', originalSet);
+						let convertedSetToArr = Array.from(kanbanBoardDATA[kboardNameSelected].InProgress);
+						// console.log('convertedSetToArr: ', convertedSetToArr);
+
+						//---> change the card position in the array
+						const changeCardPositionInDATAarr = (element, nextElement) => {
+							//find next elemt index
+							let indexOFNextElement = null
+							arr.forEach((el, index) => {
+								if (el.constent == nextElement) {
+									indexOFNextElement = index
+								}
+
+							})
+							if (indexOFNextElement == null) {
+								arr.push(element)
+							} else {
+								arr.splice(indexOFNextElement, 0, element)
+							}
+						}
+
+						//---> convet array to set
+						// let theNewSet = new Set(convertedSetToArr)
+						// console.log('theNewSet: ', theNewSet);
+
+
+
+
+
+
+
+
+						let cardcontenttolll = e.path[0].children[1].childNodes[1].textContent
+
+						let cardcontentCommentss = [...e.path[0].children[1].childNodes[7].children]
+
 						let kbanBoardListSelectedValue = kbanBoardList.options[kbanBoardList.selectedIndex].value
+
 						if (theplaceDropit == '⏳') {
 
 
@@ -1021,5 +1072,3 @@ observerWorkspace.observe(workspace, {
 // TODO instal button functionality
 
 // TODO change the README : add the api of transfer databwtwen service wrker and app ane delete voice controll struff 
-
-
