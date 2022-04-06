@@ -1100,21 +1100,22 @@ observerWorkspace.observe(workspace, {
 	subtree: true
 })
 
-
 //-[] use proxy object to send the data to service workers
-//-[] : create epics array and create the function to add epics in the roadmap section !!!!! if it is empty
-//-[] : create bugs array and create the function to add the bugs !!!!if its empty
 
+//TODO : create epics array and create the function to add epics in the roadmap section !!!!! if it is empty
+
+//TODO : create bugs array and create the function to add the bugs !!!!if its empty
 
 // TODO count the task open and in progress done and bugs and calcule the percent of each tasks
 
-//TODO  create a delete function to the cards of the projects in the first page
+// TODO enable report button until you chooose a project or you create new one : {pop up like create kboard button }
 
 //TODO create white theme for the app : dark mode white mode
 
-// TODO add delete button in the first project cards and add clear all project functionality
+//TODO  create a delete function to the cards of the projects in the first page
 
-// TODO use pop up report until you chooose a project or you create new one
+// TODO  add clear all project functionality
+
 
 
 // TODO check the database if is full or do a delete technique 
