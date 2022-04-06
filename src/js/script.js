@@ -836,25 +836,168 @@ const observerWorkspace = new MutationObserver((mutations) => {
 									kanbanBoardDATA[kboardNameSelected].Done.delete(obj);
 								}
 							})
-
-
 							kanbanBoardDATA[kboardNameSelected].InProgress.forEach((elm => {
-
 								if (checkMeImExist[elm.constent]) {
 									kanbanBoardDATA[kboardNameSelected].InProgress.delete(elm);
 								}
 								checkMeImExist[elm.constent] = true
 							}))
-
-
 							checkMeImExist = {}
 
 
 						} else if (theplaceDropit == '✅') {
-							//TODO IMPLEMENT THE FUNCTIONALITY OF ADDING AND CHANGING THE DATA IN THE ARRAY
+							let cardtoMveinArr = {
+								constent: null,
+								commenst: null
+							}
+							//change the current card in the arrdatat to the in progress 
+							cardtoMveinArr['constent'] = cardContent
+							if (nextCard==null) {
+								kanbanBoardDATA[kboardNameSelected].InProgress.add(cardtoMveinArr)
+							}else{
+								//--> convert set to array 
+								let originalSet = kanbanBoardDATA[kboardNameSelected].Done
+
+
+								let convertedSetToArr = Array.from(kanbanBoardDATA[kboardNameSelected].Done);
+
+
+
+								//-> change the card position in the array
+								const changeCardPositionInDATAarr = (element, nextElement) => {
+									//find next elemt index
+									let indexOFNextElement = null
+									convertedSetToArr.forEach((el, index) => {
+										if (el.constent == nextElement) {
+											indexOFNextElement = index
+										}
+									})
+									if (indexOFNextElement == null) {
+										convertedSetToArr.push({
+											constent: element,
+											commenst: []
+										})
+									} else {
+										convertedSetToArr.splice(indexOFNextElement, 0, {
+											constent: element,
+											commenst: []
+										})
+									}
+								}
+								changeCardPositionInDATAarr(cardContent, nextCard.children[0].textContent)
+
+								//-> convet array to set
+								kanbanBoardDATA[kboardNameSelected].Done = new Set(convertedSetToArr)
+
+							}
+							cardtoMveinArr['commenst'] = [...allCommentsOfDragableCard]
+							const cardCommensts = cardtoMveinArr.commenst.map((el, index) => {
+								if (index = 0) {
+									return
+								} else {
+									return el.textContent
+								}
+							})
+							cardtoMveinArr['commenst'] = cardCommensts
+							let shiiit = JSON.parse(JSON.stringify(cardtoMveinArr))
+							kanbanBoardDATA[kboardNameSelected].Done.add(shiiit)
+
+							// delete it from backlog
+							kanbanBoardDATA[kboardNameSelected].Backlog.forEach((obj) => {
+								if (obj.constent == cardContent) {
+									kanbanBoardDATA[kboardNameSelected].Backlog.delete(obj);
+								}
+							})
+							kanbanBoardDATA[kboardNameSelected].InProgress.forEach((obj) => {
+								if (obj.constent == cardContent) {
+									kanbanBoardDATA[kboardNameSelected].InProgress.delete(obj);
+								}
+							})
+							kanbanBoardDATA[kboardNameSelected].Done.forEach((elm => {
+								if (checkMeImExist[elm.constent]) {
+									kanbanBoardDATA[kboardNameSelected].Done.delete(elm);
+								}
+								checkMeImExist[elm.constent] = true
+							}))
+							checkMeImExist = {}
 
 						} else {
-							//TODO IMPLEMENT THE FUNCTIONALITY OF ADDING AND CHANGING THE DATA IN THE ARRAY
+							let cardtoMveinArr = {
+								constent: null,
+								commenst: null
+							}
+							//change the current card in the arrdatat to the in progress 
+							cardtoMveinArr['constent'] = cardContent
+							if (nextCard==null) {
+								kanbanBoardDATA[kboardNameSelected].Backlog.add(cardtoMveinArr)
+							} else {
+								//--> convert set to array 
+								let originalSet = kanbanBoardDATA[kboardNameSelected].Backlog
+
+
+								let convertedSetToArr = Array.from(kanbanBoardDATA[kboardNameSelected].Backlog);
+
+
+
+								//-> change the card position in the array
+								const changeCardPositionInDATAarr = (element, nextElement) => {
+									//find next elemt index
+									let indexOFNextElement = null
+									convertedSetToArr.forEach((el, index) => {
+										if (el.constent == nextElement) {
+											indexOFNextElement = index
+										}
+									})
+									if (indexOFNextElement == null) {
+										convertedSetToArr.push({
+											constent: element,
+											commenst: []
+										})
+									} else {
+										convertedSetToArr.splice(indexOFNextElement, 0, {
+											constent: element,
+											commenst: []
+										})
+									}
+								}
+								changeCardPositionInDATAarr(cardContent, nextCard.children[0].textContent)
+
+								//-> convet array to set
+								kanbanBoardDATA[kboardNameSelected].Backlog = new Set(convertedSetToArr)
+
+							}
+							
+							cardtoMveinArr['commenst'] = [...allCommentsOfDragableCard]
+							const cardCommensts = cardtoMveinArr.commenst.map((el, index) => {
+								if (index = 0) {
+									return
+								} else {
+									return el.textContent
+								}
+							})
+							cardtoMveinArr['commenst'] = cardCommensts
+							let shiiit = JSON.parse(JSON.stringify(cardtoMveinArr))
+							kanbanBoardDATA[kboardNameSelected].Backlog.add(shiiit)
+
+
+							// delete it from backlog
+							kanbanBoardDATA[kboardNameSelected].InProgress.forEach((obj) => {
+								if (obj.constent == cardContent) {
+									kanbanBoardDATA[kboardNameSelected].InProgress.delete(obj);
+								}
+							})
+							kanbanBoardDATA[kboardNameSelected].Done.forEach((obj) => {
+								if (obj.constent == cardContent) {
+									kanbanBoardDATA[kboardNameSelected].Done.delete(obj);
+								}
+							})
+							kanbanBoardDATA[kboardNameSelected].Backlog.forEach((elm => {
+								if (checkMeImExist[elm.constent]) {
+									kanbanBoardDATA[kboardNameSelected].Backlog.delete(elm);
+								}
+								checkMeImExist[elm.constent] = true
+							}))
+							checkMeImExist = {}
 
 						}
 
