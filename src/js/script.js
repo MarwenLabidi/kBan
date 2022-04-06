@@ -737,73 +737,81 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				backlogInprogressDone.addEventListener('drop', (e) => {
 					// change the content of arr to in progress or done and delete backglog from arrddata
 					setTimeout(() => {
-						//--->the place where you drop it
-						let theplaceDropit = e.path[0].innerText.split('')[0]
-						//--->selected or current kanban board list
+						
+						//->the place where you drop it
+						let theplaceDropit=backlogInprogressDone.innerText.split('')[0]
+						
+						//->selected or current kanban board list
 						let kboardNameSelected = kbanBoardList.options[kbanBoardList.selectedIndex].value
 
-						//---->the card you drag
+						//-->the card you drag
 						// 
-						//---> card content
+						//-> card content
 						let cardContent = dragable.children[0].textContent
 						
-						// ---> arr of all the htlm comment element of the draged card
-						let allCommentsOfDragableCard =[...dragable.children[3].children]
+
+						// -> arr of all the htlm comment element of the draged card
+						let allCommentsOfDragableCard = [...dragable.children[3].children]
 						allCommentsOfDragableCard.shift()
-						
-						//---->all the elements i whrere u drop it arr
+
+						//-->all the elements i whrere u drop it arr
 						let childCards = [...backlogInprogressDone.children]
 						childCards.shift()
 						// 
-
-						// ----> the next card 
-						let nextCard
+						// --> the next card 
+						let nextCard = null
 						childCards.forEach((childCard, index) => {
 							if (childCard.children[0].textContent == dragable.children[0].textContent) {
 								nextCard = childCards[index + 1]
 							}
 						})
-						// 
-						//---> convert set to array 
-						let originalSet = kanbanBoardDATA[kboardNameSelected].InProgress
-						// 
-						let convertedSetToArr = Array.from(kanbanBoardDATA[kboardNameSelected].InProgress);
-						// 
-
-						//---> change the card position in the array
-						const changeCardPositionInDATAarr = (element, nextElement) => {
-							//find next elemt index
-							let indexOFNextElement = null
-							arr.forEach((el, index) => {
-								if (el.constent == nextElement) {
-									indexOFNextElement = index
-								}
-
-							})
-							if (indexOFNextElement == null) {
-								arr.push(element)
-							} else {
-								arr.splice(indexOFNextElement, 0, element)
-							}
-						}
-
-						//---> convet array to set
-						// let theNewSet = new Set(convertedSetToArr)
-						// 
-
-						//---> implement the functionality of adding and ch ngig the data inside the array
-
+						//-> implement the functionality of adding and ch ngig the data inside the array
 						if (theplaceDropit == '⏳') {
-
 							let cardtoMveinArr = {
 								constent: null,
 								commenst: null
 							}
-						//change the current card in the arrdatat to the in progress 
+							//change the current card in the arrdatat to the in progress 
 							cardtoMveinArr['constent'] = cardContent
-							//TODO use change the card position function here below
-							kanbanBoardDATA[kboardNameSelected].InProgress.add(cardtoMveinArr)
+							if (nextCard==null) {
+								kanbanBoardDATA[kboardNameSelected].InProgress.add(cardtoMveinArr)
+							} else {
+								//--> convert set to array 
+								let originalSet = kanbanBoardDATA[kboardNameSelected].InProgress
 
+
+								let convertedSetToArr = Array.from(kanbanBoardDATA[kboardNameSelected].InProgress);
+
+
+
+								//-> change the card position in the array
+								const changeCardPositionInDATAarr = (element, nextElement) => {
+									//find next elemt index
+									let indexOFNextElement = null
+									convertedSetToArr.forEach((el, index) => {
+										if (el.constent == nextElement) {
+											indexOFNextElement = index
+										}
+									})
+									if (indexOFNextElement == null) {
+										convertedSetToArr.push({
+											constent: element,
+											commenst: []
+										})
+									} else {
+										convertedSetToArr.splice(indexOFNextElement, 0, {
+											constent: element,
+											commenst: []
+										})
+									}
+								}
+								changeCardPositionInDATAarr(cardContent, nextCard.children[0].textContent)
+
+								//-> convet array to set
+								kanbanBoardDATA[kboardNameSelected].InProgress = new Set(convertedSetToArr)
+
+							}
+							
 							cardtoMveinArr['commenst'] = [...allCommentsOfDragableCard]
 							const cardCommensts = cardtoMveinArr.commenst.map((el, index) => {
 								if (index = 0) {
@@ -842,7 +850,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 							checkMeImExist = {}
 
 
-						}else if (theplaceDropit == '✅') {
+						} else if (theplaceDropit == '✅') {
 							//TODO IMPLEMENT THE FUNCTIONALITY OF ADDING AND CHANGING THE DATA IN THE ARRAY
 
 						} else {
@@ -866,7 +874,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 					} else {
 						backlogInprogressDone.appendChild(dragable)
 					}
-					
+
 
 				})
 			})
