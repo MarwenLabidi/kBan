@@ -13,7 +13,6 @@ var bugName = null;
 
 
 
-// var calendar = await 
 var calendar
 import('/src/js/calendar.js').then(calendarr => {
 	calendar = calendarr

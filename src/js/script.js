@@ -6,20 +6,9 @@ const project = document.querySelector('#project')
 const aside = document.querySelector('aside')
 const main = document.querySelector('main')
 
-// let prevSibling = null
-// let monthDom = null
-// let yearDom = null
-// let daysDom = null
-// let thisYear = null
-// let thisMonth = null
-// let firstDayMth = null
+
 let btnPrevious = null
-// let btnNext = null
-// let evrySingleDays = []
-// let color = null
-// let startDaysToColorArr = []
-// let endDaysToColorArr = []
-// let colorArr = []
+
 
 let checkMeImExist = {}
 
@@ -997,4 +986,3 @@ observerWorkspace.observe(workspace, {
 
 // TODO change the README : add the api of transfer databwtwen service wrker and app ane delete voice controll struff 
 
-//FIXME FIX THE THREE DOTS POSIIOTN IN EPICS 
