@@ -118,15 +118,12 @@ const addBug = () => {
 
 
 // the add comments button functions 
-//FIXME FIX THE WAIT WHEN YOU CLOSE THE WINDOW : clear the time out after amount ofr look for the event of closing it
-// NOTE CHECK WHEN THE POP UP IS CLOSED
 function waitUntilReturnName(value, vl) {
 	return new Promise((resolve, reject) => {
 		const waitUntilReturn = setInterval(() => {
-			console.log('waiting');
 			setTimeout(() => {
 				clearInterval(waitUntilReturn)
-			}, 8000);
+			}, 10000);
 			value = eval(vl)
 			if (value !== null) {
 				clearInterval(waitUntilReturn)
@@ -325,5 +322,18 @@ function deleteDaysColorFromCalendar(e) {
 	//refresh the color in calendar
 	document.querySelector('.btn_next').click()
 	document.querySelector('.btn_previous').click()
+
+}
+
+function createKbanFromRoadmap(e) {
+	console.log(`create`);
+	document.querySelector('.KanbanBoard').click()
+
+	setTimeout(() => {
+
+		document.querySelector('#newKboard').click()
+		close_qual();
+		KboardName = e.path[2].firstChild.textContent
+	}, 100);
 
 }

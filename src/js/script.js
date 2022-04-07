@@ -320,24 +320,6 @@ const observerWorkspace = new MutationObserver((mutations) => {
 									setTimeout(() => {
 										options[index].style.display = 'none'
 									}, 2000);
-
-									//create a kanban board from the epic
-									options[indexOfChosenEpic].firstChild.addEventListener('click', () => {
-
-										document.querySelector('.KanbanBoard').click()
-										setTimeout(() => {
-
-											document.querySelector('#newKboard').click()
-											close_qual();
-											KboardName = epic
-
-											options[index].style.display = 'none'
-											indexOfChosenEpic = null
-										}, 100)
-
-
-									})
-				
 								});
 							})
 						}
@@ -1016,4 +998,3 @@ observerWorkspace.observe(workspace, {
 // TODO change the README : add the api of transfer databwtwen service wrker and app ane delete voice controll struff 
 
 //FIXME FIX THE THREE DOTS POSIIOTN IN EPICS 
-// FIXME CREATE THE FUNCTIONALITY OF CREATE KBAN BOARD 
