@@ -1,28 +1,30 @@
 let dataBases = await indexedDB.databases()
 const components = await import('./ajaj.js')
-const calendar = await import('./calendar.js')
 const workspace = document.querySelector('.workspace')
 const rightbar = document.querySelector('.rightbar')
 const project = document.querySelector('#project')
 const aside = document.querySelector('aside')
 const main = document.querySelector('main')
 
-let prevSibling = null
-let monthDom = null
-let yearDom = null
-let daysDom = null
-let thisYear = null
-let thisMonth = null
-let firstDayMth = null
+// let prevSibling = null
+// let monthDom = null
+// let yearDom = null
+// let daysDom = null
+// let thisYear = null
+// let thisMonth = null
+// let firstDayMth = null
 let btnPrevious = null
-let btnNext = null
-let evrySingleDays = []
-let color = null
-let startDaysToColorArr = []
-let endDaysToColorArr = []
-let colorArr = []
+// let btnNext = null
+// let evrySingleDays = []
+// let color = null
+// let startDaysToColorArr = []
+// let endDaysToColorArr = []
+// let colorArr = []
 
 let checkMeImExist = {}
+
+const allEpicsInThisProject = []
+const allBugsInThisProject = []
 
 
 function* gen() {
@@ -46,20 +48,6 @@ function* gen() {
 }
 let g = gen();
 
-const createCalender = () => {
-	daysDom.innerHTML = ''
-	yearDom.innerText = thisYear
-	monthDom.innerText = calendar.MONTHS[thisMonth]
-	for (let index = 1; index < firstDayMth; index++) {
-		let div = document.createElement('div')
-		daysDom.append(div)
-	}
-	for (let index = 1; index <= calendar.monthDaysNumber[thisMonth]; index++) {
-		let div = document.createElement('div')
-		div.innerText = index
-		daysDom.append(div)
-	}
-}
 const getDayMonthYear = (date) => {
 	const dateArr = date.split('-')
 	return {
@@ -68,17 +56,7 @@ const getDayMonthYear = (date) => {
 		year: dateArr[0]
 	}
 }
-const runOneTime = (firstDay, arrDays) => {
-	let run = true
-	return () => {
-		if (run === true) {
-			for (let index = 1; index < firstDay; index++) {
-				arrDays.shift()
-			}
-			run = false
-		}
-	}
-}
+
 
 const generateRandomBrightestHSLColor = () => {
 	return "hsla(" + ~~(360 * Math.random()) + "," +
@@ -143,39 +121,7 @@ const getCardToInsertBeforItOtherCard = (allCard, mousePosition) => {
 	return aftercard[0]
 }
 
-const colorDaysINCalendarNEXTbPREVIOUS = (startDatesarr, endDatesarr, currentMonth, currentYear) => {
 
-
-	setTimeout(() => {
-		let allDaysSelected = [...document.querySelectorAll('.days div')]
-		let firstDayMths = calendar.getFirstDaysOfSpesificMonth(currentMonth - 1, currentYear)
-		runOneTime(firstDayMths, allDaysSelected)()
-
-		for (let i = 0; i < startDatesarr.length; i++) {
-			if (startDatesarr[i].year == currentYear && startDatesarr[i].month == currentMonth) {
-				if (endDatesarr[i].month == startDatesarr[i].month) {
-					for (let index = startDatesarr[i].day; index <= endDatesarr[i].day; index++) {
-						allDaysSelected[index - 1].style.backgroundColor = colorArr[i]
-					}
-				} else {
-					for (let index = startDatesarr[i].day; index <= allDaysSelected.length; index++) {
-						allDaysSelected[index - 1].style.backgroundColor = colorArr[i]
-					}
-				}
-
-			} else if (endDatesarr[i].year == currentYear && endDatesarr[i].month == currentMonth) {
-				setTimeout(() => {
-					let allDaysSelected2 = [...document.querySelectorAll('.days div')]
-					let firstDayMths2 = calendar.getFirstDaysOfSpesificMonth(currentMonth - 1, currentYear)
-					runOneTime(firstDayMths2, allDaysSelected2)()
-					for (let index = 0; index < endDatesarr[i].day; index++) {
-						allDaysSelected2[index].style.backgroundColor = colorArr[i]
-					}
-				}, 10);
-			}
-		}
-	}, 10);
-}
 
 function sleep(milliseconds) {
 	const date = Date.now();
@@ -279,6 +225,7 @@ const observerSideBar = new MutationObserver((mutations) => {
 	})
 	Roadmap.click()
 	KanbanBoard.addEventListener('click', () => {
+		epicName = null
 		observerWorkspace.observe(workspace, {
 			childList: true,
 			subtree: true
@@ -311,64 +258,69 @@ report.addEventListener('click', () => {
 	workspace.append(components.reportHtml)
 
 })
+
 const observerWorkspace = new MutationObserver((mutations) => {
 
 	//ROADMAP FUNCTIONLITY
 	const epicButton = document.querySelector('#epicButton')
 	btnPrevious = document.querySelector('.btn_previous')
 	btnNext = document.querySelector('.btn_next')
-	if (btnPrevious || btnNext) {
-		observerWorkspace.disconnect()
-		btnPrevious.addEventListener('click', () => {
-			let theOneMonth = thisMonth
-			if (thisMonth === 0) {
-				theOneMonth = 12;
-			}
+	// if (btnPrevious || btnNext) {
+	//FIXME FIX THE CALENDAR WEN  YOU GO TO KBA AND GET BACK TO ROADMAP ITS GO WRONG
+	//NOTE create a function and assign to the event listenner this function with this keywork
+	// observerWorkspace.disconnect()
+	// btnPrevious.addEventListener('click', () => {
+	// 	console.log('clicked');
+	// 	let theOneMonth = thisMonth
+	// 	if (thisMonth === 0) {
+	// 		theOneMonth = 12;
+	// 	}
 
-			if (startDaysToColorArr.length > 0) {
-				colorDaysINCalendarNEXTbPREVIOUS(startDaysToColorArr, endDaysToColorArr, theOneMonth, thisYear)
+	// 	if (startDaysToColorArr.length > 0) {
+	// 		colorDaysINCalendarNEXTbPREVIOUS(startDaysToColorArr, endDaysToColorArr, theOneMonth, thisYear)
 
-			}
-
-
-
-			// evrySingleDays = [...document.querySelectorAll('.days div')]
-			if (thisMonth === 0) {
-				thisYear--
-				thisMonth = 11
-			} else {
-				thisMonth--
-			}
-			firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
-			createCalender()
-		})
-		btnNext.addEventListener('click', () => {
+	// 	}
 
 
 
+	// 	// evrySingleDays = [...document.querySelectorAll('.days div')]
+	// 	if (thisMonth === 0) {
+	// 		thisYear--
+	// 		thisMonth = 11
+	// 	} else {
+	// 		thisMonth--
+	// 	}
+	// 	firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
+	// 	createCalender()
+	// })
+	// btnNext.addEventListener('click', () => {
 
 
-			let theOneMonthss = thisMonth + 2
-			if (theOneMonthss === 13) {
-				theOneMonthss = 12;
-			}
-			if (startDaysToColorArr.length > 0) {
-				colorDaysINCalendarNEXTbPREVIOUS(startDaysToColorArr, endDaysToColorArr, theOneMonthss, thisYear)
-			}
 
-			// evrySingleDays = [...document.querySelectorAll('.days div')]
-			if (thisMonth === 11) {
-				thisYear++
-				thisMonth = 0
-			} else {
-				thisMonth++
-			}
-			firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
-			createCalender()
-		})
-	}
+
+
+	// 	let theOneMonthss = thisMonth + 2
+	// 	if (theOneMonthss === 13) {
+	// 		theOneMonthss = 12;
+	// 	}
+	// 	if (startDaysToColorArr.length > 0) {
+	// 		colorDaysINCalendarNEXTbPREVIOUS(startDaysToColorArr, endDaysToColorArr, theOneMonthss, thisYear)
+	// 	}
+
+	// 	// evrySingleDays = [...document.querySelectorAll('.days div')]
+	// 	if (thisMonth === 11) {
+	// 		thisYear++
+	// 		thisMonth = 0
+	// 	} else {
+	// 		thisMonth++
+	// 	}
+	// 	firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
+	// 	createCalender()
+	// })
+	// }
 	if (epicButton) {
 		epicButton.addEventListener('click', () => {
+
 
 
 			Qual.confirmd("ADD EPIC ", //For heading
@@ -382,8 +334,11 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				"Enter EPIC" //Placeholder text of input field
 			)
 			waitUntilReturnName(epicName, 'epicName').then((epic) => {
+				epicName = null
 				waitUntilReturnName(startDate, 'startDate').then((sDate) => {
 					waitUntilReturnName(endDate, 'endDate').then((eDate) => {
+						// allEpicsInThisProject.push(epic)
+						// 
 						const startDayMonthYear = getDayMonthYear(sDate)
 						const endDayMonthYear = getDayMonthYear(eDate)
 
@@ -393,6 +348,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 
 						epicTaskHtml.childNodes[0].innerHTML = epic
 						color = g.next().value
+						epicName = null
 						if (g.next().done) {
 							g = gen()
 						}
@@ -436,10 +392,19 @@ const observerWorkspace = new MutationObserver((mutations) => {
 									options[indexOfChosenEpic].lastChild.addEventListener('click', () => {
 										// 
 										options[index].style.display = 'none'
+										//FIXME fix the delete color from the calendar
+										//NOTE ATTATECH FUNCTION TO THE HTML ELEMENT AND GET HERE WORK BY HER SELF
 
-										startDaysToColorArr.splice(indexOfChosenEpic, 1)
-										endDaysToColorArr.splice(indexOfChosenEpic, 1)
-										colorArr.splice(indexOfChosenEpic, 1)
+										// startDaysToColorArr.splice(indexOfChosenEpic, 1)
+
+										// endDaysToColorArr.splice(indexOfChosenEpic, 1)
+
+										// colorArr.splice(indexOfChosenEpic, 1)
+
+
+
+
+
 										btnPrevious.click()
 										btnNext.click()
 
@@ -737,10 +702,10 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				backlogInprogressDone.addEventListener('drop', (e) => {
 					// change the content of arr to in progress or done and delete backglog from arrddata
 					setTimeout(() => {
-						
+
 						//->the place where you drop it
-						let theplaceDropit=backlogInprogressDone.innerText.split('')[0]
-						
+						let theplaceDropit = backlogInprogressDone.innerText.split('')[0]
+
 						//->selected or current kanban board list
 						let kboardNameSelected = kbanBoardList.options[kbanBoardList.selectedIndex].value
 
@@ -748,7 +713,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 						// 
 						//-> card content
 						let cardContent = dragable.children[0].textContent
-						
+
 
 						// -> arr of all the htlm comment element of the draged card
 						let allCommentsOfDragableCard = [...dragable.children[3].children]
@@ -773,7 +738,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 							}
 							//change the current card in the arrdatat to the in progress 
 							cardtoMveinArr['constent'] = cardContent
-							if (nextCard==null) {
+							if (nextCard == null) {
 								kanbanBoardDATA[kboardNameSelected].InProgress.add(cardtoMveinArr)
 							} else {
 								//--> convert set to array 
@@ -811,7 +776,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 								kanbanBoardDATA[kboardNameSelected].InProgress = new Set(convertedSetToArr)
 
 							}
-							
+
 							cardtoMveinArr['commenst'] = [...allCommentsOfDragableCard]
 							const cardCommensts = cardtoMveinArr.commenst.map((el, index) => {
 								if (index = 0) {
@@ -852,9 +817,9 @@ const observerWorkspace = new MutationObserver((mutations) => {
 							}
 							//change the current card in the arrdatat to the in progress 
 							cardtoMveinArr['constent'] = cardContent
-							if (nextCard==null) {
+							if (nextCard == null) {
 								kanbanBoardDATA[kboardNameSelected].InProgress.add(cardtoMveinArr)
-							}else{
+							} else {
 								//--> convert set to array 
 								let originalSet = kanbanBoardDATA[kboardNameSelected].Done
 
@@ -928,7 +893,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 							}
 							//change the current card in the arrdatat to the in progress 
 							cardtoMveinArr['constent'] = cardContent
-							if (nextCard==null) {
+							if (nextCard == null) {
 								kanbanBoardDATA[kboardNameSelected].Backlog.add(cardtoMveinArr)
 							} else {
 								//--> convert set to array 
@@ -966,7 +931,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 								kanbanBoardDATA[kboardNameSelected].Backlog = new Set(convertedSetToArr)
 
 							}
-							
+
 							cardtoMveinArr['commenst'] = [...allCommentsOfDragableCard]
 							const cardCommensts = cardtoMveinArr.commenst.map((el, index) => {
 								if (index = 0) {

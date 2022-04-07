@@ -11,6 +11,32 @@ var cardKanbanContent = null;
 var comment = null;
 var bugName = null;
 
+
+
+// var calendar = await 
+var calendar
+import('/src/js/calendar.js').then(calendarr => {
+	calendar = calendarr
+})
+
+var prevSibling = null
+var monthDom = null
+var yearDom = null
+var daysDom = null
+
+
+
+var thisYear = null
+var thisMonth = null
+var firstDayMth = null
+// var btnPrevious = null
+var btnNext = null
+var evrySingleDays = []
+var color = null
+var startDaysToColorArr = []
+var endDaysToColorArr = []
+var colorArr = []
+
 //statistic for report section
 //TODO get all of them from database
 var NumberOFopenBugs = 10
@@ -147,4 +173,110 @@ function functionName(e) {
 		})
 	})
 
+}
+
+const runOneTime = (firstDay, arrDays) => {
+	let run = true
+	return () => {
+		if (run === true) {
+			for (let index = 1; index < firstDay; index++) {
+				arrDays.shift()
+			}
+			run = false
+		}
+	}
+}
+
+const createCalender = () => {
+	daysDom.innerHTML = ''
+	yearDom.innerText = thisYear
+
+	monthDom.innerText = calendar.MONTHS[thisMonth]
+
+
+	for (let index = 1; index < firstDayMth; index++) {
+		let div = document.createElement('div')
+		daysDom.append(div)
+	}
+	for (let index = 1; index <= calendar.monthDaysNumber[thisMonth]; index++) {
+		let div = document.createElement('div')
+		div.innerText = index
+		daysDom.append(div)
+	}
+}
+
+const colorDaysINCalendarNEXTbPREVIOUS = (startDatesarr, endDatesarr, currentMonth, currentYear) => {
+
+
+	setTimeout(() => {
+		let allDaysSelected = [...document.querySelectorAll('.days div')]
+		let firstDayMths = calendar.getFirstDaysOfSpesificMonth(currentMonth - 1, currentYear)
+		runOneTime(firstDayMths, allDaysSelected)()
+
+		for (let i = 0; i < startDatesarr.length; i++) {
+			if (startDatesarr[i].year == currentYear && startDatesarr[i].month == currentMonth) {
+				if (endDatesarr[i].month == startDatesarr[i].month) {
+					for (let index = startDatesarr[i].day; index <= endDatesarr[i].day; index++) {
+						allDaysSelected[index - 1].style.backgroundColor = colorArr[i]
+					}
+				} else {
+					for (let index = startDatesarr[i].day; index <= allDaysSelected.length; index++) {
+						allDaysSelected[index - 1].style.backgroundColor = colorArr[i]
+					}
+				}
+
+			} else if (endDatesarr[i].year == currentYear && endDatesarr[i].month == currentMonth) {
+				setTimeout(() => {
+					let allDaysSelected2 = [...document.querySelectorAll('.days div')]
+					let firstDayMths2 = calendar.getFirstDaysOfSpesificMonth(currentMonth - 1, currentYear)
+					runOneTime(firstDayMths2, allDaysSelected2)()
+					for (let index = 0; index < endDatesarr[i].day; index++) {
+						allDaysSelected2[index].style.backgroundColor = colorArr[i]
+					}
+				}, 10);
+			}
+		}
+	}, 10);
+}
+
+function previous(e) {
+	let theOneMonth = thisMonth
+	if (thisMonth === 0) {
+		theOneMonth = 12;
+	}
+
+	if (startDaysToColorArr.length > 0) {
+		colorDaysINCalendarNEXTbPREVIOUS(startDaysToColorArr, endDaysToColorArr, theOneMonth, thisYear)
+
+	}
+
+
+
+	if (thisMonth === 0) {
+		thisYear--
+		thisMonth = 11
+	} else {
+		thisMonth--
+	}
+	firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
+	createCalender()
+}
+
+function next(e) {
+	let theOneMonthss = thisMonth + 2
+	if (theOneMonthss === 13) {
+		theOneMonthss = 12;
+	}
+	if (startDaysToColorArr.length > 0) {
+		colorDaysINCalendarNEXTbPREVIOUS(startDaysToColorArr, endDaysToColorArr, theOneMonthss, thisYear)
+	}
+
+	if (thisMonth === 11) {
+		thisYear++
+		thisMonth = 0
+	} else {
+		thisMonth++
+	}
+	firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
+	createCalender()
 }
