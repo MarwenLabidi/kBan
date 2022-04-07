@@ -265,59 +265,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 	const epicButton = document.querySelector('#epicButton')
 	btnPrevious = document.querySelector('.btn_previous')
 	btnNext = document.querySelector('.btn_next')
-	// if (btnPrevious || btnNext) {
-	//FIXME FIX THE CALENDAR WEN  YOU GO TO KBA AND GET BACK TO ROADMAP ITS GO WRONG
-	//NOTE create a function and assign to the event listenner this function with this keywork
-	// observerWorkspace.disconnect()
-	// btnPrevious.addEventListener('click', () => {
-	// 	console.log('clicked');
-	// 	let theOneMonth = thisMonth
-	// 	if (thisMonth === 0) {
-	// 		theOneMonth = 12;
-	// 	}
 
-	// 	if (startDaysToColorArr.length > 0) {
-	// 		colorDaysINCalendarNEXTbPREVIOUS(startDaysToColorArr, endDaysToColorArr, theOneMonth, thisYear)
-
-	// 	}
-
-
-
-	// 	// evrySingleDays = [...document.querySelectorAll('.days div')]
-	// 	if (thisMonth === 0) {
-	// 		thisYear--
-	// 		thisMonth = 11
-	// 	} else {
-	// 		thisMonth--
-	// 	}
-	// 	firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
-	// 	createCalender()
-	// })
-	// btnNext.addEventListener('click', () => {
-
-
-
-
-
-	// 	let theOneMonthss = thisMonth + 2
-	// 	if (theOneMonthss === 13) {
-	// 		theOneMonthss = 12;
-	// 	}
-	// 	if (startDaysToColorArr.length > 0) {
-	// 		colorDaysINCalendarNEXTbPREVIOUS(startDaysToColorArr, endDaysToColorArr, theOneMonthss, thisYear)
-	// 	}
-
-	// 	// evrySingleDays = [...document.querySelectorAll('.days div')]
-	// 	if (thisMonth === 11) {
-	// 		thisYear++
-	// 		thisMonth = 0
-	// 	} else {
-	// 		thisMonth++
-	// 	}
-	// 	firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
-	// 	createCalender()
-	// })
-	// }
 	if (epicButton) {
 		epicButton.addEventListener('click', () => {
 
@@ -389,29 +337,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 
 
 									})
-									options[indexOfChosenEpic].lastChild.addEventListener('click', () => {
-										// 
-										options[index].style.display = 'none'
-										//FIXME fix the delete color from the calendar
-										//NOTE ATTATECH FUNCTION TO THE HTML ELEMENT AND GET HERE WORK BY HER SELF
-
-										// startDaysToColorArr.splice(indexOfChosenEpic, 1)
-
-										// endDaysToColorArr.splice(indexOfChosenEpic, 1)
-
-										// colorArr.splice(indexOfChosenEpic, 1)
-
-
-
-
-
-										btnPrevious.click()
-										btnNext.click()
-
-
-										epicH3[index].remove()
-										indexOfChosenEpic = null
-									})
+				
 								});
 							})
 						}
@@ -1088,3 +1014,6 @@ observerWorkspace.observe(workspace, {
 // TODO instal button functionality
 
 // TODO change the README : add the api of transfer databwtwen service wrker and app ane delete voice controll struff 
+
+//FIXME FIX THE THREE DOTS POSIIOTN IN EPICS 
+// FIXME CREATE THE FUNCTIONALITY OF CREATE KBAN BOARD 

@@ -118,10 +118,12 @@ const addBug = () => {
 
 
 // the add comments button functions 
-
+//FIXME FIX THE WAIT WHEN YOU CLOSE THE WINDOW : clear the time out after amount ofr look for the event of closing it
+// NOTE CHECK WHEN THE POP UP IS CLOSED
 function waitUntilReturnName(value, vl) {
 	return new Promise((resolve, reject) => {
 		const waitUntilReturn = setInterval(() => {
+			// 
 			value = eval(vl)
 			if (value !== null) {
 				clearInterval(waitUntilReturn)
@@ -279,4 +281,46 @@ function next(e) {
 	}
 	firstDayMth = calendar.getFirstDaysOfSpesificMonth(thisMonth, thisYear)
 	createCalender()
+}
+
+
+function deleteDaysColorFromCalendar(e) {
+	//--> hide option
+	e.path[1].style.display = 'none'
+	//--> delete the curren epic
+	//--> all the epics
+	let allEpicsInoine = [...e.path[3].children]
+	allEpicsInoine.shift()
+
+
+	// get the index of the current epic
+	let indexOFEpic = 0
+	allEpicsInoine.forEach((epic, index) => {
+
+		if (epic.firstChild.textContent == e.path[2].firstChild.textContent) {
+
+			indexOFEpic = index
+		}
+	})
+
+	//--> detete the color from the calendar
+
+	startDaysToColorArr.splice(indexOFEpic, 1)
+
+
+
+	endDaysToColorArr.splice(indexOFEpic, 1)
+
+
+	colorArr.splice(indexOFEpic, 1)
+
+
+
+
+
+	e.path[2].remove()
+	//refresh the color in calendar
+	document.querySelector('.btn_next').click()
+	document.querySelector('.btn_previous').click()
+
 }
