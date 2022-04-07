@@ -123,7 +123,10 @@ const addBug = () => {
 function waitUntilReturnName(value, vl) {
 	return new Promise((resolve, reject) => {
 		const waitUntilReturn = setInterval(() => {
-			// 
+			console.log('waiting');
+			setTimeout(() => {
+				clearInterval(waitUntilReturn)
+			}, 8000);
 			value = eval(vl)
 			if (value !== null) {
 				clearInterval(waitUntilReturn)
