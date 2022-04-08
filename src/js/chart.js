@@ -9,18 +9,14 @@ let fontColor = "white"
 let backgroundColor = black
 
 //statistic for report section
-var NumberOFopenBugs = 1
-var NumberOFdoneBugs = 1
-var NumberOFbackLog = 1
-var NumberOFinProgress = 1
-var NumberOFdone = 1
+var NumberOFopenBugs = 0
+var NumberOFdoneBugs = 0
+var NumberOFbackLog = 0
+var NumberOFinProgress = 0
+var NumberOFdone = 0
 
 
-let openBugs = (NumberOFopenBugs / (NumberOFdoneBugs + NumberOFopenBugs)) * 100
-let doneBugs = (NumberOFdoneBugs / (NumberOFdoneBugs + NumberOFopenBugs)) * 100
-let backLog = (NumberOFbackLog / (NumberOFbackLog + NumberOFinProgress + NumberOFdone)) * 100
-let inProgress = (NumberOFinProgress / (NumberOFbackLog + NumberOFinProgress + NumberOFdone)) * 100
-let done = (NumberOFdone / (NumberOFbackLog + NumberOFinProgress + NumberOFdone)) * 100
+
 
 
 const report = document.querySelector('#report')
@@ -32,20 +28,56 @@ const {
 } = await import('./ajaj.js')
 
 report.addEventListener('click', function () {
+
 	
-	console.log(kanbanBoardDATA);
-	console.log(allBugsInThisProject);
-	//TODO get the backlog and in progress and done numbers of every kboard
-	//TODO get the open bugs and closed bugs
+	
+	// get the backlog and in progress and done numbers of every kboard
+	const getBacklogInprogressDoneNumber = () => {
+		//convet the object to array first
+		const arr = Object.values(kanbanBoardDATA);
+		
 
 
+		arr.forEach((board) => {
+			NumberOFbackLog += board.Backlog.size
+			
+			
+			NumberOFinProgress += board.InProgress.size
+			
+			
+			NumberOFdone += board.Done.size
+			
+			
 
+		})
+
+	}
+
+	getBacklogInprogressDoneNumber()
+	// get the open bugs and closed bugs
+	const getOpenClosedBugNumber = () => {
+		allBugsInThisProject.forEach((bug) => {
+			if (bug.bugStatus == 'open') {
+				NumberOFopenBugs++
+
+			} else {
+				NumberOFdoneBugs++
+			}
+		})
+
+	}
+	getOpenClosedBugNumber()
+	let openBugs = (NumberOFopenBugs / (NumberOFdoneBugs + NumberOFopenBugs)) * 100
+	let doneBugs = (NumberOFdoneBugs / (NumberOFdoneBugs + NumberOFopenBugs)) * 100
+	let backLog = (NumberOFbackLog / (NumberOFbackLog + NumberOFinProgress + NumberOFdone)) * 100
+	let inProgress = (NumberOFinProgress / (NumberOFbackLog + NumberOFinProgress + NumberOFdone)) * 100
+	let done = (NumberOFdone / (NumberOFbackLog + NumberOFinProgress + NumberOFdone)) * 100
 
 
 	if (PROJECTNAME == null) {
 		alert('Please select a project first')
 		return
-	}else{
+	} else {
 		if (NumberOFdone == 0 && NumberOFinProgress == 0 && NumberOFbackLog == 0 && NumberOFdoneBugs == 0 && NumberOFopenBugs == 0) {
 			alert('there is no statistique available ');
 			return;

@@ -901,7 +901,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				BUG.childNodes[3].childNodes[3].innerHTML = new Date().toLocaleDateString()
 				BUG.childNodes[7].innerHTML = "open"
 				tbody.append(BUG.cloneNode(true))
-				//---> create the bugs data
+				//--> create the bugs data
 				allBugsInThisProject.push({
 					bugName: bug,
 					bugStatus: "open",
@@ -923,8 +923,8 @@ const observerWorkspace = new MutationObserver((mutations) => {
 							//delete
 							getBUGS[index].childNodes[3].childNodes[1].childNodes[3].addEventListener('click', () => {
 								if (getBUGS[index] && getBUGS[index].childNodes[3].childNodes[1]) {
-									//--->the name of delete it bug
-									// console.log('the name ', getBUGS[index].children[0].children[0].children[0].innerText);
+									//-->the name of delete it bug
+									// 
 									function deleteBug(name) {
 										allBugsInThisProject.forEach((bug, index) => {
 
@@ -950,13 +950,14 @@ const observerWorkspace = new MutationObserver((mutations) => {
 							//change status
 							getBUGS[index].childNodes[3].childNodes[1].childNodes[1].addEventListener('click', () => {
 								if (getBUGS[index].childNodes[3].childNodes[1]) {
-									//---> the closed date of the bug
-									// console.log('getBUGS[index]: ', getBUGS[index].children[2].innerText);
+									//--> the closed date of the bug
+									// 
 									function changeBugStatus(name, closedDate) {
 										allBugsInThisProject.forEach((bug, index) => {
 
 											if (name == bug.bugName) {
 												bug.bugClosedDate = closedDate
+												bug.bugStatus = "closed"
 											} else {
 												return
 											}
@@ -970,6 +971,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 
 									let s = document.querySelectorAll('#shit')
 									s[index].innerHTML = new Date().toLocaleDateString()
+
 
 
 								}
@@ -1004,4 +1006,3 @@ observerWorkspace.observe(workspace, {
 
 
 // TODO check the database if is full or do a delete technique 
-
