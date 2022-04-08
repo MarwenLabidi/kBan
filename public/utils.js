@@ -1,4 +1,9 @@
 var kanbanBoardDATA = {}
+//projectname
+var PROJECTNAME = null
+//register all the epics here
+var allEpicsInThisProject = []
+var allBugsInThisProject = []
 
 
 
@@ -36,13 +41,7 @@ var startDaysToColorArr = []
 var endDaysToColorArr = []
 var colorArr = []
 
-//statistic for report section
-//TODO get all of them from database
-var NumberOFopenBugs = 10
-var NumberOFdoneBugs = 10
-var NumberOFbackLog = 10
-var NumberOFinProgress = 10
-var NumberOFdone = 10
+
 
 
 

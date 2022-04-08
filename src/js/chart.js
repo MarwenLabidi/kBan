@@ -8,12 +8,19 @@ const blue = "#008080"
 let fontColor = "white"
 let backgroundColor = black
 
+//statistic for report section
+var NumberOFopenBugs = 1
+var NumberOFdoneBugs = 1
+var NumberOFbackLog = 1
+var NumberOFinProgress = 1
+var NumberOFdone = 1
 
-let openBugs = (NumberOFopenBugs/(NumberOFdoneBugs+ NumberOFopenBugs))*100
-let doneBugs = (NumberOFdoneBugs/(NumberOFdoneBugs+ NumberOFopenBugs))*100
-let backLog = (NumberOFbackLog/(NumberOFbackLog+NumberOFinProgress+NumberOFdone))*100
-let inProgress = (NumberOFinProgress/(NumberOFbackLog+NumberOFinProgress+NumberOFdone))*100
-let done = (NumberOFdone/(NumberOFbackLog+NumberOFinProgress+NumberOFdone))*100
+
+let openBugs = (NumberOFopenBugs / (NumberOFdoneBugs + NumberOFopenBugs)) * 100
+let doneBugs = (NumberOFdoneBugs / (NumberOFdoneBugs + NumberOFopenBugs)) * 100
+let backLog = (NumberOFbackLog / (NumberOFbackLog + NumberOFinProgress + NumberOFdone)) * 100
+let inProgress = (NumberOFinProgress / (NumberOFbackLog + NumberOFinProgress + NumberOFdone)) * 100
+let done = (NumberOFdone / (NumberOFbackLog + NumberOFinProgress + NumberOFdone)) * 100
 
 
 const report = document.querySelector('#report')
@@ -25,6 +32,26 @@ const {
 } = await import('./ajaj.js')
 
 report.addEventListener('click', function () {
+	
+	console.log(kanbanBoardDATA);
+	console.log(allBugsInThisProject);
+	//TODO get the backlog and in progress and done numbers of every kboard
+	//TODO get the open bugs and closed bugs
+
+
+
+
+
+	if (PROJECTNAME == null) {
+		alert('Please select a project first')
+		return
+	}else{
+		if (NumberOFdone == 0 && NumberOFinProgress == 0 && NumberOFbackLog == 0 && NumberOFdoneBugs == 0 && NumberOFopenBugs == 0) {
+			alert('there is no statistique available ');
+			return;
+		}
+	}
+
 
 	workspace.innerHTML = ''
 	workspace.append(reportHtml)

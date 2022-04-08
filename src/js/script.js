@@ -11,12 +11,9 @@ let btnPrevious = null
 
 
 let checkMeImExist = {}
-//TODO assign the project name when you start a project
-//NOTE use this varriable to hope u reload the data from the database
-let PROJECTNAME = null
-//register all the epics here
-const allEpicsInThisProject = []
-const allBugsInThisProject = []
+
+
+
 
 
 function* gen() {
@@ -175,6 +172,8 @@ cardAdd.addEventListener('click', () => {
 	)
 	waitUntilReturnName(projectName, 'projectName').then((Name) => {
 		//!  NOTE : send the name to the service worker
+		PROJECTNAME = Name
+
 		aside.style.width = '28%'
 		aside.style.minWidth = '300px'
 		rightbar.append(components.sideBarRightHtml)
@@ -241,15 +240,6 @@ observerSideBar.observe(rightbar, {
 	childList: true
 })
 
-report.addEventListener('click', () => {
-	workspace.style.gridTemplateColumns = '1fr'
-	aside.style.width = '5.2%'
-	aside.style.minWidth = '100px'
-	rightbar.style.display = 'none'
-	workspace.innerHTML = ''
-	workspace.append(components.reportHtml)
-
-})
 
 const observerWorkspace = new MutationObserver((mutations) => {
 
@@ -1003,24 +993,15 @@ observerWorkspace.observe(workspace, {
 	subtree: true
 })
 
-//-[] use proxy object to send the data to service workers
 
-
-
-// TODO count the task open and in progress done and bugs and calcule the percent of each tasks
-
-// TODO enable report button until you chooose a project or you create new one : {pop up like create kboard button }
+// TODO instal button functionality
 
 //TODO create white theme for the app : dark mode white mode
 
-//TODO  create a delete function to the cards of the projects in the first page
+//TODO use proxy object to send the data to service workers
 
-// TODO  add clear all project functionality
-
+//TODO  create a delete button at the first page and you have the chose to delete one or mutltiple : it show you pop up to pick widh check box
 
 
 // TODO check the database if is full or do a delete technique 
 
-// TODO instal button functionality
-
-// TODO change the README : add the api of transfer databwtwen service wrker and app ane delete voice controll struff 
