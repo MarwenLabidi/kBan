@@ -1,11 +1,16 @@
-const black = "hsl(215, 0%, 25%)"
-const white = "hsl(76, 100%, 100%)"
+
+// report 
+let fontColor = "white"
+let black = "hsl(215, 0%, 25%)"
+let white = "hsl(76, 100%, 100%)"
+
+
 const red = "#FF0000"
 const green = "#3CB371"
 const orange = "#FFC000"
 const blue = "#008080"
 
-let fontColor = "white"
+
 let backgroundColor = black
 
 //statistic for report section
@@ -14,6 +19,8 @@ var NumberOFdoneBugs = 0
 var NumberOFbackLog = 0
 var NumberOFinProgress = 0
 var NumberOFdone = 0
+
+
 
 
 
@@ -29,25 +36,23 @@ const {
 
 report.addEventListener('click', function () {
 
-	
-	
 	// get the backlog and in progress and done numbers of every kboard
 	const getBacklogInprogressDoneNumber = () => {
 		//convet the object to array first
 		const arr = Object.values(kanbanBoardDATA);
-		
+
 
 
 		arr.forEach((board) => {
 			NumberOFbackLog += board.Backlog.size
-			
-			
+
+
 			NumberOFinProgress += board.InProgress.size
-			
-			
+
+
 			NumberOFdone += board.Done.size
-			
-			
+
+
 
 		})
 
@@ -67,6 +72,7 @@ report.addEventListener('click', function () {
 
 	}
 	getOpenClosedBugNumber()
+	
 	let openBugs = (NumberOFopenBugs / (NumberOFdoneBugs + NumberOFopenBugs)) * 100
 	let doneBugs = (NumberOFdoneBugs / (NumberOFdoneBugs + NumberOFopenBugs)) * 100
 	let backLog = (NumberOFbackLog / (NumberOFbackLog + NumberOFinProgress + NumberOFdone)) * 100
@@ -87,6 +93,8 @@ report.addEventListener('click', function () {
 
 	workspace.innerHTML = ''
 	workspace.append(reportHtml)
+	const projectname =document.querySelector('.pn')
+	projectname.innerHTML=PROJECTNAME
 
 	CanvasJS.addColorSet("progress",
 		[ //colorSet Array

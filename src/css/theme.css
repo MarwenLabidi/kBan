@@ -1,0 +1,18 @@
+.changeTheme{
+	& .onemain{
+		background-color: var(--clr_gray_white:);
+
+	}
+	& .sidemain{
+		background-color: var(--clr_gray);
+	}
+	& .kBord{
+		color:black;
+	}
+	& .roadmap{
+		color:black;
+		& .daysNames{
+			color:white;
+		}
+	}
+}
