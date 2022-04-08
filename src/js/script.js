@@ -11,7 +11,10 @@ let btnPrevious = null
 
 
 let checkMeImExist = {}
-
+//TODO assign the project name when you start a project
+//NOTE use this varriable to hope u reload the data from the database
+let PROJECTNAME = null
+//register all the epics here
 const allEpicsInThisProject = []
 const allBugsInThisProject = []
 
@@ -274,8 +277,8 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				epicName = null
 				waitUntilReturnName(startDate, 'startDate').then((sDate) => {
 					waitUntilReturnName(endDate, 'endDate').then((eDate) => {
-						// allEpicsInThisProject.push(epic)
-						// 
+						allEpicsInThisProject.push(epic)
+
 						const startDayMonthYear = getDayMonthYear(sDate)
 						const endDayMonthYear = getDayMonthYear(eDate)
 
@@ -908,6 +911,13 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				BUG.childNodes[3].childNodes[3].innerHTML = new Date().toLocaleDateString()
 				BUG.childNodes[7].innerHTML = "open"
 				tbody.append(BUG.cloneNode(true))
+				//---> create the bugs data
+				allBugsInThisProject.push({
+					bugName: bug,
+					bugStatus: "open",
+					bugOpenDate: new Date().toLocaleDateString(),
+					bugClosedDate: `on going`
+				})
 				bugName = null
 				let getBUGS = [...document.querySelectorAll('.BUG')]
 				let options3dot = [...document.querySelectorAll('.options3dot')]
@@ -923,6 +933,23 @@ const observerWorkspace = new MutationObserver((mutations) => {
 							//delete
 							getBUGS[index].childNodes[3].childNodes[1].childNodes[3].addEventListener('click', () => {
 								if (getBUGS[index] && getBUGS[index].childNodes[3].childNodes[1]) {
+									//--->the name of delete it bug
+									// console.log('the name ', getBUGS[index].children[0].children[0].children[0].innerText);
+									function deleteBug(name) {
+										allBugsInThisProject.forEach((bug, index) => {
+
+											if (name == bug.bugName) {
+												allBugsInThisProject.splice(index, 1)
+											} else {
+												return
+											}
+										})
+
+									}
+									deleteBug(getBUGS[index].children[0].children[0].children[0].innerText)
+
+
+
 									getBUGS[index].remove()
 									getBUGS[index].childNodes[3].childNodes[1].remove()
 
@@ -933,6 +960,20 @@ const observerWorkspace = new MutationObserver((mutations) => {
 							//change status
 							getBUGS[index].childNodes[3].childNodes[1].childNodes[1].addEventListener('click', () => {
 								if (getBUGS[index].childNodes[3].childNodes[1]) {
+									//---> the closed date of the bug
+									// console.log('getBUGS[index]: ', getBUGS[index].children[2].innerText);
+									function changeBugStatus(name, closedDate) {
+										allBugsInThisProject.forEach((bug, index) => {
+
+											if (name == bug.bugName) {
+												bug.bugClosedDate = closedDate
+											} else {
+												return
+											}
+										})
+									}
+									changeBugStatus(getBUGS[index].children[0].children[0].children[0].innerText, new Date().toLocaleDateString())
+
 									optionsdamn[index].style.display = 'none'
 									getBUGS[index].childNodes[7].innerHTML = 'closed'
 									getBUGS[index].classList.add('closegreenclass')
@@ -964,9 +1005,7 @@ observerWorkspace.observe(workspace, {
 
 //-[] use proxy object to send the data to service workers
 
-//TODO : create epics array and create the function to add epics in the roadmap section !!!!! if it is empty
 
-//TODO : create bugs array and create the function to add the bugs !!!!if its empty
 
 // TODO count the task open and in progress done and bugs and calcule the percent of each tasks
 
@@ -985,4 +1024,3 @@ observerWorkspace.observe(workspace, {
 // TODO instal button functionality
 
 // TODO change the README : add the api of transfer databwtwen service wrker and app ane delete voice controll struff 
-
