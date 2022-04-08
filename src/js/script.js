@@ -995,8 +995,7 @@ observerWorkspace.observe(workspace, {
 	subtree: true
 })
 
-
-// TODO instal button functionality
+//FIXME FIX CODE IN THE BUILD SECTION
 
 //TODO create white theme for the app : dark mode white mode
 
