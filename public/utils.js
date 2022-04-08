@@ -19,7 +19,7 @@ var bugName = null;
 
 
 var calendar
-import('/src/js/calendar.js').then(calendarr => {
+import('/calendar.js').then(calendarr => {
 	calendar = calendarr
 })
 

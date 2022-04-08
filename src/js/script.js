@@ -5,6 +5,8 @@ const rightbar = document.querySelector('.rightbar')
 const project = document.querySelector('#project')
 const aside = document.querySelector('aside')
 const main = document.querySelector('main')
+var calendar = await import('/calendar.js')
+
 
 
 let btnPrevious = null
@@ -997,7 +999,6 @@ observerWorkspace.observe(workspace, {
 
 //FIXME FIX CODE IN THE BUILD SECTION
 
-//TODO create white theme for the app : dark mode white mode
 
 //TODO use proxy object to send the data to service workers
 
