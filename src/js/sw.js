@@ -46,3 +46,12 @@ registerRoute(
 // Auto update for new content ...
 self.skipWaiting()
 clientsClaim()
+
+
+self.addEventListener('message', (event) => {
+	if (event.data && event.data.type === 'MESSAGE_IDENTIFIER') {
+		// do something
+		console.log(`message received`);
+		console.log(event.data.msg);
+	}
+});

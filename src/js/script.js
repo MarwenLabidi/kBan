@@ -5,7 +5,7 @@ const rightbar = document.querySelector('.rightbar')
 const project = document.querySelector('#project')
 const aside = document.querySelector('aside')
 const main = document.querySelector('main')
- calendar = await import('./calendar.js')
+calendar = await import('./calendar.js')
 
 
 
@@ -1006,3 +1006,9 @@ observerWorkspace.observe(workspace, {
 
 
 // TODO check the database if is full or do a delete technique 
+
+
+navigator.serviceWorker.controller.postMessage({
+	type: 'MESSAGE_IDENTIFIER',
+	msg: "Hey I just got a fetch from you!",
+});
