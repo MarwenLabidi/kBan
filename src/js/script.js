@@ -1010,5 +1010,5 @@ observerWorkspace.observe(workspace, {
 
 navigator.serviceWorker.controller.postMessage({
 	type: 'MESSAGE_IDENTIFIER',
-	msg: "Hey I just got a fetch from you!",
+	nameDataBase: "TEST!",
 });

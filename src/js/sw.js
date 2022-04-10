@@ -1,3 +1,8 @@
+// importScripts('https://unpkg.com/dexie@2.0.3/dist/dexie.js');
+importScripts('dexie.js');
+
+
+
 import {
 	precacheAndRoute,
 	cleanupOutdatedCaches
@@ -48,10 +53,31 @@ self.skipWaiting()
 clientsClaim()
 
 
+// indexDB
+
+
+
+
+
 self.addEventListener('message', (event) => {
 	if (event.data && event.data.type === 'MESSAGE_IDENTIFIER') {
 		// do something
 		console.log(`message received`);
-		console.log(event.data.msg);
+
+		let projectName = event.data.nameDataBase;
+		let version = 1
+		const db = new Dexie(projectName);
+		db.version(version).stores({
+			epics: "epic",
+			kboard: "kboard",
+			bugs: "bug"
+		});
+
+		(async () => {
+			await db.epics.put({
+				epic: ['one', 'two', 'three'],
+
+			});
+		})();
 	}
 });
