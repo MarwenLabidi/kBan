@@ -19,9 +19,9 @@ var bugName = null;
 
 
 var calendar
-import('/calendar.js').then(calendarr => {
-	calendar = calendarr
-})
+// import('/calendar.js').then(calendarr => {
+// 	calendar = calendarr
+// })
 
 var prevSibling = null
 var monthDom = null

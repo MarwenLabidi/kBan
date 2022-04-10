@@ -5,7 +5,7 @@ const rightbar = document.querySelector('.rightbar')
 const project = document.querySelector('#project')
 const aside = document.querySelector('aside')
 const main = document.querySelector('main')
-var calendar = await import('/calendar.js')
+ calendar = await import('./calendar.js')
 
 
 
