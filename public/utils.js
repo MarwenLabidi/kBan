@@ -171,6 +171,9 @@ function functionName(e) {
 				card.commenst.push(comments)
 			}
 		})
+		navigator.serviceWorker.controller.postMessage({
+			kban: kanbanBoardDATA,
+		});
 	})
 
 }
@@ -303,6 +306,8 @@ function deleteDaysColorFromCalendar(e) {
 
 	//--> detete the color from the calendar
 
+	allEpicsInThisProject.splice(indexOFEpic, 1)
+
 	startDaysToColorArr.splice(indexOFEpic, 1)
 
 
@@ -311,6 +316,14 @@ function deleteDaysColorFromCalendar(e) {
 
 
 	colorArr.splice(indexOFEpic, 1)
+	navigator.serviceWorker.controller.postMessage({
+		epics: allEpicsInThisProject,
+	});
+	navigator.serviceWorker.controller.postMessage({
+		start: startDaysToColorArr,
+		end: endDaysToColorArr,
+		color: colorArr
+	});
 
 
 

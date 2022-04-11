@@ -5,7 +5,7 @@ const main = document.querySelector('.main')
 darkMode.addEventListener('click', () => {
 
 	//play sound
-	var audio = new Audio("/public/lightswitch.mp3");
+	var audio = new Audio("/lightswitch.mp3");
 	audio.play();
 	//play animation 
 	darkMode.style.display = 'block'
