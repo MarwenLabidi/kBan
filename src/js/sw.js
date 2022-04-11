@@ -1,6 +1,6 @@
 // importScripts('https://unpkg.com/dexie@2.0.3/dist/dexie.js');
 importScripts('dexie.js');
-
+let projectNameSW = null
 
 
 import {
@@ -60,24 +60,105 @@ clientsClaim()
 
 
 self.addEventListener('message', (event) => {
-	if (event.data && event.data.type === 'MESSAGE_IDENTIFIER') {
-		// do something
-		console.log(`message received`);
+	if (event.data) {
+		if (event.data.nameDataBase) {
+			projectNameSW = event.data.nameDataBase;
 
-		let projectName = event.data.nameDataBase;
+		}
+
+
 		let version = 1
-		const db = new Dexie(projectName);
+		const db = new Dexie(projectNameSW);
 		db.version(version).stores({
-			epics: "epic",
-			kboard: "kboard",
-			bugs: "bug"
+			allEpicsInThisProject: "epic",
+			startDaysToColorArr: "startDays",
+			endDaysToColorArr: "endDays",
+			colorArr: "colorArr",
+			kanbanBoardDATA: "kanbanBoardDATA",
+			allBugsInThisProject: "allBugsInThisProject",
 		});
+		if (event.data.epics) {
 
-		(async () => {
-			await db.epics.put({
-				epic: ['one', 'two', 'three'],
+			(async () => {
+				await db.allEpicsInThisProject
+					.orderBy('epic')
+					.delete();
+			})()
+			setTimeout(() => {
 
-			});
-		})();
+				(async () => {
+					await db.allEpicsInThisProject.put({
+						epic: 'epic',
+						data: event.data.epics
+					});
+				})();
+			}, 200);
+		}
+
+		if (event.data.start) {
+
+			(async () => {
+				await db.startDaysToColorArr
+					.orderBy('startDays')
+					.delete();
+			})()
+
+			setTimeout(() => {
+
+
+
+				(async () => {
+					await db.startDaysToColorArr.put({
+						startDays: 'startDays',
+						data: event.data.start
+					});
+				})();
+				(async () => {
+					await db.endDaysToColorArr.put({
+						endDays: 'endDays',
+						data: event.data.end
+					});
+				})();
+				(async () => {
+					await db.colorArr.put({
+						colorArr: 'colorArr',
+						data: event.data.color
+					});
+				})();
+			}, 201);
+		}
+		if (event.data.kban) {
+
+			(async () => {
+				await db.kanbanBoardDATA
+					.orderBy('kanbanBoardDATA')
+					.delete();
+			})()
+			setTimeout(() => {
+
+				(async () => {
+					await db.kanbanBoardDATA.put({
+						kanbanBoardDATA: 'kanbanBoardDATA',
+						data: event.data.kban
+					});
+				})();
+			}, 200);
+		}
+		if (event.data.bugs) {
+			(async () => {
+				await db.allBugsInThisProject
+					.orderBy('allBugsInThisProject')
+					.delete();
+			})()
+			setTimeout(() => {
+
+				(async () => {
+					await db.allBugsInThisProject.put({
+						allBugsInThisProject: 'allBugsInThisProject',
+						data: event.data.bugs
+					});
+				})();
+			}, 200);
+		}
 	}
 });
