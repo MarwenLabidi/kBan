@@ -17,7 +17,7 @@ var comment = null;
 var bugName = null;
 
 
-
+var components
 var calendar
 // import('/calendar.js').then(calendarr => {
 // 	calendar = calendarr
@@ -333,5 +333,23 @@ function createKbanFromRoadmap(e) {
 		close_qual();
 		KboardName = e.path[2].firstChild.textContent
 	}, 100);
+
+}
+
+
+
+function loadDataFromIndexDB(e) {
+	let name = e.path[0].children[0].textContent
+	// show sidebar
+	const aside = document.querySelector('aside')
+	const rightbar = document.querySelector('.rightbar')
+
+	aside.style.width = '28%'
+	aside.style.minWidth = '300px'
+	rightbar.append(components.sideBarRightHtml)
+	const projectnamesHtml = document.querySelector('.projectnames')
+	projectnamesHtml.innerText = name
+	//----> load data from indexDB
+	
 
 }

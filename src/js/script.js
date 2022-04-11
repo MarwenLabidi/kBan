@@ -1,5 +1,5 @@
 let dataBases = await indexedDB.databases()
-const components = await import('./ajaj.js')
+components = await import('./ajaj.js')
 const workspace = document.querySelector('.workspace')
 const rightbar = document.querySelector('.rightbar')
 const project = document.querySelector('#project')
@@ -173,7 +173,7 @@ cardAdd.addEventListener('click', () => {
 		"Enter Project Name" //Placeholder text of input field
 	)
 	waitUntilReturnName(projectName, 'projectName').then((Name) => {
-		//  NOTE : send the name to the service worker
+		//   : send the name to the service worker
 		PROJECTNAME = Name
 		navigator.serviceWorker.controller.postMessage({
 			nameDataBase: PROJECTNAME,
@@ -272,7 +272,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 				epicName = null
 				waitUntilReturnName(startDate, 'startDate').then((sDate) => {
 					waitUntilReturnName(endDate, 'endDate').then((eDate) => {
-						//NOTE send epics to the service worker
+						// send epics to the service worker
 						allEpicsInThisProject.push(epic)
 						navigator.serviceWorker.controller.postMessage({
 							epics: allEpicsInThisProject,
@@ -294,7 +294,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 						startDaysToColorArr.push(startDayMonthYear)
 						endDaysToColorArr.push(endDayMonthYear)
 						colorArr.push(color)
-						//NOTE SEND STARTDATYCOLOR ENDDAYCOLOR AND COLORARR TOO THE SERVICE WORKER
+						// SEND STARTDATYCOLOR ENDDAYCOLOR AND COLORARR TOO THE SERVICE WORKER
 						navigator.serviceWorker.controller.postMessage({
 							start: startDaysToColorArr,
 							end: endDaysToColorArr,
@@ -497,7 +497,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 					InProgress: new Set(),
 					Done: new Set()
 				}
-				//NOTE ADD KBAN BOARD TO SERVIEC WORKER
+				// ADD KBAN BOARD TO SERVIEC WORKER
 
 				navigator.serviceWorker.controller.postMessage({
 					kban: kanbanBoardDATA,
@@ -549,7 +549,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 					constent: contentCard,
 					commenst: []
 				})
-				//NOTE ADD KBAN BOARD TO SERVIEC WORKER
+				// ADD KBAN BOARD TO SERVIEC WORKER
 
 				navigator.serviceWorker.controller.postMessage({
 					kban: kanbanBoardDATA,
@@ -579,7 +579,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 						if (card.constent == constetncard) {
 
 							kanbanBoardDATA[kbanBoardListSelectedValue][theplaceDropit].delete(card)
-							//NOTE ADD KBAN BOARD TO SERVIEC WORKER
+							// ADD KBAN BOARD TO SERVIEC WORKER
 
 							navigator.serviceWorker.controller.postMessage({
 								kban: kanbanBoardDATA,
@@ -661,7 +661,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 							cardtoMveinArr['constent'] = cardContent
 							if (nextCard == null) {
 								kanbanBoardDATA[kboardNameSelected].InProgress.add(cardtoMveinArr)
-								//NOTE ADD KBAN BOARD TO SERVIEC WORKER
+								// ADD KBAN BOARD TO SERVIEC WORKER
 
 								navigator.serviceWorker.controller.postMessage({
 									kban: kanbanBoardDATA,
@@ -700,7 +700,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 
 								//-> convet array to set
 								kanbanBoardDATA[kboardNameSelected].InProgress = new Set(convertedSetToArr)
-								//NOTE ADD KBAN BOARD TO SERVIEC WORKER
+								// ADD KBAN BOARD TO SERVIEC WORKER
 
 								navigator.serviceWorker.controller.postMessage({
 									kban: kanbanBoardDATA,
@@ -719,7 +719,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 							cardtoMveinArr['commenst'] = cardCommensts
 							let shiiit = JSON.parse(JSON.stringify(cardtoMveinArr))
 							kanbanBoardDATA[kboardNameSelected].InProgress.add(shiiit)
-							//NOTE ADD KBAN BOARD TO SERVIEC WORKER
+							// ADD KBAN BOARD TO SERVIEC WORKER
 
 							navigator.serviceWorker.controller.postMessage({
 								kban: kanbanBoardDATA,
@@ -730,7 +730,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 							kanbanBoardDATA[kboardNameSelected].Backlog.forEach((obj) => {
 								if (obj.constent == cardContent) {
 									kanbanBoardDATA[kboardNameSelected].Backlog.delete(obj);
-									//NOTE ADD KBAN BOARD TO SERVIEC WORKER
+									// ADD KBAN BOARD TO SERVIEC WORKER
 
 									navigator.serviceWorker.controller.postMessage({
 										kban: kanbanBoardDATA,
@@ -740,7 +740,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 							kanbanBoardDATA[kboardNameSelected].Done.forEach((obj) => {
 								if (obj.constent == cardContent) {
 									kanbanBoardDATA[kboardNameSelected].Done.delete(obj);
-									//NOTE ADD KBAN BOARD TO SERVIEC WORKER
+									// ADD KBAN BOARD TO SERVIEC WORKER
 
 									navigator.serviceWorker.controller.postMessage({
 										kban: kanbanBoardDATA,
@@ -750,7 +750,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 							kanbanBoardDATA[kboardNameSelected].InProgress.forEach((elm => {
 								if (checkMeImExist[elm.constent]) {
 									kanbanBoardDATA[kboardNameSelected].InProgress.delete(elm);
-									//NOTE ADD KBAN BOARD TO SERVIEC WORKER
+									// ADD KBAN BOARD TO SERVIEC WORKER
 
 									navigator.serviceWorker.controller.postMessage({
 										kban: kanbanBoardDATA,
@@ -770,7 +770,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 							cardtoMveinArr['constent'] = cardContent
 							if (nextCard == null) {
 								kanbanBoardDATA[kboardNameSelected].InProgress.add(cardtoMveinArr)
-								//NOTE ADD KBAN BOARD TO SERVIEC WORKER
+								// ADD KBAN BOARD TO SERVIEC WORKER
 
 								navigator.serviceWorker.controller.postMessage({
 									kban: kanbanBoardDATA,
@@ -809,7 +809,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 
 								//-> convet array to set
 								kanbanBoardDATA[kboardNameSelected].Done = new Set(convertedSetToArr)
-								//NOTE ADD KBAN BOARD TO SERVIEC WORKER
+								// ADD KBAN BOARD TO SERVIEC WORKER
 
 								navigator.serviceWorker.controller.postMessage({
 									kban: kanbanBoardDATA,
@@ -827,7 +827,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 							cardtoMveinArr['commenst'] = cardCommensts
 							let shiiit = JSON.parse(JSON.stringify(cardtoMveinArr))
 							kanbanBoardDATA[kboardNameSelected].Done.add(shiiit)
-							//NOTE ADD KBAN BOARD TO SERVIEC WORKER
+							// ADD KBAN BOARD TO SERVIEC WORKER
 
 							navigator.serviceWorker.controller.postMessage({
 								kban: kanbanBoardDATA,
@@ -837,7 +837,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 							kanbanBoardDATA[kboardNameSelected].Backlog.forEach((obj) => {
 								if (obj.constent == cardContent) {
 									kanbanBoardDATA[kboardNameSelected].Backlog.delete(obj);
-									//NOTE ADD KBAN BOARD TO SERVIEC WORKER
+									// ADD KBAN BOARD TO SERVIEC WORKER
 
 									navigator.serviceWorker.controller.postMessage({
 										kban: kanbanBoardDATA,
@@ -847,7 +847,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 							kanbanBoardDATA[kboardNameSelected].InProgress.forEach((obj) => {
 								if (obj.constent == cardContent) {
 									kanbanBoardDATA[kboardNameSelected].InProgress.delete(obj);
-									//NOTE ADD KBAN BOARD TO SERVIEC WORKER
+									// ADD KBAN BOARD TO SERVIEC WORKER
 
 									navigator.serviceWorker.controller.postMessage({
 										kban: kanbanBoardDATA,
@@ -857,7 +857,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 							kanbanBoardDATA[kboardNameSelected].Done.forEach((elm => {
 								if (checkMeImExist[elm.constent]) {
 									kanbanBoardDATA[kboardNameSelected].Done.delete(elm);
-									//NOTE ADD KBAN BOARD TO SERVIEC WORKER
+									// ADD KBAN BOARD TO SERVIEC WORKER
 
 									navigator.serviceWorker.controller.postMessage({
 										kban: kanbanBoardDATA,
@@ -876,7 +876,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 							cardtoMveinArr['constent'] = cardContent
 							if (nextCard == null) {
 								kanbanBoardDATA[kboardNameSelected].Backlog.add(cardtoMveinArr)
-								//NOTE ADD KBAN BOARD TO SERVIEC WORKER
+								// ADD KBAN BOARD TO SERVIEC WORKER
 
 								navigator.serviceWorker.controller.postMessage({
 									kban: kanbanBoardDATA,
@@ -915,7 +915,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 
 								//-> convet array to set
 								kanbanBoardDATA[kboardNameSelected].Backlog = new Set(convertedSetToArr)
-								//NOTE ADD KBAN BOARD TO SERVIEC WORKER
+								// ADD KBAN BOARD TO SERVIEC WORKER
 
 								navigator.serviceWorker.controller.postMessage({
 									kban: kanbanBoardDATA,
@@ -934,7 +934,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 							cardtoMveinArr['commenst'] = cardCommensts
 							let shiiit = JSON.parse(JSON.stringify(cardtoMveinArr))
 							kanbanBoardDATA[kboardNameSelected].Backlog.add(shiiit)
-							//NOTE ADD KBAN BOARD TO SERVIEC WORKER
+							// ADD KBAN BOARD TO SERVIEC WORKER
 
 							navigator.serviceWorker.controller.postMessage({
 								kban: kanbanBoardDATA,
@@ -945,7 +945,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 							kanbanBoardDATA[kboardNameSelected].InProgress.forEach((obj) => {
 								if (obj.constent == cardContent) {
 									kanbanBoardDATA[kboardNameSelected].InProgress.delete(obj);
-									//NOTE ADD KBAN BOARD TO SERVIEC WORKER
+									// ADD KBAN BOARD TO SERVIEC WORKER
 
 									navigator.serviceWorker.controller.postMessage({
 										kban: kanbanBoardDATA,
@@ -955,7 +955,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 							kanbanBoardDATA[kboardNameSelected].Done.forEach((obj) => {
 								if (obj.constent == cardContent) {
 									kanbanBoardDATA[kboardNameSelected].Done.delete(obj);
-									//NOTE ADD KBAN BOARD TO SERVIEC WORKER
+									// ADD KBAN BOARD TO SERVIEC WORKER
 
 									navigator.serviceWorker.controller.postMessage({
 										kban: kanbanBoardDATA,
@@ -965,7 +965,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 							kanbanBoardDATA[kboardNameSelected].Backlog.forEach((elm => {
 								if (checkMeImExist[elm.constent]) {
 									kanbanBoardDATA[kboardNameSelected].Backlog.delete(elm);
-									//NOTE ADD KBAN BOARD TO SERVIEC WORKER
+									// ADD KBAN BOARD TO SERVIEC WORKER
 
 									navigator.serviceWorker.controller.postMessage({
 										kban: kanbanBoardDATA,
@@ -1029,7 +1029,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 					bugOpenDate: new Date().toLocaleDateString(),
 					bugClosedDate: `on going`
 				})
-				//NOTE SEND BUG TO SEVICE WORKER
+				// SEND BUG TO SEVICE WORKER
 				navigator.serviceWorker.controller.postMessage({
 					bugs: allBugsInThisProject,
 				});
@@ -1062,7 +1062,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 
 									}
 									deleteBug(getBUGS[index].children[0].children[0].children[0].innerText)
-									//NOTE SEND BUG TO SEVICE WORKER
+									// SEND BUG TO SEVICE WORKER
 									navigator.serviceWorker.controller.postMessage({
 										bugs: allBugsInThisProject,
 									});
@@ -1094,7 +1094,7 @@ const observerWorkspace = new MutationObserver((mutations) => {
 									}
 									changeBugStatus(getBUGS[index].children[0].children[0].children[0].innerText, new Date().toLocaleDateString())
 
-									//NOTE SEND BUG TO SEVICE WORKER
+									// SEND BUG TO SEVICE WORKER
 									navigator.serviceWorker.controller.postMessage({
 										bugs: allBugsInThisProject,
 									});
