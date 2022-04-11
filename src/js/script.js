@@ -123,7 +123,7 @@ function sleep(milliseconds) {
 }
 
 
-//---> load data from indexDB
+//--> load data from indexDB
 project.addEventListener('click', () => {
 	workspace.innerHTML = ''
 	workspace.append(components.cardAddHtml)
@@ -140,7 +140,6 @@ project.addEventListener('click', () => {
 		for (let index = 0; index < Names.length; index++) {
 			cardNames[index].innerText = Names[index]
 		}
-		//TODO when you click to any project card it will show you seconde side bar and show you the data
 	}
 
 })
@@ -220,7 +219,10 @@ const observerSideBar = new MutationObserver((mutations) => {
 
 	})
 	Roadmap.click()
+
 	KanbanBoard.addEventListener('click', () => {
+
+
 		epicName = null
 		observerWorkspace.observe(workspace, {
 			childList: true,
@@ -231,6 +233,7 @@ const observerSideBar = new MutationObserver((mutations) => {
 		workspace.append(components.kanbanboardHtml)
 	})
 	Bugs.addEventListener('click', () => {
+
 		observerWorkspace.observe(workspace, {
 			childList: true,
 			subtree: true
@@ -1093,21 +1096,15 @@ const observerWorkspace = new MutationObserver((mutations) => {
 										})
 									}
 									changeBugStatus(getBUGS[index].children[0].children[0].children[0].innerText, new Date().toLocaleDateString())
-
 									// SEND BUG TO SEVICE WORKER
 									navigator.serviceWorker.controller.postMessage({
 										bugs: allBugsInThisProject,
 									});
-
 									optionsdamn[index].style.display = 'none'
 									getBUGS[index].childNodes[7].innerHTML = 'closed'
 									getBUGS[index].classList.add('closegreenclass')
-
 									let s = document.querySelectorAll('#shit')
 									s[index].innerHTML = new Date().toLocaleDateString()
-
-
-
 								}
 							}, {
 								once: true
@@ -1129,10 +1126,8 @@ observerWorkspace.observe(workspace, {
 	subtree: true
 })
 
-//FIXME when you pick another databawe UPDATE THE project name attribute and send it to the servce worker
-//TODO impllemet the funcionaity of oher card project click on it 
+//FIXME fix add comment to indexDB 
 
-//TODO use proxy object to send the data to service workers
 
 //TODO  create a delete button at the first page and you have the chose to delete one or mutltiple : it show you pop up to pick widh check box
 

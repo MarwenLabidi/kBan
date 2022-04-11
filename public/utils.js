@@ -349,7 +349,62 @@ function loadDataFromIndexDB(e) {
 	rightbar.append(components.sideBarRightHtml)
 	const projectnamesHtml = document.querySelector('.projectnames')
 	projectnamesHtml.innerText = name
-	//----> load data from indexDB
-	
+	//--> load data from indexDB
+	let version = 1
+	const db = new Dexie(name);
+	db.version(version).stores({
+		allEpicsInThisProject: "epic",
+		startDaysToColorArr: "startDays",
+		endDaysToColorArr: "endDays",
+		colorArr: "colorArr",
+		kanbanBoardDATA: "kanbanBoardDATA",
+		allBugsInThisProject: "allBugsInThisProject",
+	});
+	db.allEpicsInThisProject.bulkGet(["epic"]).then((data) => {
+		// console.log('epic: ', data[0].data);
+		allEpicsInThisProject = data[0].data
+		console.log('allEpicsInThisProject: ', allEpicsInThisProject);
+		//TODO ADD EPIC CARD TO THE ROADMAP section
+		//TODO click previous then  next button to color the days
+	})
+	db.startDaysToColorArr.bulkGet(["startDays"]).then((data) => {
+		// console.log('startday: ', data[0].data);
+		startDaysToColorArr = data[0].data
+		console.log('startDaysToColorArr: ', startDaysToColorArr);
+	})
+	db.endDaysToColorArr.bulkGet(["endDays"]).then((data) => {
+		// console.log('endday: ', data[0].data);
+		endDaysToColorArr = data[0].data
+		console.log('endDaysToColorArr: ', endDaysToColorArr);
+	})
+	db.colorArr.bulkGet(["colorArr"]).then((data) => {
+		// console.log('color: ', data[0].data);
+		colorArr = data[0].data
+		console.log('colorArr: ', colorArr);
+
+
+
+	})
+	db.kanbanBoardDATA.bulkGet(["kanbanBoardDATA"]).then((data) => {
+		// console.log('kbandata: ', data[0].data);
+		kanbanBoardDATA = data[0].data
+		console.log('kanbanBoardDATA: ', kanbanBoardDATA);
+		const KanbanBoard = document.querySelector('.KanbanBoard')
+		// KanbanBoard.click()
+		//TODO create kanban boards and add it to the list
+		//TODO create cards with comments
+
+	})
+	db.allBugsInThisProject.bulkGet(["allBugsInThisProject"]).then((data) => {
+		// console.log('bugs: ', data[0].data);
+		allBugsInThisProject = data[0].data
+		console.log('allBugsInThisProject: ', allBugsInThisProject);
+		const Bugs = document.querySelector('.Bugs')
+		// Bugs.click()
+		//TODO create bugs
+	})
+
+
+
 
 }
