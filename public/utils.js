@@ -286,6 +286,7 @@ function next(e) {
 
 
 function deleteDaysColorFromCalendar(e) {
+
 	//--> hide option
 	e.path[1].style.display = 'none'
 	//--> delete the curren epic
@@ -349,6 +350,15 @@ function createKbanFromRoadmap(e) {
 
 }
 
+function showDots(e) {
+	// console.log(`showDots`);
+	// console.log(e.path[1].children[2]);
+	e.path[1].children[2].style.display = 'block'
+	setTimeout(() => {
+		e.path[1].children[2].style.display = 'none'
+	}, 2000);
+}
+
 
 
 function loadDataFromIndexDB(e) {
@@ -373,13 +383,12 @@ function loadDataFromIndexDB(e) {
 		kanbanBoardDATA: "kanbanBoardDATA",
 		allBugsInThisProject: "allBugsInThisProject",
 	});
-	db.allEpicsInThisProject.bulkGet(["epic"]).then((data) => {
-		// console.log('epic: ', data[0].data);
-		allEpicsInThisProject = data[0].data
-		console.log('allEpicsInThisProject: ', allEpicsInThisProject);
-		//TODO ADD EPIC CARD TO THE ROADMAP section
-		//TODO click previous then  next button to color the days
+	db.colorArr.bulkGet(["colorArr"]).then((data) => {
+		// console.log('color: ', data[0].data);
+		colorArr = data[0].data
+		console.log('colorArr: ', colorArr);
 	})
+	
 	db.startDaysToColorArr.bulkGet(["startDays"]).then((data) => {
 		// console.log('startday: ', data[0].data);
 		startDaysToColorArr = data[0].data
@@ -390,14 +399,29 @@ function loadDataFromIndexDB(e) {
 		endDaysToColorArr = data[0].data
 		console.log('endDaysToColorArr: ', endDaysToColorArr);
 	})
-	db.colorArr.bulkGet(["colorArr"]).then((data) => {
-		// console.log('color: ', data[0].data);
-		colorArr = data[0].data
-		console.log('colorArr: ', colorArr);
+	db.allEpicsInThisProject.bulkGet(["epic"]).then((data) => {
+		// console.log('epic: ', data[0].data);
+		allEpicsInThisProject = data[0].data
+		console.log('allEpicsInThisProject: ', allEpicsInThisProject);
+		// ADD EPIC CARD TO THE ROADMAP section
+		allEpicsInThisProject.forEach((epic, index) => {
+			const epicTask = document.querySelector('.epic_task')
+			let epicTaskHtml = components.epicHtml
+			epicTaskHtml.childNodes[0].innerHTML = epic
+			epicTaskHtml.style.backgroundColor = colorArr[index]
+			epicTask.append(epicTaskHtml.cloneNode(true))
+		})
+		// click previous then  next button to color the days
+		let btnPrevious = document.querySelector('.btn_previous')
 
+		let btnNext = document.querySelector('.btn_next')
+		setTimeout(() => {
 
-
+			btnPrevious.click()
+			btnNext.click()
+		}, 500)
 	})
+
 	db.kanbanBoardDATA.bulkGet(["kanbanBoardDATA"]).then((data) => {
 		// console.log('kbandata: ', data[0].data);
 		kanbanBoardDATA = data[0].data

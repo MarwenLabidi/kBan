@@ -309,21 +309,6 @@ const observerWorkspace = new MutationObserver((mutations) => {
 						epicTask.append(epicTaskHtml.cloneNode(true))
 						runOneTime(firstDayMth, evrySingleDays)()
 						colorSelectedDays(thisMonth + 1, thisYear)(+startDayMonthYear.day, +startDayMonthYear.month, +startDayMonthYear.year)(+endDayMonthYear.day, +endDayMonthYear.month, +endDayMonthYear.year)(color)
-						const epic3dots = document.querySelectorAll('.epic3dots')
-						const options = document.querySelectorAll('.options')
-						const epicH3 = document.querySelectorAll('.epicH3')
-						let indexOfChosenEpic = null
-						if (epic3dots) {
-							epic3dots.forEach((epic3dot, index) => {
-								epic3dot.addEventListener('click', () => {
-									options[index].style.display = 'block'
-									let indexOfChosenEpic = index
-									setTimeout(() => {
-										options[index].style.display = 'none'
-									}, 2000);
-								});
-							})
-						}
 						startDate = null
 						epicName = null
 						endDate = null
