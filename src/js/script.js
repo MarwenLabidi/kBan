@@ -1112,7 +1112,6 @@ observerWorkspace.observe(workspace, {
 })
 
 
-
 //TODO  create a delete button at the first page and you have the chose to delete one or mutltiple : it show you pop up to pick widh check box
 
 

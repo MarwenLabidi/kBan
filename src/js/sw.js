@@ -65,6 +65,10 @@ self.addEventListener('message', (event) => {
 			projectNameSW = event.data.nameDataBase;
 
 		}
+		if (projectNameSW == null) {
+			return
+		}
+
 
 
 		let version = 1

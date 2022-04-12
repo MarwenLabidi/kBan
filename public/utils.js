@@ -362,7 +362,10 @@ function showDots(e) {
 
 
 function loadDataFromIndexDB(e) {
+
 	let name = e.path[0].children[0].textContent
+	PROJECTNAME = name
+	console.log('PROJECTNAME: ', PROJECTNAME);
 	// show sidebar
 	const aside = document.querySelector('aside')
 	const rightbar = document.querySelector('.rightbar')
@@ -388,7 +391,7 @@ function loadDataFromIndexDB(e) {
 		colorArr = data[0].data
 		console.log('colorArr: ', colorArr);
 	})
-	
+
 	db.startDaysToColorArr.bulkGet(["startDays"]).then((data) => {
 		// console.log('startday: ', data[0].data);
 		startDaysToColorArr = data[0].data
@@ -419,27 +422,119 @@ function loadDataFromIndexDB(e) {
 
 			btnPrevious.click()
 			btnNext.click()
-		}, 500)
+		}, 300)
 	})
+	setTimeout(() => {
+		db.kanbanBoardDATA.bulkGet(["kanbanBoardDATA"]).then((data) => {
+			// console.log('kbandata: ', data[0].data);
+			kanbanBoardDATA = data[0].data
+			let arrData = Object.keys(kanbanBoardDATA);
 
-	db.kanbanBoardDATA.bulkGet(["kanbanBoardDATA"]).then((data) => {
-		// console.log('kbandata: ', data[0].data);
-		kanbanBoardDATA = data[0].data
-		console.log('kanbanBoardDATA: ', kanbanBoardDATA);
-		const KanbanBoard = document.querySelector('.KanbanBoard')
-		// KanbanBoard.click()
-		//TODO create kanban boards and add it to the list
-		//TODO create cards with comments
+			const KanbanBoard = document.querySelector('.KanbanBoard')
+			KanbanBoard.click()
+			// console.log('kanbanBoardDATA: ', kanbanBoardDATA);
+			// console.log('arrData: ', arrData);
+			// create kanban boards and add it to the list
+			// create cards with comments
 
-	})
-	db.allBugsInThisProject.bulkGet(["allBugsInThisProject"]).then((data) => {
-		// console.log('bugs: ', data[0].data);
-		allBugsInThisProject = data[0].data
-		console.log('allBugsInThisProject: ', allBugsInThisProject);
-		const Bugs = document.querySelector('.Bugs')
-		// Bugs.click()
-		//TODO create bugs
-	})
+			const nameKboard = document.querySelector('#nameKboard')
+			const kbanBoardList = document.querySelector('#kbanBoardList')
+			const Backlog = document.querySelector('#Backlog')
+			const InProgress = document.querySelector('#inProgress')
+			const Done = document.querySelector('#done')
+
+			arrData.forEach((kboard, index) => {
+				let optionHTML = document.createElement('option')
+				optionHTML.innerHTML = kboard
+				kbanBoardList.append(optionHTML)
+				nameKboard.innerHTML = kboard
+
+			})
+
+			//get the current kboard and use foreach on it to create the cards
+			let kbanBoardListSelectedValue = kbanBoardList.options[kbanBoardList.selectedIndex].value
+			//backlog
+			kanbanBoardDATA[kbanBoardListSelectedValue].Backlog.forEach((crd, index) => {
+				// add card
+				let card = components.cardBoardkanbanHtml
+				card.children[0].innerHTML = crd.constent
+				card.childNodes[7].innerHTML = ''
+				//add comments
+				crd.commenst.forEach((comt, index) => {
+					let lia = document.createElement('li')
+					lia.innerHTML = comt
+					card.childNodes[7].append(lia)
+
+				})
+				//add number of comments
+				card.children[2].children[0].textContent = crd.commenst.length
+				Backlog.append(card.cloneNode(true))
+				allCardBoard = document.querySelectorAll('.cardBoard')
+
+
+			})
+
+			//in progress
+
+			kanbanBoardDATA[kbanBoardListSelectedValue].InProgress.forEach((crd, index) => {
+				// add card
+				let card = components.cardBoardkanbanHtml
+				card.children[0].innerHTML = crd.constent
+				card.childNodes[7].innerHTML = ''
+				//add comments
+				crd.commenst.forEach((comt, index) => {
+					let lia = document.createElement('li')
+					lia.innerHTML = comt
+					card.childNodes[7].append(lia)
+
+				})
+				//add number of comments
+				card.children[2].children[0].textContent = crd.commenst.length
+				InProgress.append(card.cloneNode(true))
+				allCardBoard = document.querySelectorAll('.cardBoard')
+
+
+			})
+
+			//done 
+
+			kanbanBoardDATA[kbanBoardListSelectedValue].Done.forEach((crd, index) => {
+				// add card
+				let card = components.cardBoardkanbanHtml
+				card.children[0].innerHTML = crd.constent
+				card.childNodes[7].innerHTML = ''
+				//add comments
+				crd.commenst.forEach((comt, index) => {
+					let lia = document.createElement('li')
+					lia.innerHTML = comt
+					card.childNodes[7].append(lia)
+
+				})
+				//add number of comments
+				card.children[2].children[0].textContent = crd.commenst.length
+				Done.append(card.cloneNode(true))
+				allCardBoard = document.querySelectorAll('.cardBoard')
+
+
+			})
+		})
+
+	}, 500);
+
+
+
+	setTimeout(() => {
+		db.allBugsInThisProject.bulkGet(["allBugsInThisProject"]).then((data) => {
+			// console.log('bugs: ', data[0].data);
+			allBugsInThisProject = data[0].data
+			console.log('allBugsInThisProject: ', allBugsInThisProject);
+			const Bugs = document.querySelector('.Bugs')
+			// Bugs.click()
+			//TODO create bugs
+		})
+
+	}, 800);
+
 
 
 
