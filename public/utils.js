@@ -111,7 +111,7 @@ const addBug = () => {
 
 
 function addBugsFromButt() {
-	
+
 	const tbody = document.querySelector('tbody')
 	Qual.confirmd("ADD Bug ", //For heading
 		"", //For sub heading
@@ -158,11 +158,11 @@ function threeDotsBugs(e) {
 }
 
 function closeThisBug(e) {
-	
+
 	// 
 	e.path[3].children[1].children[0].style.display = 'none'
 	//date
-	
+
 	e.path[4].children[0].children[3].textContent = new Date().toLocaleDateString()
 	//closed
 	// 
@@ -173,7 +173,7 @@ function closeThisBug(e) {
 	function changeBugStatus(name, closedDate) {
 		allBugsInThisProject.forEach((bug, index) => {
 			if (name.trim() == bug.bugName) {
-				
+
 				bug.bugClosedDate = closedDate
 				bug.bugStatus = "closed"
 			} else {
@@ -181,9 +181,9 @@ function closeThisBug(e) {
 			}
 		})
 	}
-	
+
 	changeBugStatus(e.path[4].children[0].children[0].textContent, new Date().toLocaleDateString())
-	
+
 	// FIXME SEND BUG TO SEVICE WORKER
 	navigator.serviceWorker.controller.postMessage({
 		bugs: allBugsInThisProject,
@@ -195,19 +195,20 @@ function closeThisBug(e) {
 }
 
 function deleteThisBug(e) {
-	
-	
+
+
 	e.path[3].children[1].children[0].style.display = 'none'
 	//delete 
-	let n =e.path[4].children[0].children[0].textContent
-	
+	let n = e.path[4].children[0].children[0].textContent
+
 
 	// 
 	e.path[4].children[0].remove()
+
 	function deleteBug(name) {
-		
+
 		allBugsInThisProject.forEach((bug, index) => {
-			
+
 			if (name.trim() == bug.bugName) {
 				allBugsInThisProject.splice(index, 1)
 			} else {
@@ -223,7 +224,7 @@ function deleteThisBug(e) {
 
 
 
-	
+
 
 
 
@@ -453,7 +454,7 @@ function deleteDaysColorFromCalendar(e) {
 }
 
 function createKbanFromRoadmap(e) {
-	
+
 	document.querySelector('.KanbanBoard').click()
 
 	setTimeout(() => {
@@ -478,13 +479,20 @@ function showDots(e) {
 
 function loadDataFromIndexDB(e) {
 
-	let name = e.path[0].children[0].textContent
-	//FIXME COPY ALL THE REST FROM THE FUNCTION BEFORE
-	// if(!name){name=e.path[0].textContent}
-	
-	
+	// let name = e.path[0].children[0].textContent
+	// if(typeof name === 'undefined'){name=e.path[0].textContent}
+	let name
+	if (e.path[0].children[0]) {
+		name = e.path[0].children[0].textContent
+
+	} else {
+		name = e.path[0].textContent
+
+	}
+
+
 	PROJECTNAME = name
-	
+
 	// show sidebar
 	const aside = document.querySelector('aside')
 	const rightbar = document.querySelector('.rightbar')
@@ -508,23 +516,23 @@ function loadDataFromIndexDB(e) {
 	db.colorArr.bulkGet(["colorArr"]).then((data) => {
 		// 
 		colorArr = data[0].data
-		
+
 	})
 
 	db.startDaysToColorArr.bulkGet(["startDays"]).then((data) => {
 		// 
 		startDaysToColorArr = data[0].data
-		
+
 	})
 	db.endDaysToColorArr.bulkGet(["endDays"]).then((data) => {
 		// 
 		endDaysToColorArr = data[0].data
-		
+
 	})
 	db.allEpicsInThisProject.bulkGet(["epic"]).then((data) => {
 		// 
 		allEpicsInThisProject = data[0].data
-		
+
 		// ADD EPIC CARD TO THE ROADMAP section
 		allEpicsInThisProject.forEach((epic, index) => {
 			const epicTask = document.querySelector('.epic_task')
@@ -646,7 +654,7 @@ function loadDataFromIndexDB(e) {
 		db.allBugsInThisProject.bulkGet(["allBugsInThisProject"]).then((data) => {
 			// 
 			allBugsInThisProject = data[0].data
-			
+
 			const Bugs = document.querySelector('.Bugs')
 			Bugs.click()
 			//TODO create bugs
