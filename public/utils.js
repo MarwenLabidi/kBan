@@ -110,9 +110,124 @@ const addBug = () => {
 
 
 
+function addBugsFromButt() {
+	
+	const tbody = document.querySelector('tbody')
+	Qual.confirmd("ADD Bug ", //For heading
+		"", //For sub heading
+		inf, //icon variable we can define our own also by giving th link in double quotes
+		"ADD", //blue button string
+		"", // cancel button string
+		"addBug", //function name that is to be called on click on blue button
+		"", //function name that is to be called on click on cancel button
+		"string", //type of input you want whether a text ,password or number
+		"Enter Bug" //Placeholder text of input field
+	)
+	waitUntilReturnName(bugName, 'bugName').then((bug) => {
+		let BUG = components.bugbarHtml
+		BUG.childNodes[1].childNodes[1].childNodes[1].innerText = bug
+		BUG.childNodes[3].childNodes[3].innerHTML = new Date().toLocaleDateString()
+		BUG.childNodes[7].innerHTML = "open"
+		tbody.append(BUG.cloneNode(true))
+		//--> create the bugs data
+		allBugsInThisProject.push({
+			bugName: bug,
+			bugStatus: "open",
+			bugOpenDate: new Date().toLocaleDateString(),
+			bugClosedDate: `on going`
+		})
+		// SEND BUG TO SEVICE WORKER
+		navigator.serviceWorker.controller.postMessage({
+			bugs: allBugsInThisProject,
+		});
+		bugName = null
+	})
+
+
+}
+
+//---> add bug function 
+function threeDotsBugs(e) {
+	// 
+	// 
+	e.path[3].children[1].children[0].style.display = 'block'
+	setTimeout(() => {
+		e.path[3].children[1].children[0].style.display = 'none'
+
+	}, 2000);
+}
+
+function closeThisBug(e) {
+	
+	// 
+	e.path[3].children[1].children[0].style.display = 'none'
+	//date
+	
+	e.path[4].children[0].children[3].textContent = new Date().toLocaleDateString()
+	//closed
+	// 
+	e.path[4].children[0].children[2].textContent = "closed"
+	e.path[4].children[0].classList.add('closegreenclass')
+
+	// 
+	function changeBugStatus(name, closedDate) {
+		allBugsInThisProject.forEach((bug, index) => {
+			if (name.trim() == bug.bugName) {
+				
+				bug.bugClosedDate = closedDate
+				bug.bugStatus = "closed"
+			} else {
+				return
+			}
+		})
+	}
+	
+	changeBugStatus(e.path[4].children[0].children[0].textContent, new Date().toLocaleDateString())
+	
+	// FIXME SEND BUG TO SEVICE WORKER
+	navigator.serviceWorker.controller.postMessage({
+		bugs: allBugsInThisProject,
+	});
 
 
 
+
+}
+
+function deleteThisBug(e) {
+	
+	
+	e.path[3].children[1].children[0].style.display = 'none'
+	//delete 
+	let n =e.path[4].children[0].children[0].textContent
+	
+
+	// 
+	e.path[4].children[0].remove()
+	function deleteBug(name) {
+		
+		allBugsInThisProject.forEach((bug, index) => {
+			
+			if (name.trim() == bug.bugName) {
+				allBugsInThisProject.splice(index, 1)
+			} else {
+				return
+			}
+		})
+	}
+	deleteBug(n)
+	// SEND BUG TO SEVICE WORKER
+	navigator.serviceWorker.controller.postMessage({
+		bugs: allBugsInThisProject,
+	});
+
+
+
+	
+
+
+
+}
 
 
 // the add comments button functions 
@@ -338,7 +453,7 @@ function deleteDaysColorFromCalendar(e) {
 }
 
 function createKbanFromRoadmap(e) {
-	console.log(`create`);
+	
 	document.querySelector('.KanbanBoard').click()
 
 	setTimeout(() => {
@@ -351,8 +466,8 @@ function createKbanFromRoadmap(e) {
 }
 
 function showDots(e) {
-	// console.log(`showDots`);
-	// console.log(e.path[1].children[2]);
+	// 
+	// 
 	e.path[1].children[2].style.display = 'block'
 	setTimeout(() => {
 		e.path[1].children[2].style.display = 'none'
@@ -364,8 +479,12 @@ function showDots(e) {
 function loadDataFromIndexDB(e) {
 
 	let name = e.path[0].children[0].textContent
+	//FIXME COPY ALL THE REST FROM THE FUNCTION BEFORE
+	// if(!name){name=e.path[0].textContent}
+	
+	
 	PROJECTNAME = name
-	console.log('PROJECTNAME: ', PROJECTNAME);
+	
 	// show sidebar
 	const aside = document.querySelector('aside')
 	const rightbar = document.querySelector('.rightbar')
@@ -387,25 +506,25 @@ function loadDataFromIndexDB(e) {
 		allBugsInThisProject: "allBugsInThisProject",
 	});
 	db.colorArr.bulkGet(["colorArr"]).then((data) => {
-		// console.log('color: ', data[0].data);
+		// 
 		colorArr = data[0].data
-		console.log('colorArr: ', colorArr);
+		
 	})
 
 	db.startDaysToColorArr.bulkGet(["startDays"]).then((data) => {
-		// console.log('startday: ', data[0].data);
+		// 
 		startDaysToColorArr = data[0].data
-		console.log('startDaysToColorArr: ', startDaysToColorArr);
+		
 	})
 	db.endDaysToColorArr.bulkGet(["endDays"]).then((data) => {
-		// console.log('endday: ', data[0].data);
+		// 
 		endDaysToColorArr = data[0].data
-		console.log('endDaysToColorArr: ', endDaysToColorArr);
+		
 	})
 	db.allEpicsInThisProject.bulkGet(["epic"]).then((data) => {
-		// console.log('epic: ', data[0].data);
+		// 
 		allEpicsInThisProject = data[0].data
-		console.log('allEpicsInThisProject: ', allEpicsInThisProject);
+		
 		// ADD EPIC CARD TO THE ROADMAP section
 		allEpicsInThisProject.forEach((epic, index) => {
 			const epicTask = document.querySelector('.epic_task')
@@ -422,18 +541,18 @@ function loadDataFromIndexDB(e) {
 
 			btnPrevious.click()
 			btnNext.click()
-		}, 300)
+		}, 200)
 	})
 	setTimeout(() => {
 		db.kanbanBoardDATA.bulkGet(["kanbanBoardDATA"]).then((data) => {
-			// console.log('kbandata: ', data[0].data);
+			// 
 			kanbanBoardDATA = data[0].data
 			let arrData = Object.keys(kanbanBoardDATA);
 
 			const KanbanBoard = document.querySelector('.KanbanBoard')
 			KanbanBoard.click()
-			// console.log('kanbanBoardDATA: ', kanbanBoardDATA);
-			// console.log('arrData: ', arrData);
+			// 
+			// 
 			// create kanban boards and add it to the list
 			// create cards with comments
 
@@ -519,17 +638,17 @@ function loadDataFromIndexDB(e) {
 			})
 		})
 
-	}, 500);
+	}, 300);
 
 
 
 	setTimeout(() => {
 		db.allBugsInThisProject.bulkGet(["allBugsInThisProject"]).then((data) => {
-			// console.log('bugs: ', data[0].data);
+			// 
 			allBugsInThisProject = data[0].data
-			console.log('allBugsInThisProject: ', allBugsInThisProject);
+			
 			const Bugs = document.querySelector('.Bugs')
-			// Bugs.click()
+			Bugs.click()
 			//TODO create bugs
 		})
 
