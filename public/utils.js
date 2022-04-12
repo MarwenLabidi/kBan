@@ -146,7 +146,7 @@ function addBugsFromButt() {
 
 }
 
-//---> add bug function 
+//--> add bug function 
 function threeDotsBugs(e) {
 	// 
 	// 
@@ -158,18 +158,31 @@ function threeDotsBugs(e) {
 }
 
 function closeThisBug(e) {
+	//option
+	// 
+	//all the tab
+	// 
+	//on going
+	// 
+	//open
+	// 
+	// 
+
+	//name
+	// 
+
 
 	// 
-	e.path[3].children[1].children[0].style.display = 'none'
+	e.parentElement.style.display = 'none'
 	//date
 
-	e.path[4].children[0].children[3].textContent = new Date().toLocaleDateString()
+	e.parentElement.parentElement.parentElement.children[2].innerText = new Date().toLocaleDateString()
 	//closed
 	// 
-	e.path[4].children[0].children[2].textContent = "closed"
-	e.path[4].children[0].classList.add('closegreenclass')
+	e.parentElement.parentElement.parentElement.children[3].innerText = "closed"
+	e.parentElement.parentElement.parentElement.classList.add('closegreenclass')
 
-	// 
+
 	function changeBugStatus(name, closedDate) {
 		allBugsInThisProject.forEach((bug, index) => {
 			if (name.trim() == bug.bugName) {
@@ -182,28 +195,24 @@ function closeThisBug(e) {
 		})
 	}
 
-	changeBugStatus(e.path[4].children[0].children[0].textContent, new Date().toLocaleDateString())
+	changeBugStatus(e.parentElement.parentElement.parentElement.children[0].innerText, new Date().toLocaleDateString())
 
-	// FIXME SEND BUG TO SEVICE WORKER
 	navigator.serviceWorker.controller.postMessage({
 		bugs: allBugsInThisProject,
 	});
 
-
-
-
 }
-
 function deleteThisBug(e) {
 
 
-	e.path[3].children[1].children[0].style.display = 'none'
+	e.parentElement.style.display = 'none'
 	//delete 
-	let n = e.path[4].children[0].children[0].textContent
+	//get the name
+	let n = e.parentElement.parentElement.parentElement.children[0].innerText
 
 
 	// 
-	e.path[4].children[0].remove()
+	e.parentElement.parentElement.parentElement.remove()
 
 	function deleteBug(name) {
 
@@ -635,7 +644,6 @@ function loadDataFromIndexDB(e) {
 					let lia = document.createElement('li')
 					lia.innerHTML = comt
 					card.childNodes[7].append(lia)
-
 				})
 				//add number of comments
 				card.children[2].children[0].textContent = crd.commenst.length
@@ -657,7 +665,22 @@ function loadDataFromIndexDB(e) {
 
 			const Bugs = document.querySelector('.Bugs')
 			Bugs.click()
-			//TODO create bugs
+			// create bugs
+			const tbody = document.querySelector('tbody')
+			let BUG = components.bugbarHtml
+			allBugsInThisProject.forEach((bug, index) => {
+				BUG.childNodes[1].childNodes[1].childNodes[1].innerText = bug.bugName
+				BUG.childNodes[3].childNodes[3].innerHTML = bug.bugOpenDate
+				BUG.childNodes[7].innerHTML = bug.bugStatus
+				BUG.children[2].textContent = bug.bugClosedDate
+				if(bug.bugStatus === 'closed'){
+					BUG.classList.add('closegreenclass')
+				}
+
+				tbody.append(BUG.cloneNode(true))
+				
+			})
+
 		})
 
 	}, 800);
@@ -667,3 +690,4 @@ function loadDataFromIndexDB(e) {
 
 
 }
+
