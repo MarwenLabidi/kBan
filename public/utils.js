@@ -694,15 +694,8 @@ function loadDataFromIndexDB(e) {
 function deleteThisProject(e) {
 	//stop the paret event
 	e.stopPropagation();
-	console.log('delete me');
+	//delete the project in indexDB
+	Dexie.delete(e.path[1].outerText);
+	//remove cards from the board
+	e.path[1].remove()
 }
-
-// function moseoverexit(e){
-// 	const parent=e.parentElement
-// 	console.log('parent: ', parent);
-// 	parent.classList.add('stopItanimation')
-// }
-
-// function moseoverexitcard(){
-// 	console.log(`yaaaaaaaaaaaaaa`);
-// }

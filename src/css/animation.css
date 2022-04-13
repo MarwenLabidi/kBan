@@ -54,14 +54,14 @@
 .card:hover {
 	box-shadow: 0px 0px 1px 1px var(--clr_white);
 	cursor: pointer;
-	transform: scale(1.1);
+	/* transform: scale(1.1); */
 }
 
 .card:active {
 	box-shadow: 0px 0px 20px 1px var(--clr_dark);
-	transform: scale(1);
+	/* transform: scale(1); */
 
-}
+} 
 
 /* kaban board */
 .board div span {
@@ -91,10 +91,5 @@
 	cursor: pointer;
 }
 
-// stop hover animation and click
-/* .stopItanimation{
-	transform: scale(1);
 
-} */
 
-.deltecard li:not(.no-hover):hover { transform: scale(1); }
