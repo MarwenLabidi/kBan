@@ -691,3 +691,18 @@ function loadDataFromIndexDB(e) {
 
 }
 
+function deleteThisProject(e) {
+	//stop the paret event
+	e.stopPropagation();
+	console.log('delete me');
+}
+
+// function moseoverexit(e){
+// 	const parent=e.parentElement
+// 	console.log('parent: ', parent);
+// 	parent.classList.add('stopItanimation')
+// }
+
+// function moseoverexitcard(){
+// 	console.log(`yaaaaaaaaaaaaaa`);
+// }

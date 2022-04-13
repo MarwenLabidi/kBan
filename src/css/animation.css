@@ -67,7 +67,9 @@
 .board div span {
 	cursor: pointer;
 }
-.cardBoard:hover {	cursor: move;
+
+.cardBoard:hover {
+	cursor: move;
 }
 
 .cardBoard img:hover {
@@ -76,16 +78,23 @@
 }
 
 /* bugs */
-.bugs table thead span:hover  {
+.bugs table thead span:hover {
 	cursor: pointer;
 	transform: scale(1.1);
 }
-.bugs table thead span:active  {
+
+.bugs table thead span:active {
 	transform: scale(1);
 }
 
-.bugs img:hover  {
+.bugs img:hover {
 	cursor: pointer;
 }
 
+// stop hover animation and click
+/* .stopItanimation{
+	transform: scale(1);
 
+} */
+
+.deltecard li:not(.no-hover):hover { transform: scale(1); }
