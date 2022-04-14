@@ -30,6 +30,34 @@
 </head>
 
 <body class="main ">
+  <section class="promodoroTimer">
+    <div class="promodoroTimer__focusState">
+      <input type="number" class="promodoroTimer__focusState__minute" max="60" value="25">
+      <span>:</span>
+      <input type="number" class="promodoroTimer__focusState__second" max="60" value="00">
+
+    </div>
+    <div class="promodoroTimer__ControlButton">
+      <svg width="80px" height="80px">
+        <circle cx="50%" cy="50%" />
+        <div class="promodoroTimer__ControlButton__Button">
+          <div class="promodoroTimer__ControlButton__Button__Start"></div>
+          <div class="promodoroTimer__ControlButton__Button__Pause"></div>
+        </div>
+      </svg>
+
+
+    </div>
+    <div class="promodoroTimer__breakState">
+      <input type="number" class="promodoroTimer__breakState__minute" max="60" value="05">
+      <span>:</span>
+      <input type="number" class="promodoroTimer__breakState__second" max="60" value="00">
+
+    </div>
+
+  </section>
+  <audio media-player="audioPlayer" controls="controls" preload="auto" id="audioElement" crossOrigin="anonymous"
+    src="/getUP.ogg"></audio>
   <aside>
     <main class='sidemain'>
       <section class="leftbar">

@@ -1000,10 +1000,8 @@ observerWorkspace.observe(workspace, {
 
 
 
-// TODO check the database if is full or do a delete technique 
 
 
-// TODO add promodoro timer feature song effect : your voice and always work in the background : maybe its like a flowing button you can always press on it and i show you time and cool an animation AND THERE IS  LITTLE BUTTON FOR CONFIGURATION SHOW YOU TIME LOAD AND INPUT FOR TIME BREAK
 
 //TODO  voice controll button like timer : create instruction page another html page open you click to instruction 
 

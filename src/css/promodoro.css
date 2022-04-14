@@ -1,0 +1,113 @@
+.promodoroTimer {
+	margin: auto;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: absolute;
+	height: 7%;
+	transform: translate(-50px,15px)
+
+}
+
+.promodoroTimer__ControlButton {
+	position: relative;
+}
+
+.promodoroTimer__ControlButton__Button {
+	height: 30px;
+	width: 30px;
+	position: absolute;
+	display: flex;
+	top: 30%;
+	left: 30%;
+}
+
+svg {
+	position: relative;
+}
+
+.promodoroTimer__focusState>input {
+	width: 30%;
+	height: 30px;
+	color: green;
+	border: none;
+	border-radius: 5px;
+	text-align: center;
+	font-size: 20px;
+	font-weight: bold;
+
+}
+
+.promodoroTimer__focusState>span {
+	font-size: 30px;
+	font-weight: bold;
+	color: white;
+}
+
+.promodoroTimer__focusState>input:focus {
+	outline: none;
+}
+
+.promodoroTimer__focusState {
+	width: 12%;
+	align-self: end;
+	transform: translateX(23%);
+
+}
+
+.promodoroTimer__breakState {
+	width: 9%;
+	align-self: start;
+}
+
+.promodoroTimer__breakState>input {
+	width: 35%;
+	height: 20px;
+	color: red;
+	border: none;
+	border-radius: 5px;
+	text-align: center;
+	font-size: 15px;
+	font-weight: bold;
+
+}
+
+.promodoroTimer__breakState>span {
+	font-size: 30px;
+	font-weight: bold;
+	color: white;
+}
+
+.promodoroTimer__ControlButton__Button__Start {
+	/* NOTE change it when you click */
+	/* display:none; */
+	width: 0;
+	height: 0;
+	border-top: 20px solid transparent;
+	border-bottom: 20px solid transparent;
+
+	border-left: 24px solid black;
+	transform: translate(30%, -10%);
+}
+
+.promodoroTimer__ControlButton__Button__Pause {
+	/* NOTE change it when you click */
+	display: none;
+	width: 30px;
+	height: 30px;
+	background-color: black;
+}
+
+.promodoroTimer__ControlButton__Button:hover {
+	cursor: pointer;
+	transform: scale(1.1);
+}
+
+.promodoroTimer__ControlButton__Button:active {
+	transform: scale(1);
+}
+
+audio {
+	position: absolute;
+	display: none;
+}
