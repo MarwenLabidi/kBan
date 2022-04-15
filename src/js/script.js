@@ -1003,5 +1003,4 @@ observerWorkspace.observe(workspace, {
 
 
 
-//TODO  voice controll button like timer : create instruction page another html page open you click to instruction 
 

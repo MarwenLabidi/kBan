@@ -79,7 +79,7 @@ svg {
 }
 
 .promodoroTimer__ControlButton__Button__Start {
-	/* NOTE change it when you click */
+	/*  change it when you click */
 	/* display:none; */
 	width: 0;
 	height: 0;
@@ -91,7 +91,7 @@ svg {
 }
 
 .promodoroTimer__ControlButton__Button__Pause {
-	/* NOTE change it when you click */
+	/*  change it when you click */
 	display: none;
 	width: 30px;
 	height: 30px;

@@ -1,9 +1,11 @@
 ## Welcome to  kBan
 #### Next Generation  kanban board 
 #### very fast ⚡  
-#### you can install it or use it directly the link bellow
+#### promodoro timer 🍅 
+#### dark mode feature 🌙
+#### you can install it or use it directly from the link bellow
 
-# [APP link]()
+# [APP link](https://truculent-tail.surge.sh/)
 
 ## Tech Stack:
 - Html , Css , javaScript
@@ -14,8 +16,8 @@
 ## API and library :
 - Drag and Drop API
 - MutationObservers API
-- canvasJs libarary
+- canvasJs library
 - dexie.js(indexdDB library)
-- QuantumAlert libraty 
+- QuantumAlert library 
 
 
